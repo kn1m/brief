@@ -19,9 +19,6 @@
 
         public string Trasform(string source, params object[] configurations)
         {
-            //var png = Image.FromFile("some.png");
-            //png.Save("a.tiff", ImageFormat.Tiff);
-
             //var testImagePath = "./phototest.tif";
 
             string result = string.Empty;

@@ -28,7 +28,9 @@
 
         public Task<CoverModel> SaveCover(ImageModel image)
         {
-            throw new NotImplementedException();
+
+
+            return null;
         }
 
         public Task<CoverModel> RetrieveDataFromCover(ImageModel cover)

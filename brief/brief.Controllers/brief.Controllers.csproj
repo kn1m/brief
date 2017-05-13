@@ -84,6 +84,7 @@
     <Compile Include="BookController.cs" />
     <Compile Include="CoverController.cs" />
     <Compile Include="Filters\ExceptionLogger.cs" />
+    <Compile Include="BaseImageUploadController.cs" />
     <Compile Include="Models\BookModel.cs" />
     <Compile Include="Models\CoverModel.cs" />
     <Compile Include="Models\EditionModel.cs" />

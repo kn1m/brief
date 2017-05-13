@@ -5,6 +5,7 @@
     using AutoMapper;
     using Controllers.Models;
     using Controllers.Providers;
+    using Entities;
     using Helpers;
     using Repositories;
 
@@ -22,17 +23,25 @@
             _mapper = mapper;
         }
 
-        public Task<BookModel> CreateBook(BookModel book)
+        public async Task<BookModel> CreateBook(BookModel book)
         {
-            throw new NotImplementedException();
+            var newBook = _mapper.Map<Book>(book);
+
+            var createdBook = await _bookReporitory.CreateBook(newBook);
+
+            return _mapper.Map<BookModel>(createdBook);
         }
 
-        public Task<BookModel> UpdateBook(BookModel book)
+        public async Task<BookModel> UpdateBook(BookModel book)
         {
-            throw new NotImplementedException();
+            var newBook = _mapper.Map<Book>(book);
+
+            var updatedBook = await _bookReporitory.UpdateBook(newBook);
+
+            return _mapper.Map<BookModel>(updatedBook);
         }
 
-        public Task RemoveBook(Guid id)
+        public Task RemoveBook(BookModel book)
         {
             throw new NotImplementedException();
         }

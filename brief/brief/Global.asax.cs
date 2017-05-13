@@ -29,17 +29,26 @@
                     new NamedParameter("mode", ConfigurationManager.GetSection("tesseractDataPath"))
             });
 
-            builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>();
+            builder.RegisterType<ApplicationDbContext>()
+                .As<IApplicationDbContext>();
 
-            builder.RegisterType<BookService>().As<IBookService>();
-            builder.RegisterType<EditionService>().As<IEditionService>();
-            builder.RegisterType<CoverService>().As<ICoverService>();
-            builder.RegisterType<SeriesService>().As<ISeriesService>();
+            builder.RegisterType<BookService>()
+                .As<IBookService>();
+            builder.RegisterType<EditionService>()
+                .As<IEditionService>();
+            builder.RegisterType<CoverService>()
+                .As<ICoverService>();
+            builder.RegisterType<SeriesService>()
+                .As<ISeriesService>();
 
-            builder.RegisterType<BookRepository>().As<IBookReporitory>();
-            builder.RegisterType<EditionRepository>().As<IEditionRepository>();
-            builder.RegisterType<CoverRepository>().As<ICoverRepository>();
-            builder.RegisterType<SeriesRepository>().As<ISeriesRepository>();
+            builder.RegisterType<BookRepository>()
+                .As<IBookReporitory>();
+            builder.RegisterType<EditionRepository>()
+                .As<IEditionRepository>();
+            builder.RegisterType<CoverRepository>()
+                .As<ICoverRepository>();
+            builder.RegisterType<SeriesRepository>()
+                .As<ISeriesRepository>();
 
             // OPTIONAL: Register the Autofac filter provider.
             //builder.RegisterWebApiFilterProvider(config);
