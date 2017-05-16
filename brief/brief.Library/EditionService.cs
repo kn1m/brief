@@ -39,14 +39,21 @@
         {
             var fileSavePath = SaveImage(image);
 
-            var imagePath = ConvertToAppropirateFormat(fileSavePath);
+            if (fileSavePath == null)
+            {
+                return null;
+            }
+
+            var imagePath = ConvertToAppropirateFormat(fileSavePath, true);
 
             string transformResult = await _transformer.TransformAsync(imagePath);
 
             /// ... implelement parsing algo
-           
-            var newEdition = new Edition() { };
 
+            //Create new edititon
+            //Create new book
+            //Create new publisher
+            //Create new series
 
             return null;
         }

@@ -17,12 +17,12 @@
     {
         protected void Application_Start()
         {
-            var storageSettings = new StorageSettings()
+            //TODO : retrieve from config
+            var storageSettings = new StorageSettings
             {
                 AllowedFormats = new[] {".tif", ".tiff", ".png", ".jpg"},
                 StoragePath = @"C:\Users\xxxx\Documents\UploadedFiles"
             };
-
 
             var builder = new ContainerBuilder();
 

@@ -19,40 +19,45 @@
             _saveImagePath = settings.StoragePath;
         }
 
-        public virtual string ConvertToAppropirateFormat(string existingFilePath)
+        public virtual string ConvertToAppropirateFormat(string existingFilePath, bool deleteOriginal)
         {
-            if (
-                _allowed.Contains(
-                    existingFilePath.Substring(existingFilePath.LastIndexOf(".", StringComparison.Ordinal), existingFilePath.Length)))
+            var image = Image.FromFile(existingFilePath);
+
+            if (image.RawFormat.Equals(ImageFormat.Tiff))
             {
-                var image = Image.FromFile(existingFilePath);
-
-                if (image.RawFormat.Equals(ImageFormat.Tiff))
-                {
-                    return existingFilePath;
-                }
-
-                var newPath = existingFilePath.Substring(0, existingFilePath.LastIndexOf(".", StringComparison.Ordinal)) +
-                              ImageFormat.Tiff;
-
-                image.Save(newPath, ImageFormat.Tiff);
-                //File.Delete(f);
+                return existingFilePath;
             }
 
-            return null;
+            var newPath = existingFilePath.Substring(0, existingFilePath.LastIndexOf(".", StringComparison.Ordinal)) +
+                          ImageFormat.Tiff;
+
+            image.Save(newPath, ImageFormat.Tiff);
+
+            if (deleteOriginal)
+            {
+                File.Delete(existingFilePath);
+            }
+
+            return newPath;
         }
 
         public virtual string SaveImage(ImageModel image)
         {
-            var fileSavePath = Path.Combine(_saveImagePath, image.Name);
-
-            using (var bw = new BinaryWriter(File.Open(fileSavePath, FileMode.OpenOrCreate)))
+            if (
+                _allowed.Contains(
+                    image.Name.Substring(image.Name.LastIndexOf(".", StringComparison.Ordinal), image.Name.Length)))
             {
-                bw.Write(image.Data);
+
+                var fileSavePath = Path.Combine(_saveImagePath, image.Name);
+
+                using (var bw = new BinaryWriter(File.Open(fileSavePath, FileMode.OpenOrCreate)))
+                {
+                    bw.Write(image.Data);
+                }
+
+                return fileSavePath;
             }
-
-            return fileSavePath;
+            return null;
         }
-
     }
 }
