@@ -1,8 +1,9 @@
 ﻿namespace brief.Data
 {
     using Library.Helpers;
+    using Library.Repositories;
 
-    public class CoverRepository
+    public class CoverRepository : ICoverRepository
     {
         private readonly IApplicationDbContext _context;
 

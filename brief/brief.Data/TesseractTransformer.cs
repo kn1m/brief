@@ -93,6 +93,6 @@
         }
 
         public Task<string> TransformAsync(string source, params object[] configurations)
-            => Task.Factory.StartNew(() => Trasform(source, configurations));
+            => Task.Run(() => Trasform(source, configurations));
     }
 }

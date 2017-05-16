@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
 
-    public class Book
+    public class Publisher
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual IList<Edition> Editionss { get; set; }
-        public virtual IList<Cover> Covers { get; set; }
-        public virtual IList<Publisher> Publishers { get; set; }
+        public DateTime Founded { get; set; }
+        public IList<Book> Books { get; set; }
+        public IList<Series> Series { get; set; }
     }
 }

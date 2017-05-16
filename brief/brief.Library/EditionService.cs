@@ -4,17 +4,18 @@
     using AutoMapper;
     using Controllers.Models;
     using Controllers.Providers;
+    using Entities;
     using Helpers;
     using Repositories;
     using Transformers;
 
-    public class EditionService : IEditionService
+    public class EditionService : BaseImageService, IEditionService
     {
         private readonly IEditionRepository _editionRepository;
         private readonly ITransformer<string, string> _transformer;
         private readonly IMapper _mapper;
 
-        public EditionService(IEditionRepository editionRepository, ITransformer<string, string> transformer, IMapper mapper)
+        public EditionService(IEditionRepository editionRepository, ITransformer<string, string> transformer, IMapper mapper, StorageSettings settings) : base(settings)
         {
             Guard.AssertNotNull(editionRepository);
             Guard.AssertNotNull(transformer);
@@ -25,19 +26,39 @@
             _mapper = mapper;
         }
 
-        public Task<EditionModel> CreateEdition(EditionModel edition)
+        public async Task<EditionModel> CreateEdition(EditionModel edition)
         {
-            throw new System.NotImplementedException();
+            var newEdtition = _mapper.Map<Edition>(edition);
+
+            var createdEdition = await _editionRepository.CreateEdition(newEdtition);
+
+            return _mapper.Map<EditionModel>(createdEdition);
         }
 
-        public Task<EditionModel> CreateEditionFromImage(ImageModel image)
+        public async Task<EditionModel> CreateEditionFromImage(ImageModel image)
         {
-            throw new System.NotImplementedException();
+            var fileSavePath = SaveImage(image);
+
+            var imagePath = ConvertToAppropirateFormat(fileSavePath);
+
+            string transformResult = await _transformer.TransformAsync(imagePath);
+
+            /// ... implelement parsing algo
+           
+            var newEdition = new Edition() { };
+
+
+            return null;
         }
 
-        public Task<EditionModel> UpdateEdition(EditionModel edition)
+        public async Task<EditionModel> UpdateEdition(EditionModel edition)
         {
-            throw new System.NotImplementedException();
+            var updatedEdition = _mapper.Map<Edition>(edition);
+
+            var createdEdition = await _editionRepository.UpdateEdition(updatedEdition);
+
+            return _mapper.Map<EditionModel>(createdEdition);
+
         }
 
         public Task RemoveEdition(EditionModel edition)
