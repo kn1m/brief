@@ -3,9 +3,9 @@
     using System.Data.Entity.ModelConfiguration;
     using Library.Entities;
 
-    public class EditionMap : EntityTypeConfiguration<Edition>
+    class PublisherMap : EntityTypeConfiguration<Publisher>
     {
-        public EditionMap()
+        public PublisherMap()
         {
             
         }

@@ -1,7 +1,8 @@
-﻿using System.Web.Http;
-
-namespace brief
+﻿namespace brief
 {
+    using System.Web.Http;
+    using Controllers.Constraints;
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
@@ -14,7 +15,8 @@ namespace brief
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                defaults: new { id = RouteParameter.Optional },
+                constraints: new { url = new LowercaseRouteConstraint() }
             );
         }
     }

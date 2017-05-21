@@ -64,8 +64,10 @@
     <Compile Include="Maps\BookMap.cs" />
     <Compile Include="Maps\CoverMap.cs" />
     <Compile Include="Maps\EditionMap.cs" />
+    <Compile Include="Maps\PublisherMap.cs" />
     <Compile Include="Maps\SeriesMap.cs" />
     <Compile Include="EditionRepository.cs" />
+    <Compile Include="PublisherRepostitory.cs" />
     <Compile Include="SeriesRepository.cs" />
     <Compile Include="IApplicationDbContext.cs" />
     <Compile Include="BookRepository.cs" />
