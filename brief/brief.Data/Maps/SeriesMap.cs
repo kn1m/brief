@@ -7,7 +7,16 @@
     {
         public SeriesMap()
         {
-            
+            ToTable("serieses");
+
+            HasKey(s => s.Id);
+
+            Property(s => s.Name)
+                .HasMaxLength(100)
+                .IsRequired();
+
+            Property(s => s.Description)
+                .HasMaxLength(300);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace brief.Library.Entities
 {
     using System;
+    using System.Collections.Generic;
 
     public class Edition
     {
@@ -10,5 +11,7 @@
         public int Amount { get; set; }
         public virtual Book Book { get; set; }
         public virtual Publisher Publisher { get; set; }
+        public virtual IList<Cover> Covers { get; set; }
+        public EditionType EditionType { get; set; }
     }
 }

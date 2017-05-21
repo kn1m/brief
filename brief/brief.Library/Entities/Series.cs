@@ -7,6 +7,7 @@
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public virtual IList<Book> OtherBooksInSeries { get; set; } 
+        public string Description { get; set; }
+        public virtual IList<Book> BooksInSeries { get; set; } 
     }
 }

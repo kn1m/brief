@@ -7,7 +7,19 @@
     {
         public EditionMap()
         {
-            
+            ToTable("editions");
+
+            HasKey(e => e.Id);
+
+            Property(e => e.Description)
+                .HasMaxLength(300)
+                .IsRequired();
+
+            Property(e => e.Amount)
+                .IsOptional();
+
+            Property(e => e.Year)
+                .IsOptional();
         }
     }
 }

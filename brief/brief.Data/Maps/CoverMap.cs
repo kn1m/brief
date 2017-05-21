@@ -5,5 +5,15 @@
 
     class CoverMap : EntityTypeConfiguration<Cover>
     {
+        public CoverMap()
+        {
+            ToTable("covers");
+
+            HasKey(c => c.Id);
+
+            Property(c => c.LinkTo)
+                .HasMaxLength(256)
+                .IsRequired();
+        }
     }
 }
