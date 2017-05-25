@@ -1,15 +1,18 @@
 ﻿namespace brief
 {
+    using System.Collections.Specialized;
     using System.Configuration;
     using Autofac;
     using Autofac.Integration.WebApi;
     using Controllers;
     using System.Web.Http;
     using Autofac.Core;
+    using AutoMapper;
     using Controllers.Providers;
     using Library;
     using Library.Repositories;
     using Data;
+    using Library.Entities.Profiles;
     using Library.Helpers;
     using Library.Transformers;
 
@@ -17,18 +20,27 @@
     {
         protected void Application_Start()
         {
-            //TODO : retrieve from config
             var storageSettings = new StorageSettings
             {
-                AllowedFormats = new[] {".tif", ".tiff", ".png", ".jpg"},
-                StoragePath = @"C:\Users\xxxx\Documents\UploadedFiles"
+                AllowedFormats = ConfigurationManager.AppSettings["allowedFormats"].Split(';'),
+                StoragePath = ConfigurationManager.AppSettings["saveImagePath"]
             };
 
             var builder = new ContainerBuilder();
 
+            builder.Register(ctx => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfiles(typeof(BookProfile).Assembly);
+            }));
+
+            builder.Register(ctx => ctx.Resolve<MapperConfiguration>().CreateMapper()).As<IMapper>();
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
             var config = GlobalConfiguration.Configuration;
+
+            NameValueCollection myParamsCollection =
+             (NameValueCollection)ConfigurationManager.GetSection("tesseractData");
 
             //builder.RegisterGeneric(typeof(TesseractTransformer))
             //    .As(typeof(ITransformer<string, string>))
@@ -41,12 +53,13 @@
                 .As<ITransformer<string, string>>()
                 .WithParameters(new Parameter[]
                 {
-                    new NamedParameter("dataPath", ConfigurationManager.GetSection("tesseractDataPath")),
-                    new NamedParameter("mode", ConfigurationManager.GetSection("tesseractDataPath"))
+                    new NamedParameter("dataPath", myParamsCollection["FirstParam"]),
+                    new NamedParameter("mode", myParamsCollection["FirstParam"])
                 });
 
             builder.RegisterType<ApplicationDbContext>()
-                .As<IApplicationDbContext>();
+                .As<IApplicationDbContext>()
+                .WithParameter(new NamedParameter("connectionString", ConfigurationManager.ConnectionStrings["briefContext"].ConnectionString));
 
             builder.RegisterType<BookService>()
                 .As<IBookService>();
@@ -67,8 +80,7 @@
             builder.RegisterType<EditionRepository>()
                 .As<IEditionRepository>();
             builder.RegisterType<CoverRepository>()
-                .As<ICoverRepository>();
-                
+                .As<ICoverRepository>();      
             builder.RegisterType<SeriesRepository>()
                 .As<ISeriesRepository>();
 

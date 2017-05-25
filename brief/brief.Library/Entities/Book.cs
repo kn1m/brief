@@ -9,6 +9,6 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public virtual IList<Edition> Editions { get; set; }
-        public virtual Series Series { get; set; }
+        public virtual IList<Series> Serieses { get; set; }
     }
 }

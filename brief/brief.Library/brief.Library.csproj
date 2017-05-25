@@ -52,6 +52,7 @@
     <Compile Include="Entities\Edition.cs" />
     <Compile Include="Entities\Book.cs" />
     <Compile Include="Entities\EditionType.cs" />
+    <Compile Include="Entities\Language.cs" />
     <Compile Include="Entities\Profiles\BookProfile.cs" />
     <Compile Include="Entities\Profiles\CoverProfile.cs" />
     <Compile Include="Entities\Profiles\EditionProfile.cs" />

@@ -14,6 +14,13 @@
             Property(c => c.LinkTo)
                 .HasMaxLength(256)
                 .IsRequired();
+
+            Property(c => c.EditionId)
+                .IsRequired();
+
+            HasRequired<Edition>(c => c.Edition)
+                .WithMany(e => e.Covers)
+                .HasForeignKey(c => c.EditionId);
         }
     }
 }

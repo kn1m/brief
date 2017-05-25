@@ -18,9 +18,14 @@
             Property(b => b.Description)
                 .HasMaxLength(300);
 
-            HasOptional<Series>(b => b.Series)
+            HasMany<Series>(b => b.Serieses)
                 .WithMany(s => s.BooksInSeries)
-                .HasForeignKey(b => b.Id);
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("BookId");
+                    cs.MapRightKey("SeriesId");
+                    cs.ToTable("books_in_series");
+                });
         }
     }
 }

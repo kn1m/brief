@@ -6,7 +6,7 @@
 
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
-        public ApplicationDbContext() : base("connString")
+        public ApplicationDbContext(string connectionString) : base(connectionString)
         {
             Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
         }
