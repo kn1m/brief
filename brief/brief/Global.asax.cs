@@ -15,6 +15,7 @@
     using Library.Entities.Profiles;
     using Library.Helpers;
     using Library.Transformers;
+    using Tesseract;
 
     public class WebApiApplication : System.Web.HttpApplication
     {
@@ -53,8 +54,8 @@
                 .As<ITransformer<string, string>>()
                 .WithParameters(new Parameter[]
                 {
-                    new NamedParameter("dataPath", myParamsCollection["FirstParam"]),
-                    new NamedParameter("mode", myParamsCollection["FirstParam"])
+                    new NamedParameter("dataPath", myParamsCollection["TrainDataPath"]),
+                    new NamedParameter("mode", myParamsCollection["EngineMode"].ConvertToEnum<EngineMode>())
                 });
 
             builder.RegisterType<ApplicationDbContext>()
