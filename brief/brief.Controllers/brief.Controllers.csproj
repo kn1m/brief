@@ -94,6 +94,7 @@
     <Compile Include="Models\CoverModel.cs" />
     <Compile Include="Models\EditionModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
+    <Compile Include="Models\PublisherModel.cs" />
     <Compile Include="Models\SeriesModel.cs" />
     <Compile Include="EditionController.cs" />
     <Compile Include="Filters\ActionLogger.cs" />
