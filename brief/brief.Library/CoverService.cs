@@ -38,7 +38,7 @@
             throw new NotImplementedException();
         }
 
-        public Task RemoveCover(BookModel book, int id)
+        public Task RemoveCover(CoverModel cover)
         {
             throw new NotImplementedException();
         }

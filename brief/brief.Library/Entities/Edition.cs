@@ -7,8 +7,9 @@
     {
         public Guid Id { get; set; }
         public string Description { get; set; }
-        public int Year { get; set; }
-        public int Amount { get; set; }
+        public int? Year { get; set; }
+        public int? Amount { get; set; }
+        public decimal? Price { get; set; }
         public Guid BookId { get; set; }
         public virtual Book Book { get; set; }
         public Guid PublisherId { get; set; }
@@ -16,5 +17,6 @@
         public virtual IList<Cover> Covers { get; set; }
         public EditionType EditionType { get; set; }
         public Language Language { get; set; }
+        public Currency? Currency { get; set; }
     }
 }

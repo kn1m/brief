@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="BaseImageService.cs" />
     <Compile Include="CoverService.cs" />
+    <Compile Include="Currency.cs" />
     <Compile Include="EditionService.cs" />
     <Compile Include="Entities\Cover.cs" />
     <Compile Include="Entities\Edition.cs" />

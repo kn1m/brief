@@ -7,6 +7,6 @@
     {
         Task<PublisherModel> CreatePublisher(PublisherModel publisher);
         Task<PublisherModel> UpdatePublisher(PublisherModel publisher);
-        Task RemoveBook(PublisherModel publisher);
+        Task RemovePublisher(PublisherModel publisher);
     }
 }
