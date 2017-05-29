@@ -12,12 +12,7 @@
 
         public BookController(IBookService bookService)
         {
-            if (bookService == null)
-            {
-                throw new ArgumentNullException(nameof(bookService));
-            }
-
-            _bookService = bookService;
+            _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
         }
 
         [HttpPost]

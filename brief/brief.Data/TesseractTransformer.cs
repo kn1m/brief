@@ -9,9 +9,9 @@
     public class TesseractTransformer : ITransformer<string, string>
     {
         private readonly string _dataPath;
-        private readonly string _mode;
+        private readonly EngineMode _mode;
 
-        public TesseractTransformer(string dataPath, string mode)
+        public TesseractTransformer(string dataPath, EngineMode mode)
         {
             _dataPath = dataPath;
             _mode = mode;
@@ -26,7 +26,7 @@
             try
             {
                 //using (var engine = new TesseractEngine(@"./tessdata", "eng", EngineMode.Default))
-                using (var engine = new TesseractEngine(_dataPath, "eng", EngineMode.Default))
+                using (var engine = new TesseractEngine(_dataPath, "eng", _mode))
                 {
                     using (var img = Pix.LoadFromFile(source))
                     {

@@ -7,6 +7,6 @@
     {
         Task<CoverModel> SaveCover(ImageModel image);
         Task<CoverModel> RetrieveDataFromCover(ImageModel cover);
-        Task RemoveCover(BookModel book, int id);
+        Task RemoveCover(CoverModel cover);
     }
 }

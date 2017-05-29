@@ -55,7 +55,7 @@
                 .WithParameters(new Parameter[]
                 {
                     new NamedParameter("dataPath", myParamsCollection["TrainDataPath"]),
-                    new NamedParameter("mode", myParamsCollection["EngineMode"].ToString().ConvertToEnum<EngineMode>())
+                    new NamedParameter("mode", myParamsCollection["EngineMode"].ConvertToEnum<EngineMode>())
                 });
 
             builder.RegisterType<ApplicationDbContext>()
