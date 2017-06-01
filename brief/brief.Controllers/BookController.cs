@@ -20,10 +20,5 @@
         {
             return await _bookService.CreateBook(book);
         }
-
-        public BookModel Get(BookModel book)
-        {
-            return null;
-        }
     }
 }

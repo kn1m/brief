@@ -1,4 +1,4 @@
-﻿namespace brief.Library
+﻿namespace brief.Library.Entities
 {
     public enum Currency : byte
     {
