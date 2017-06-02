@@ -22,11 +22,12 @@
             //var testImagePath = "./phototest.tif";
 
             string result = string.Empty;
+            var languages = configurations.Length == 0 ? "auto" : configurations.ToString();
 
             try
             {
                 //using (var engine = new TesseractEngine(@"./tessdata", "eng", EngineMode.Default))
-                using (var engine = new TesseractEngine(_dataPath, "eng", _mode))
+                using (var engine = new TesseractEngine(_dataPath, languages, _mode))
                 {
                     using (var img = Pix.LoadFromFile(source))
                     {

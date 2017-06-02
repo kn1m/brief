@@ -118,7 +118,7 @@
     <Compile Include="Providers\ISeriesService.cs" />
     <Compile Include="Providers\IBookService.cs" />
     <Compile Include="PublisherController.cs" />
-    <Compile Include="QuickFilterController.cs" />
+    <Compile Include="FilterController.cs" />
     <Compile Include="SeriesController.cs" />
   </ItemGroup>
   <ItemGroup>

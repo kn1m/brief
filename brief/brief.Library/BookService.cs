@@ -1,9 +1,11 @@
 ﻿namespace brief.Library
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
     using Controllers.Models;
+    using Controllers.Models.RetrieveModels;
     using Controllers.Providers;
     using Entities;
     using Helpers;
@@ -21,6 +23,11 @@
 
             _bookReporitory = bookReporitory;
             _mapper = mapper;
+        }
+
+        public Task<IQueryable<BookRetrieveModel>> GetBooks()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<BookModel> CreateBook(BookModel book)
