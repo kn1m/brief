@@ -3,14 +3,17 @@
     using System;
     using AutoMapper;
     using Controllers.Models;
+    using Controllers.Models.RetrieveModels;
 
     public class BookProfile : Profile
     {
         public BookProfile()
         {
             CreateMap<BookModel, Book>()
-                .ForMember(x => x.Id, opt => opt.MapFrom(o => Guid.NewGuid()));
-            //.BeforeMap((s, d) => .Id = Guid.NewGuid());
+                .ForMember(d => d.Id, opt => opt.MapFrom(o => Guid.NewGuid()));
+
+            CreateMap<Book, BookModel>();
+            CreateMap<Book, BookRetrieveModel>();
         }
     }
 }

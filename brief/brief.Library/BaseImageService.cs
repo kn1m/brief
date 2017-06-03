@@ -47,7 +47,6 @@
                 _allowed.Contains(
                     image.Name.Substring(image.Name.LastIndexOf(".", StringComparison.Ordinal), image.Name.Length)))
             {
-
                 var fileSavePath = Path.Combine(_saveImagePath, image.Name);
 
                 using (var bw = new BinaryWriter(File.Open(fileSavePath, FileMode.OpenOrCreate)))

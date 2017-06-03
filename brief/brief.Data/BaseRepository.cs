@@ -1,33 +1,37 @@
 ﻿namespace brief.Data
 {
     using System.Data.Entity;
+    using System.Linq;
     using System.Threading.Tasks;
     using Library.Helpers;
 
     public class BaseRepository
     {
-        protected readonly IApplicationDbContext context;
+        protected readonly IApplicationDbContext Context;
 
         protected BaseRepository(IApplicationDbContext appContext)
         {
             Guard.AssertNotNull(appContext);
 
-            context = appContext;
+            Context = appContext;
         }
 
+        protected IQueryable<TEntity> RetrieveSet<TEntity>() where TEntity : class
+            => Context.Set<TEntity>();
+
         protected TEntity Attach<TEntity>(TEntity entity) where TEntity : class 
-            => context.Set<TEntity>().Attach(entity);
+            => Context.Set<TEntity>().Attach(entity);
 
         protected TEntity Add<TEntity>(TEntity entity) where TEntity : class
-            => context.Set<TEntity>().Add(entity);
+            => Context.Set<TEntity>().Add(entity);
 
         protected void Update<TEntity>(TEntity entity) where TEntity : class
-            => context.Entry(entity).State = EntityState.Modified;
+            => Context.Entry(entity).State = EntityState.Modified;
 
         protected void Remove<TEntity>(TEntity entity) where TEntity : class
-            => context.Set<TEntity>().Remove(entity);
+            => Context.Set<TEntity>().Remove(entity);
 
         public Task Commit()
-            => context.Commit();
+            => Context.Commit();
     }
 }

@@ -11,12 +11,7 @@
 
         public CoverController(ICoverService coverService)
         {
-            if (coverService == null)
-            {
-                throw new ArgumentNullException(nameof(coverService));
-            }
-
-            _coverService = coverService;
+            _coverService = coverService ?? throw new ArgumentNullException(nameof(coverService));
         }
 
         //[ResponseType(typeof(FileUpload))]
@@ -26,7 +21,7 @@
         //    {
         //        // Get the uploaded image from the Files collection  
         //        var httpPostedFile = HttpContext.Current.Request.Files["UploadedImage"];
-        //        if (httpPostedFile != null)
+        //        if (httpPostedFile != null)s
         //        {
         //            FileUpload imgupload = new FileUpload();
         //            int length = httpPostedFile.ContentLength;

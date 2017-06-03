@@ -25,11 +25,6 @@
             _mapper = mapper;
         }
 
-        public Task<IQueryable<BookRetrieveModel>> GetBooks()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<BookModel> CreateBook(BookModel book)
         {
             var newBook = _mapper.Map<Book>(book);
@@ -49,6 +44,11 @@
         }
 
         public Task RemoveBook(BookModel book)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<BookRetrieveModel> GetBooks()
         {
             throw new NotImplementedException();
         }

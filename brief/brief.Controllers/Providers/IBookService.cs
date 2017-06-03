@@ -7,7 +7,7 @@
 
     public interface IBookService
     {
-        Task<IQueryable<BookRetrieveModel>> GetBooks();
+        IQueryable<BookRetrieveModel> GetBooks();
         Task<BookModel> CreateBook(BookModel book);
         Task<BookModel> UpdateBook(BookModel book);
         Task RemoveBook(BookModel book);

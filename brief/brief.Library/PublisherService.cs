@@ -1,14 +1,24 @@
 ﻿namespace brief.Library
 {
     using System.Threading.Tasks;
+    using AutoMapper;
     using Controllers.Models;
     using Controllers.Providers;
+    using Helpers;
+    using Repositories;
 
     public class PublisherService : IPublisherService
     {
-        public PublisherService()
+        private readonly IPublisherRepository _publisherRepository;
+        private readonly IMapper _mapper;
+
+        public PublisherService(IPublisherRepository publisherRepository, IMapper mapper)
         {
-            
+            Guard.AssertNotNull(publisherRepository);
+            Guard.AssertNotNull(mapper);
+
+            _publisherRepository = publisherRepository;
+            _mapper = mapper;
         }
 
         public Task<PublisherModel> CreatePublisher(PublisherModel publisher)
