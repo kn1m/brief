@@ -3,7 +3,7 @@
     using System.Data.Entity.ModelConfiguration;
     using Library.Entities;
 
-    public class SeriesMap : EntityTypeConfiguration<Series>
+    class SeriesMap : EntityTypeConfiguration<Series>
     {
         public SeriesMap()
         {

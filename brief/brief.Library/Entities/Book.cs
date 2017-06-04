@@ -10,5 +10,6 @@
         public string Description { get; set; }
         public virtual IList<Edition> Editions { get; set; }
         public virtual IList<Series> Serieses { get; set; }
+        public virtual IList<Author> Authors { get; set; }
     }
 }

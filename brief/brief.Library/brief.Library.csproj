@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="BaseImageService.cs" />
     <Compile Include="CoverService.cs" />
+    <Compile Include="Entities\Author.cs" />
     <Compile Include="Entities\Currency.cs" />
     <Compile Include="EditionService.cs" />
     <Compile Include="Entities\Cover.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Entities\Book.cs" />
     <Compile Include="Entities\EditionType.cs" />
     <Compile Include="Entities\Language.cs" />
+    <Compile Include="Entities\Profiles\AuthorProfile.cs" />
     <Compile Include="Entities\Profiles\BookProfile.cs" />
     <Compile Include="Entities\Profiles\CoverProfile.cs" />
     <Compile Include="Entities\Profiles\EditionProfile.cs" />

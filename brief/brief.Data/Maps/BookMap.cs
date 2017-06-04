@@ -26,6 +26,15 @@
                     cs.MapRightKey("SeriesId");
                     cs.ToTable("books_in_series");
                 });
+
+            HasMany<Author>(b => b.Authors)
+                .WithMany(a => a.BooksByAuthor)
+                .Map(ba =>
+                { 
+                    ba.MapLeftKey("BookId");
+                    ba.MapRightKey("AuthorId");
+                    ba.ToTable("books_by_author");
+                });
         }
     }
 }

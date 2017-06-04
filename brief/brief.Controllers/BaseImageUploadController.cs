@@ -32,7 +32,7 @@
                     return await strategy.Invoke(imageToSave);
                 }
             }
-            return null; //????
+            return null;
         }
     }
 }
