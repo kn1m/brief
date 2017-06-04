@@ -43,7 +43,7 @@
             return _mapper.Map<BookModel>(updatedBook);
         }
 
-        public Task RemoveBook(BookModel book)
+        public Task RemoveBook(Guid id)
         {
             throw new NotImplementedException();
         }

@@ -4,6 +4,7 @@
     using AutoMapper;
     using Controllers.Models;
     using Controllers.Providers;
+    using Entities;
     using Helpers;
     using Repositories;
 
@@ -21,14 +22,22 @@
             _mapper = mapper;
         }
 
-        public Task<SeriesModel> CreateSeries(SeriesModel series)
+        public async Task<SeriesModel> CreateSeries(SeriesModel series)
         {
-            throw new System.NotImplementedException();
+            var newSeries = _mapper.Map<Series>(series);
+
+            var createdSeries = await _seriesRepository.CreateSerires(newSeries);
+
+            return _mapper.Map<SeriesModel>(createdSeries);
         }
 
-        public Task<SeriesModel> UpdateSeries(SeriesModel series)
+        public async Task<SeriesModel> UpdateSeries(SeriesModel series)
         {
-            throw new System.NotImplementedException();
+            var newSeries = _mapper.Map<Series>(series);
+
+            var updatedSeries = await _seriesRepository.CreateSerires(newSeries);
+
+            return _mapper.Map<SeriesModel>(updatedSeries);
         }
 
         public Task RemoveSeries(SeriesModel series)

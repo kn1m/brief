@@ -8,7 +8,8 @@
     {
         public ApplicationDbContext(string connectionString) : base(connectionString)
         {
-            Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
+            Database.SetInitializer(
+                new CreateDatabaseIfNotExists<ApplicationDbContext>());;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -17,8 +17,14 @@
 
         [HttpPost]
         public async Task<BookModel> Create([FromBody] BookModel book)
-        {
-            return await _bookService.CreateBook(book);
-        }
+            => await _bookService.CreateBook(book);
+
+        [HttpPut]
+        public async Task<BookModel> Update([FromBody] BookModel book)
+            => await _bookService.UpdateBook(book);
+
+        [HttpDelete]
+        public async Task Delete([FromUri] Guid id)
+            => await _bookService.RemoveBook(id);
     }
 }

@@ -19,10 +19,11 @@
 
         public string Trasform(string source, params object[] configurations)
         {
-            //var testImagePath = "./phototest.tif";
-
             string result = string.Empty;
-            var languages = configurations.Length == 0 ? "auto" : configurations.ToString();
+
+            var languages = configurations.Length == 0 ? "auto" 
+                : configurations.Length == 1 ? configurations[0].ToString() 
+                : string.Join("+", configurations);
 
             try
             {

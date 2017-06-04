@@ -1,6 +1,8 @@
 ﻿namespace brief.Data
 {
-    class AuthorRepository
+    using Library.Repositories;
+
+    public class AuthorRepository : IAuthorRepository
     {
     }
 }

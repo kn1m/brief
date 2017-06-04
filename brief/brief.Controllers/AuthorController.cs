@@ -6,11 +6,11 @@
 
     public class AuthorController : ApiController
     {
-        private readonly IAuthorService _authorService;
+        //private readonly IAuthorService _authorService;
 
-        public AuthorController(IAuthorService authorService)
-        {
-            _authorService = authorService ?? throw new ArgumentNullException(nameof(authorService));
-        }
+        //public AuthorController(IAuthorService authorService)
+        //{
+        //    _authorService = authorService ?? throw new ArgumentNullException(nameof(authorService));
+        //}
     }
 }
