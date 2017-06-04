@@ -97,6 +97,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorController.cs" />
     <Compile Include="BookController.cs" />
     <Compile Include="Constraints\LowercaseRouteConstraint.cs" />
     <Compile Include="CoverController.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="EditionController.cs" />
     <Compile Include="Filters\ActionLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\IAuthorService.cs" />
     <Compile Include="Providers\ICoverService.cs" />
     <Compile Include="Providers\IEditionService.cs" />
     <Compile Include="Providers\IPublisherService.cs" />

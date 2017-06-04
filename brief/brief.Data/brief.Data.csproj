@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="AuthorRepository.cs" />
     <Compile Include="BaseRepository.cs" />
     <Compile Include="Maps\AuthorMap.cs" />
     <Compile Include="Maps\BaseTypeConfiguration.cs" />
