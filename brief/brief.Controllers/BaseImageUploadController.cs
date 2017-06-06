@@ -4,35 +4,60 @@
     using System.Web;
     using Models;
     using System;
-    using System.Linq;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using System.Web.Http;
 
     public abstract class BaseImageUploadController : ApiController
     {
-        protected virtual async Task<CoverModel> BaseUpload(Func<ImageModel, Task<CoverModel>> strategy)
+        protected virtual async Task<HttpResponseMessage> BaseUpload<TData>(Func<ImageModel, Task<TData>> strategy) where TData : class 
         {
-            if (HttpContext.Current.Request.Files.AllKeys.Any())
+            string fileSaveLocation = HttpContext.Current.Server.MapPath("~/App_Data");
+            CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(fileSaveLocation);
+            List<string> files = new List<string>();
+
+            try
             {
-                // Get the uploaded image from the Files collection  
-                var httpPostedFile = HttpContext.Current.Request.Files["UploadedImage"];
-                if (httpPostedFile != null)
+                // Read all contents of multipart message into CustomMultipartFormDataStreamProvider.
+                await Request.Content.ReadAsMultipartAsync(provider);
+
+                foreach (MultipartFileData file in provider.FileData)
                 {
-                    int length = httpPostedFile.ContentLength;
-
-                    var imageToSave = new ImageModel
-                    {
-                        Length = httpPostedFile.ContentLength,
-                        Data = new byte[httpPostedFile.ContentLength],
-                        Name = Path.GetFileName(httpPostedFile.FileName)
-                    };
-
-                    httpPostedFile.InputStream.Read(imageToSave.Data, 0, length);
-
-                    return await strategy.Invoke(imageToSave);
+                    files.Add(Path.GetFileName(file.LocalFileName));
                 }
+
+                var arrb = File.ReadAllBytes(provider.FileData[0].LocalFileName);
+
+                var imageToSave = new ImageModel
+                {
+                    Length = arrb.Length,
+                    Data = arrb,
+                    Name = Path.GetFileName(provider.FileData[0].LocalFileName)
+                };
+
+                await strategy.Invoke(imageToSave);
+
+                // Send OK Response along with saved file names to the client.
+                return Request.CreateResponse(HttpStatusCode.OK, files);
             }
-            return null;
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
         }
     }
+
+    public class CustomMultipartFormDataStreamProvider : MultipartFormDataStreamProvider
+    {
+        public CustomMultipartFormDataStreamProvider(string path) : base(path) { }
+
+        public override string GetLocalFileName(HttpContentHeaders headers)
+        {
+            return headers.ContentDisposition.FileName.Replace("\"", string.Empty);
+        }
+    }
+
 }

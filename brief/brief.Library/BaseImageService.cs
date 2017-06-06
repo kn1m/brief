@@ -28,14 +28,15 @@
                 return existingFilePath;
             }
 
-            var newPath = existingFilePath.Substring(0, existingFilePath.LastIndexOf(".", StringComparison.Ordinal)) +
+            var newPath = existingFilePath.Substring(0, existingFilePath.LastIndexOf(".", StringComparison.Ordinal)) + "." +
                           ImageFormat.Tiff;
 
             image.Save(newPath, ImageFormat.Tiff);
 
             if (deleteOriginal)
             {
-                File.Delete(existingFilePath);
+                //TODO : WTF
+                //File.Delete(existingFilePath);
             }
 
             return newPath;
@@ -45,7 +46,7 @@
         {
             if (
                 _allowed.Contains(
-                    image.Name.Substring(image.Name.LastIndexOf(".", StringComparison.Ordinal), image.Name.Length)))
+                    image.Name.Substring(image.Name.LastIndexOf(".", StringComparison.Ordinal), image.Name.Length - 1).ToLower()))
             {
                 var fileSavePath = Path.Combine(_saveImagePath, image.Name);
 

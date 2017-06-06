@@ -53,11 +53,11 @@
         //    return Ok("Image is not Uploaded");
         //}
 
-        public async Task<CoverModel> SaveCover()
-            => await BaseUpload(_coverService.SaveCover);
+        //public async Task<CoverModel> SaveCover()
+        //    => await BaseUpload(_coverService.SaveCover);
 
-        public async Task<CoverModel> RetrieveDataFromCover()
-            => await BaseUpload(_coverService.RetrieveDataFromCover);
+        //public async Task<CoverModel> RetrieveDataFromCover()
+        //    => await BaseUpload(_coverService.RetrieveDataFromCover);
 
     }
 }

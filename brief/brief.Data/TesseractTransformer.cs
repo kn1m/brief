@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Text;
     using System.Threading.Tasks;
     using Library.Transformers;
     using Tesseract;
@@ -28,7 +29,7 @@
             try
             {
                 //using (var engine = new TesseractEngine(@"./tessdata", "eng", EngineMode.Default))
-                using (var engine = new TesseractEngine(_dataPath, languages, _mode))
+                using (var engine = new TesseractEngine(_dataPath, "ukr", _mode))
                 {
                     using (var img = Pix.LoadFromFile(source))
                     {
@@ -36,7 +37,10 @@
                         {
                             var text = page.GetText();
                             Console.WriteLine("Mean confidence: {0}", page.GetMeanConfidence());
+                            result += page.GetHOCRText(1);
+                            result += page.GetMeanConfidence();
 
+                            result += text;
                             Console.WriteLine("Text (GetText): \r\n{0}", text);
                             Console.WriteLine("Text (iterator):");
                             using (var iter = page.GetIterator())
