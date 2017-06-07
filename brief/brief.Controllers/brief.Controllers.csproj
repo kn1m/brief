@@ -123,6 +123,7 @@
     <Compile Include="PublisherController.cs" />
     <Compile Include="FilterController.cs" />
     <Compile Include="SeriesController.cs" />
+    <Compile Include="StreamProviders\CustomMultipartFormDataStreamProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

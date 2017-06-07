@@ -7,9 +7,9 @@
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
-    using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using StreamProviders;
 
     public abstract class BaseImageUploadController : ApiController
     {
@@ -49,15 +49,4 @@
             }
         }
     }
-
-    public class CustomMultipartFormDataStreamProvider : MultipartFormDataStreamProvider
-    {
-        public CustomMultipartFormDataStreamProvider(string path) : base(path) { }
-
-        public override string GetLocalFileName(HttpContentHeaders headers)
-        {
-            return headers.ContentDisposition.FileName.Replace("\"", string.Empty);
-        }
-    }
-
 }

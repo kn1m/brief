@@ -32,32 +32,42 @@
                           ImageFormat.Tiff;
 
             image.Save(newPath, ImageFormat.Tiff);
+            image.Dispose();
 
             if (deleteOriginal)
             {
-                //TODO : WTF
-                //File.Delete(existingFilePath);
+                File.Delete(existingFilePath);
             }
 
             return newPath;
         }
 
-        public virtual string SaveImage(ImageModel image)
-        {
-            if (
-                _allowed.Contains(
-                    image.Name.Substring(image.Name.LastIndexOf(".", StringComparison.Ordinal), image.Name.Length - 1).ToLower()))
-            {
-                var fileSavePath = Path.Combine(_saveImagePath, image.Name);
+        //public virtual string SaveImage(ImageModel image)
+        //{
+        //    if (
+        //        _allowed.Contains(
+        //            image.Name.Substring(image.Name.LastIndexOf(".", StringComparison.Ordinal), image.Name.Length - 1).ToLower()))
+        //    {
+        //        var fileSavePath = Path.Combine(_saveImagePath, image.Name);
 
-                using (var bw = new BinaryWriter(File.Open(fileSavePath, FileMode.OpenOrCreate)))
-                {
-                    bw.Write(image.Data);
-                }
+        //        if (File.Exists(fileSavePath))
+        //        {
+        //            fileSavePath = Path.Combine(_saveImagePath, Guid.NewGuid() + image.Name);
+        //        }
 
-                return fileSavePath;
-            }
-            return null;
-        }
+        //        //using (var bw = new BinaryWriter(File.Open(fileSavePath, FileMode.CreateNew)))
+        //        //{
+        //        //    bw.Write(image.Data);
+        //        //    bw.Close();
+        //        //}
+
+        //        var fs = new BinaryWriter(new FileStream(fileSavePath, FileMode.Append, FileAccess.Write));
+        //        fs.Write(image.Data);
+        //        fs.Close();
+
+        //        return fileSavePath;
+        //    }
+        //    return null;
+        //}
     }
 }

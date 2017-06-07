@@ -37,12 +37,12 @@
 
         public async Task<EditionModel> CreateEditionFromImage(ImageModel image)
         {
-            var fileSavePath = SaveImage(image);
+            var fileSavePath = @"d:\brief\brief\brief\App_Data\" + image.Name;//SaveImage(image);
 
-            if (fileSavePath == null)
-            {
-                return null;
-            }
+            //if (fileSavePath == null)
+            //{
+            //    return null;
+            //}
 
             var imagePath = ConvertToAppropirateFormat(fileSavePath, true);
 

@@ -37,8 +37,6 @@
                         {
                             var text = page.GetText();
                             Console.WriteLine("Mean confidence: {0}", page.GetMeanConfidence());
-                            result += page.GetHOCRText(1);
-                            result += page.GetMeanConfidence();
 
                             result += text;
                             Console.WriteLine("Text (GetText): \r\n{0}", text);
