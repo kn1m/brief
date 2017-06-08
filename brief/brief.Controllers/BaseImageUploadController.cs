@@ -13,15 +13,25 @@
 
     public abstract class BaseImageUploadController : ApiController
     {
+        protected BaseImageUploadController()
+        {
+            
+        }
+
         protected virtual async Task<HttpResponseMessage> BaseUpload<TData>(Func<ImageModel, Task<TData>> strategy) where TData : class 
         {
+            if(!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
             string fileSaveLocation = HttpContext.Current.Server.MapPath("~/App_Data");
-            CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(fileSaveLocation);
+            ImageMultipartFormDataStreamProvider provider = new ImageMultipartFormDataStreamProvider(fileSaveLocation);
             List<string> files = new List<string>();
 
             try
             {
-                // Read all contents of multipart message into CustomMultipartFormDataStreamProvider.
+                // Read all contents of multipart message into ImageMultipartFormDataStreamProvider.
                 await Request.Content.ReadAsMultipartAsync(provider);
 
                 foreach (MultipartFileData file in provider.FileData)

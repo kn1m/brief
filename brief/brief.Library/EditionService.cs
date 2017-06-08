@@ -48,8 +48,6 @@
 
             string transformResult = await _transformer.TransformAsync(imagePath);
 
-            // ... implelement parsing algo
-
             //Create new edititon
             //Create new book
             //Create new publisher
