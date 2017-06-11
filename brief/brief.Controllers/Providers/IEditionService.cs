@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public interface IEditionService
+    public interface IEditionService : IImageService
     {
         Task<EditionModel> CreateEdition(EditionModel edition);
         Task<EditionModel> CreateEditionFromImage(ImageModel image);

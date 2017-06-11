@@ -4,10 +4,7 @@
 
     public class ImageModel
     {
-        public int Length { get; set; }
-        public byte[] Data { get; set; }
-        public string Name { get; set; }
-        public Guid? EditionId { get; set; }
-        public Guid? CoverId { get; set; }
+        public Guid? Id { get; set; }
+        public string Path { get; set; }
     }
 }

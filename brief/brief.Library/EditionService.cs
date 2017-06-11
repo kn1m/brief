@@ -1,7 +1,9 @@
 ﻿namespace brief.Library
 {
+    using System.IO;
     using System.Threading.Tasks;
     using AutoMapper;
+    using Controllers.Helpers;
     using Controllers.Models;
     using Controllers.Providers;
     using Entities;
@@ -11,15 +13,20 @@
 
     public class EditionService : BaseImageService, IEditionService
     {
+        public StorageSettings StorageSettings { get; }
+
         private readonly IEditionRepository _editionRepository;
         private readonly ITransformer<string, string> _transformer;
         private readonly IMapper _mapper;
 
-        public EditionService(IEditionRepository editionRepository, ITransformer<string, string> transformer, IMapper mapper, StorageSettings settings) : base(settings)
+        public EditionService(IEditionRepository editionRepository, ITransformer<string, string> transformer, IMapper mapper, BaseTransformerSettings settings, StorageSettings storageSettings) : base(settings)
         {
             Guard.AssertNotNull(editionRepository);
             Guard.AssertNotNull(transformer);
             Guard.AssertNotNull(mapper);
+            Guard.AssertNotNull(storageSettings);
+
+            StorageSettings = storageSettings;
 
             _editionRepository = editionRepository;
             _transformer = transformer;
@@ -37,12 +44,7 @@
 
         public async Task<EditionModel> CreateEditionFromImage(ImageModel image)
         {
-            var fileSavePath = @"d:\brief\brief\brief\App_Data\" + image.Name;//SaveImage(image);
-
-            //if (fileSavePath == null)
-            //{
-            //    return null;
-            //}
+            var fileSavePath = Path.Combine(StorageSettings.StoragePath, image.Path);
 
             var imagePath = ConvertToAppropirateFormat(fileSavePath, true);
 

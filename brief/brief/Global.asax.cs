@@ -8,6 +8,7 @@
     using System.Web.Http;
     using Autofac.Core;
     using AutoMapper;
+    using Controllers.Helpers;
     using Controllers.Providers;
     using Library;
     using Library.Repositories;
@@ -21,10 +22,9 @@
     {
         protected void Application_Start()
         {
-            var storageSettings = new StorageSettings
+            var baseTransformerSettings = new BaseTransformerSettings
             {
-                AllowedFormats = ConfigurationManager.AppSettings["allowedFormats"].Split(';'),
-                StoragePath = ConfigurationManager.AppSettings["saveImagePath"]
+                AllowedFormats = ConfigurationManager.AppSettings["allowedFormats"].Split(';')
             };
 
             var builder = new ContainerBuilder();
@@ -43,13 +43,6 @@
             NameValueCollection myParamsCollection =
              (NameValueCollection)ConfigurationManager.GetSection("tesseractData");
 
-            //builder.RegisterGeneric(typeof(TesseractTransformer))
-            //    .As(typeof(ITransformer<string, string>))
-            //    .WithParameters(new Parameter[] { 
-            //        new NamedParameter("dataPath", ConfigurationManager.GetSection("tesseractDataPath")),
-            //        new NamedParameter("mode", ConfigurationManager.GetSection("tesseractDataPath"))
-            //});
-
             builder.RegisterType<TesseractTransformer>()
                 .As<ITransformer<string, string>>()
                 .WithParameters(new Parameter[]
@@ -67,15 +60,22 @@
 
             builder.RegisterType<EditionService>()
                 .As<IEditionService>()
-                .WithParameter(new TypedParameter(typeof(StorageSettings), storageSettings));
+                .WithParameters(new Parameter[]
+                {
+                    new TypedParameter(typeof(BaseTransformerSettings), baseTransformerSettings),
+                    new TypedParameter(typeof(StorageSettings), new StorageSettings {StoragePath = ConfigurationManager.AppSettings["saveEditionPath"]})
+                });
 
             builder.RegisterType<CoverService>()
                 .As<ICoverService>()
-                .WithParameter(new TypedParameter(typeof(StorageSettings), storageSettings));
+                .WithParameters(new Parameter[]
+                {
+                    new TypedParameter(typeof(BaseTransformerSettings), baseTransformerSettings),
+                    new TypedParameter(typeof(StorageSettings), new StorageSettings {StoragePath = ConfigurationManager.AppSettings["saveCoverPath"]})
+                });
 
             builder.RegisterType<SeriesService>()
                 .As<ISeriesService>();
-
             builder.RegisterType<BookRepository>()
                 .As<IBookReporitory>();
             builder.RegisterType<EditionRepository>()

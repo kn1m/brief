@@ -2,7 +2,6 @@
 {
     using System;
     using System.Diagnostics;
-    using System.Text;
     using System.Threading.Tasks;
     using Library.Transformers;
     using Tesseract;
@@ -28,7 +27,6 @@
 
             try
             {
-                //using (var engine = new TesseractEngine(@"./tessdata", "eng", EngineMode.Default))
                 using (var engine = new TesseractEngine(_dataPath, "ukr", _mode))
                 {
                     using (var img = Pix.LoadFromFile(source))

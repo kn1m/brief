@@ -1,8 +1,9 @@
 ﻿namespace brief.Controllers
 {
     using System;
+    using System.Net.Http;
     using System.Threading.Tasks;
-    using Models;
+    using System.Web.Http;
     using Providers;
 
     public class CoverController : BaseImageUploadController
@@ -14,11 +15,12 @@
             _coverService = coverService ?? throw new ArgumentNullException(nameof(coverService));
         }
 
-        //public async Task<CoverModel> SaveCover()
-        //    => await BaseUpload(_coverService.SaveCover);
+        [HttpPost]
+        public async Task<HttpResponseMessage> SaveCover()
+            => await BaseUpload(_coverService.SaveCover, _coverService.StorageSettings);
 
-        //public async Task<CoverModel> RetrieveDataFromCover()
-        //    => await BaseUpload(_coverService.RetrieveDataFromCover);
-
+        [HttpPost]
+        public async Task<HttpResponseMessage> RetrieveDataFromCover()
+            => await BaseUpload(_coverService.RetrieveDataFromCover, _coverService.StorageSettings);
     }
 }

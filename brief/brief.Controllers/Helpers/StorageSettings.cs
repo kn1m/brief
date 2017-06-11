@@ -1,8 +1,7 @@
-﻿namespace brief.Library.Helpers
+﻿namespace brief.Controllers.Helpers
 {
     public class StorageSettings
     {
-        public string[] AllowedFormats { get; set; }
         public string StoragePath { get; set; }
     }
 }

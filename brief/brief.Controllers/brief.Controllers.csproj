@@ -103,6 +103,7 @@
     <Compile Include="CoverController.cs" />
     <Compile Include="Filters\ExceptionLogger.cs" />
     <Compile Include="BaseImageUploadController.cs" />
+    <Compile Include="Helpers\StorageSettings.cs" />
     <Compile Include="Models\AuthorModel.cs" />
     <Compile Include="Models\BookModel.cs" />
     <Compile Include="Models\CoverModel.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Providers\IAuthorService.cs" />
     <Compile Include="Providers\ICoverService.cs" />
     <Compile Include="Providers\IEditionService.cs" />
+    <Compile Include="Providers\IImageService.cs" />
     <Compile Include="Providers\IPublisherService.cs" />
     <Compile Include="Providers\ISeriesService.cs" />
     <Compile Include="Providers\IBookService.cs" />

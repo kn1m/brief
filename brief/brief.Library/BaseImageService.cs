@@ -11,12 +11,10 @@
     public abstract class BaseImageService
     {
         private readonly string[] _allowed;
-        private readonly string _saveImagePath;
 
-        protected BaseImageService(StorageSettings settings)
+        protected BaseImageService(BaseTransformerSettings settings)
         {
             _allowed = settings.AllowedFormats;
-            _saveImagePath = settings.StoragePath;
         }
 
         public virtual string ConvertToAppropirateFormat(string existingFilePath, bool deleteOriginal)
