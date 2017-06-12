@@ -1,5 +1,6 @@
 ﻿namespace brief.Library
 {
+    using System;
     using System.IO;
     using System.Threading.Tasks;
     using AutoMapper;
@@ -58,6 +59,16 @@
             return null;
         }
 
+        public Task<EditionModel> GetByIsbnFromImage(ImageModel image)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<EditionModel> GetByIsbn(string isbn)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<EditionModel> UpdateEdition(EditionModel edition)
         {
             var updatedEdition = _mapper.Map<Edition>(edition);
@@ -65,12 +76,11 @@
             var createdEdition = await _editionRepository.UpdateEdition(updatedEdition);
 
             return _mapper.Map<EditionModel>(createdEdition);
-
         }
 
-        public Task RemoveEdition(EditionModel edition)
+        public Task RemoveEdition(Guid id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

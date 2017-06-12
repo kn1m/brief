@@ -1,5 +1,6 @@
 ﻿namespace brief.Controllers.Providers
 {
+    using System;
     using System.Threading.Tasks;
     using Models;
 
@@ -7,6 +8,6 @@
     {
         Task<PublisherModel> CreatePublisher(PublisherModel publisher);
         Task<PublisherModel> UpdatePublisher(PublisherModel publisher);
-        Task RemovePublisher(PublisherModel publisher);
+        Task RemovePublisher(Guid id);
     }
 }

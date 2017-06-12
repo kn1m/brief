@@ -1,5 +1,6 @@
 ﻿namespace brief.Library
 {
+    using System;
     using System.Threading.Tasks;
     using AutoMapper;
     using Controllers.Models;
@@ -40,9 +41,9 @@
             return _mapper.Map<SeriesModel>(updatedSeries);
         }
 
-        public Task RemoveSeries(SeriesModel series)
+        public Task RemoveSeries(Guid id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="AuthorService.cs" />
     <Compile Include="BaseImageService.cs" />
     <Compile Include="CoverService.cs" />
+    <Compile Include="DataService.cs" />
     <Compile Include="Entities\Author.cs" />
     <Compile Include="Entities\Currency.cs" />
     <Compile Include="EditionService.cs" />

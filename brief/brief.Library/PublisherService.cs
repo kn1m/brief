@@ -1,5 +1,6 @@
 ﻿namespace brief.Library
 {
+    using System;
     using System.Threading.Tasks;
     using AutoMapper;
     using Controllers.Models;
@@ -31,9 +32,9 @@
             throw new System.NotImplementedException();
         }
 
-        public Task RemovePublisher(PublisherModel publisher)
+        public Task RemovePublisher(Guid id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

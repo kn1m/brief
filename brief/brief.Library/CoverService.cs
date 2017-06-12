@@ -44,7 +44,7 @@
             throw new NotImplementedException();
         }
 
-        public Task RemoveCover(CoverModel cover)
+        public Task RemoveCover(Guid id)
         {
             throw new NotImplementedException();
         }
