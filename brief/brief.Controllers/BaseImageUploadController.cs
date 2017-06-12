@@ -29,6 +29,8 @@
                 // Read all contents of multipart message into ImageMultipartFormDataStreamProvider.
                 await Request.Content.ReadAsMultipartAsync(provider);
 
+                //var taskList = new List<Task<TData>>();
+
                 foreach (MultipartFileData file in provider.FileData)
                 {
                     var test = file.Headers.ContentLanguage;

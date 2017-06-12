@@ -1,6 +1,8 @@
 ﻿namespace brief.Library
 {
-    public class DataService
+    using Controllers.Providers;
+
+    public class DataService : IDataService
     {
         public DataService()
         {
