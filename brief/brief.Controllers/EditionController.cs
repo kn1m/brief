@@ -1,9 +1,11 @@
 ﻿namespace brief.Controllers
 {
     using System;
+    using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using Extensions;
     using Models;
     using Providers;
 
@@ -18,15 +20,35 @@
 
         [HttpPost]
         public async Task<HttpResponseMessage> RetriveData()
-            => await BaseUpload(_editionService.CreateEditionFromImage, _editionService.StorageSettings);
+            => await BaseUpload(_editionService.RetrieveEditionDataFromImage, _editionService.StorageSettings);
 
         [HttpPost]
-        public async Task<EditionModel> Create([FromBody] EditionModel edition)
-            => await _editionService.CreateEdition(edition);
+        public async Task<HttpResponseMessage> Create([FromBody] EditionModel edition)
+        {
+            var result = await _editionService.CreateEdition(edition);
+
+            return result.CreateRespose(Request, HttpStatusCode.OK, HttpStatusCode.NoContent);
+
+            //if (result.RawData != null)
+            //{
+            //    return Request.CreateResponse(HttpStatusCode.NoContent, result.RawData);
+            //}
+
+            //return Request.CreateResponse(HttpStatusCode.OK, result.Id);
+        }
 
         [HttpPut]
-        public async Task<EditionModel> Update([FromBody] EditionModel edition)
-            => await _editionService.UpdateEdition(edition);
+        public async Task<HttpResponseMessage> Update([FromBody] EditionModel edition)
+        {
+            var result = await _editionService.CreateEdition(edition);
+
+            if (result.RawData != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NoContent, result.RawData);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result.Id);
+        }
 
         [HttpDelete]
         public async Task Delete([FromUri] Guid id)

@@ -6,6 +6,7 @@
     using AutoMapper;
     using Controllers.Helpers;
     using Controllers.Models;
+    using Controllers.Models.BaseEntities;
     using Controllers.Providers;
     using Entities;
     using Helpers;
@@ -43,11 +44,41 @@
             return _mapper.Map<EditionModel>(createdEdition);
         }
 
+        public Task<BaseResponseMessage> RetrieveEditionDataFromImage(ImageModel image)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ResponseMessage<EditionModel>> RetrieveEditionObjectFromImage(ImageModel image)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> IEditionService.GetByIsbnFromImage(ImageModel image)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<ResponseMessage<EditionModel>> IEditionService.GetByIsbn(string isbn)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> IEditionService.UpdateEdition(EditionModel edition)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> IEditionService.RemoveEdition(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<EditionModel> CreateEditionFromImage(ImageModel image)
         {
             var fileSavePath = Path.Combine(StorageSettings.StoragePath, image.Path);
 
-            var imagePath = ConvertToAppropirateFormat(fileSavePath, true);
+            var imagePath = ConvertToAppropirateFormat(fileSavePath, deleteOriginal: true);
 
             string transformResult = await _transformer.TransformAsync(imagePath);
 
@@ -56,7 +87,12 @@
             //Create new publisher
             //Create new series
 
-            return null;
+            return new EditionModel() {RawData = transformResult};
+        }
+
+        Task<BaseResponseMessage> IEditionService.CreateEdition(EditionModel edition)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<EditionModel> GetByIsbnFromImage(ImageModel image)

@@ -43,9 +43,9 @@
             return _mapper.Map<BookModel>(updatedBook);
         }
 
-        public Task RemoveBook(Guid id)
+        public async Task RemoveBook(Guid id)
         {
-            throw new NotImplementedException();
+            await _bookReporitory.RemoveBook(id);
         }
 
         public IQueryable<BookRetrieveModel> GetBooks()

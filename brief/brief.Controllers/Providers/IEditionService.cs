@@ -3,14 +3,16 @@
     using System;
     using System.Threading.Tasks;
     using Models;
+    using Models.BaseEntities;
 
     public interface IEditionService : IImageService
     {
-        Task<EditionModel> CreateEdition(EditionModel edition);
-        Task<EditionModel> CreateEditionFromImage(ImageModel image);
-        Task<EditionModel> GetByIsbnFromImage(ImageModel image);
-        Task<EditionModel> GetByIsbn(string isbn);
-        Task<EditionModel> UpdateEdition(EditionModel edition);
-        Task RemoveEdition(Guid id);
+        Task<BaseResponseMessage> CreateEdition(EditionModel edition);
+        Task<BaseResponseMessage> RetrieveEditionDataFromImage(ImageModel image);
+        Task<ResponseMessage<EditionModel>> RetrieveEditionObjectFromImage(ImageModel image);
+        Task<BaseResponseMessage> GetByIsbnFromImage(ImageModel image);
+        Task<ResponseMessage<EditionModel>> GetByIsbn(string isbn);
+        Task<BaseResponseMessage> UpdateEdition(EditionModel edition);
+        Task<BaseResponseMessage> RemoveEdition(Guid id);
     }
 }

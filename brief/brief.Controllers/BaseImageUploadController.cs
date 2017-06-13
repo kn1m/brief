@@ -4,48 +4,49 @@
     using Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
     using Helpers;
+    using Models.BaseEntities;
     using StreamProviders;
 
     public abstract class BaseImageUploadController : ApiController
     {
-        protected virtual async Task<HttpResponseMessage> BaseUpload<TData>(Func<ImageModel, Task<TData>> strategy, StorageSettings storageSettings) where TData : class 
+        protected virtual async Task<HttpResponseMessage> BaseUpload<TData>(Func<ImageModel, Task<TData>> strategy, StorageSettings storageSettings) where TData : IRecognizable 
         {
             if(!Request.Content.IsMimeMultipartContent())
             {
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
 
-            //string fileSaveLocation = HttpContext.Current.Server.MapPath("~/App_Data");
             ImageMultipartFormDataStreamProvider provider = new ImageMultipartFormDataStreamProvider(storageSettings.StoragePath);
-            List<string> files = new List<string>();
 
             try
             {
-                // Read all contents of multipart message into ImageMultipartFormDataStreamProvider.
                 await Request.Content.ReadAsMultipartAsync(provider);
 
-                //var taskList = new List<Task<TData>>();
+                List<string> files = new List<string>();
+                var dataTasks = new List<Task<TData>>();
 
                 foreach (MultipartFileData file in provider.FileData)
                 {
-                    var test = file.Headers.ContentLanguage;
                     files.Add(Path.GetFileName(file.LocalFileName));
+
+                    var imageToSave = new ImageModel
+                    {
+                        Path = Path.GetFileName(file.LocalFileName)
+                    };
+
+                    dataTasks.Add(strategy.Invoke(imageToSave));
                 }
 
-                var imageToSave = new ImageModel
-                {
-                    Path = Path.GetFileName(provider.FileData[0].LocalFileName)
-                };
+                var results = await Task.WhenAll(dataTasks);
+                var resultingDict = Enumerable.Range(0, results.Length).ToDictionary(i => files[i], i => results[i].RawData);
 
-                await strategy.Invoke(imageToSave);
-
-                // Send OK Response along with saved file names to the client.
-                return Request.CreateResponse(HttpStatusCode.OK, files);
+                return Request.CreateResponse(HttpStatusCode.OK, resultingDict);
             }
             catch (Exception e)
             {

@@ -1,8 +1,9 @@
 ﻿namespace brief.Controllers.Models
 {
     using System;
+    using BaseEntities;
 
-    public class EditionModel
+    public class EditionModel : IRecognizable
     {
         public Guid? Id { get; set; }
         public string Description { get; set; }
@@ -14,5 +15,6 @@
         public string Currency { get; set; }
         public Guid? PublisherId { get; set; }
         public Guid? BookId { get; set; }
+        public string RawData { get; set; }
     }
 }
