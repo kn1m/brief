@@ -11,7 +11,6 @@
         Task<BaseResponseMessage> RetrieveEditionDataFromImage(ImageModel image);
         Task<ResponseMessage<EditionModel>> RetrieveEditionObjectFromImage(ImageModel image);
         Task<BaseResponseMessage> GetByIsbnFromImage(ImageModel image);
-        Task<ResponseMessage<EditionModel>> GetByIsbn(string isbn);
         Task<BaseResponseMessage> UpdateEdition(EditionModel edition);
         Task<BaseResponseMessage> RemoveEdition(Guid id);
     }

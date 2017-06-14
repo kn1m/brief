@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using AutoMapper;
+    using brief.Controllers.Models.BaseEntities;
     using Controllers.Models;
     using Controllers.Providers;
     using Helpers;
@@ -22,17 +23,17 @@
             _mapper = mapper;
         }
 
-        public Task<PublisherModel> CreatePublisher(PublisherModel publisher)
+        Task<BaseResponseMessage> IPublisherService.CreatePublisher(PublisherModel publisher)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public Task<PublisherModel> UpdatePublisher(PublisherModel publisher)
+        Task<BaseResponseMessage> IPublisherService.UpdatePublisher(PublisherModel publisher)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public Task RemovePublisher(Guid id)
+        Task<BaseResponseMessage> IPublisherService.RemovePublisher(Guid id)
         {
             throw new NotImplementedException();
         }

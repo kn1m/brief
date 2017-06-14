@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
+    using brief.Controllers.Models.BaseEntities;
     using Controllers.Models;
     using Controllers.Models.RetrieveModels;
     using Controllers.Providers;
@@ -25,15 +26,6 @@
             _mapper = mapper;
         }
 
-        public async Task<BookModel> CreateBook(BookModel book)
-        {
-            var newBook = _mapper.Map<Book>(book);
-
-            var createdBook = await _bookReporitory.CreateBook(newBook);
-
-            return _mapper.Map<BookModel>(createdBook);
-        }
-
         public async Task<BookModel> UpdateBook(BookModel book)
         {
             var newBook = _mapper.Map<Book>(book);
@@ -48,7 +40,21 @@
             await _bookReporitory.RemoveBook(id);
         }
 
-        public IQueryable<BookRetrieveModel> GetBooks()
+        public async Task<BaseResponseMessage> CreateBook(BookModel book)
+        {
+            var newBook = _mapper.Map<Book>(book);
+
+            var createdBook = await _bookReporitory.CreateBook(newBook);
+
+            return new BaseResponseMessage { Id = createdBook.Id };
+        }
+
+        Task<BaseResponseMessage> IBookService.UpdateBook(BookModel book)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> IBookService.RemoveBook(Guid id)
         {
             throw new NotImplementedException();
         }

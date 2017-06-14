@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using AutoMapper;
+    using brief.Controllers.Models.BaseEntities;
     using Controllers.Helpers;
     using Controllers.Models;
     using Controllers.Providers;
@@ -18,7 +19,11 @@
         private readonly ITransformer<string, string> _transformer;
         private readonly IMapper _mapper;
 
-        public CoverService(ICoverRepository coverRepository, ITransformer<string, string> transformer, IMapper mapper, BaseTransformerSettings settings, StorageSettings storageSettings) : base(settings)
+        public CoverService(ICoverRepository coverRepository,
+                            ITransformer<string, string> transformer,
+                            IMapper mapper,
+                            BaseTransformerSettings settings,
+                            StorageSettings storageSettings) : base(settings)
         {
             Guard.AssertNotNull(coverRepository);
             Guard.AssertNotNull(transformer);
@@ -45,6 +50,21 @@
         }
 
         public Task RemoveCover(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> ICoverService.SaveCover(ImageModel image)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> ICoverService.RetrieveDataFromCover(ImageModel cover)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> ICoverService.RemoveCover(Guid id)
         {
             throw new NotImplementedException();
         }

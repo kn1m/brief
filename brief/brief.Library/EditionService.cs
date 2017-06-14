@@ -44,37 +44,7 @@
             return _mapper.Map<EditionModel>(createdEdition);
         }
 
-        public Task<BaseResponseMessage> RetrieveEditionDataFromImage(ImageModel image)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ResponseMessage<EditionModel>> RetrieveEditionObjectFromImage(ImageModel image)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> IEditionService.GetByIsbnFromImage(ImageModel image)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<ResponseMessage<EditionModel>> IEditionService.GetByIsbn(string isbn)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> IEditionService.UpdateEdition(EditionModel edition)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> IEditionService.RemoveEdition(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<EditionModel> CreateEditionFromImage(ImageModel image)
+        public async Task<BaseResponseMessage> RetrieveEditionDataFromImage(ImageModel image)
         {
             var fileSavePath = Path.Combine(StorageSettings.StoragePath, image.Path);
 
@@ -87,7 +57,27 @@
             //Create new publisher
             //Create new series
 
-            return new EditionModel() {RawData = transformResult};
+            return new BaseResponseMessage { RawData = transformResult };
+        }
+
+        public Task<ResponseMessage<EditionModel>> RetrieveEditionObjectFromImage(ImageModel image)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> IEditionService.GetByIsbnFromImage(ImageModel image)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> IEditionService.UpdateEdition(EditionModel edition)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> IEditionService.RemoveEdition(Guid id)
+        {
+            throw new NotImplementedException();
         }
 
         Task<BaseResponseMessage> IEditionService.CreateEdition(EditionModel edition)

@@ -3,11 +3,12 @@
     using System;
     using System.Threading.Tasks;
     using Models;
+    using Models.BaseEntities;
 
     public interface IPublisherService
     {
-        Task<PublisherModel> CreatePublisher(PublisherModel publisher);
-        Task<PublisherModel> UpdatePublisher(PublisherModel publisher);
-        Task RemovePublisher(Guid id);
+        Task<BaseResponseMessage> CreatePublisher(PublisherModel publisher);
+        Task<BaseResponseMessage> UpdatePublisher(PublisherModel publisher);
+        Task<BaseResponseMessage> RemovePublisher(Guid id);
     }
 }

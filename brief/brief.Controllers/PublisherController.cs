@@ -1,8 +1,11 @@
 ﻿namespace brief.Controllers
 {
     using System;
+    using System.Net;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using Extensions;
     using Models;
     using Providers;
 
@@ -16,15 +19,27 @@
         }
 
         [HttpPost]
-        public async Task<PublisherModel> Create([FromBody] PublisherModel publisher)
-            => await _publisherService.CreatePublisher(publisher);
+        public async Task<HttpResponseMessage> Create([FromBody] PublisherModel publisher)
+        {
+            var result = await _publisherService.CreatePublisher(publisher);
+
+            return result.CreateRespose(Request, HttpStatusCode.Created, HttpStatusCode.BadRequest);
+        }
 
         [HttpPut]
-        public async Task<PublisherModel> Update([FromBody] PublisherModel publisher)
-            => await _publisherService.UpdatePublisher(publisher);
+        public async Task<HttpResponseMessage> Update([FromBody] PublisherModel publisher)
+        {
+            var result = await _publisherService.UpdatePublisher(publisher);
+
+            return result.CreateRespose(Request, HttpStatusCode.OK, HttpStatusCode.NoContent);
+        }
 
         [HttpDelete]
-        public async Task Delete([FromUri] Guid id)
-            => await _publisherService.RemovePublisher(id);
+        public async Task<HttpResponseMessage> Delete([FromUri] Guid id)
+        {
+            var result = await _publisherService.RemovePublisher(id);
+
+            return result.CreateRespose(Request, HttpStatusCode.OK, HttpStatusCode.NoContent);
+        }
     }
 }

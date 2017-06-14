@@ -1,8 +1,11 @@
 ﻿namespace brief.Controllers
 {
     using System;
+    using System.Net;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using Extensions;
     using Models;
     using Providers;
 
@@ -16,15 +19,27 @@
         }
 
         [HttpPost]
-        public async Task<BookModel> Create([FromBody] BookModel book)
-            => await _bookService.CreateBook(book);
+        public async Task<HttpResponseMessage> Create([FromBody] BookModel book)
+        {
+            var result = await _bookService.CreateBook(book);
+
+            return result.CreateRespose(Request, HttpStatusCode.Created, HttpStatusCode.BadRequest);
+        }
 
         [HttpPut]
-        public async Task<BookModel> Update([FromBody] BookModel book)
-            => await _bookService.UpdateBook(book);
+        public async Task<HttpResponseMessage> Update([FromBody] BookModel book)
+        {
+            var result = await _bookService.UpdateBook(book);
+
+            return result.CreateRespose(Request, HttpStatusCode.OK, HttpStatusCode.NoContent);
+        }
 
         [HttpDelete]
-        public async Task Delete([FromUri] Guid id)
-            => await _bookService.RemoveBook(id);
+        public async Task<HttpResponseMessage> Delete([FromUri] Guid id)
+        {
+            var result = await _bookService.RemoveBook(id);
+
+            return result.CreateRespose(Request, HttpStatusCode.OK, HttpStatusCode.NoContent);
+        }
     }
 }

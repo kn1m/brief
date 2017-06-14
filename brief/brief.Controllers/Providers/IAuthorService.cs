@@ -3,11 +3,12 @@
     using System;
     using System.Threading.Tasks;
     using Models;
+    using Models.BaseEntities;
 
     public interface IAuthorService
     {
-        Task<AuthorModel> CreateAuthor(AuthorModel author);
-        Task<AuthorModel> UpdateAuthor(AuthorModel author);
-        Task RemoveAuthor(Guid id);
+        Task<BaseResponseMessage> CreateAuthor(AuthorModel author);
+        Task<BaseResponseMessage> UpdateAuthor(AuthorModel author);
+        Task<BaseResponseMessage> RemoveAuthor(Guid id);
     }
 }

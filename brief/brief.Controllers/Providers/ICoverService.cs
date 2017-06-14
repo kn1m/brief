@@ -3,11 +3,12 @@
     using System;
     using System.Threading.Tasks;
     using Models;
+    using Models.BaseEntities;
 
     public interface ICoverService : IImageService
     {
-        Task<CoverModel> SaveCover(ImageModel image);
-        Task<CoverModel> RetrieveDataFromCover(ImageModel cover);
-        Task RemoveCover(Guid id);
+        Task<BaseResponseMessage> SaveCover(ImageModel image);
+        Task<BaseResponseMessage> RetrieveDataFromCover(ImageModel cover);
+        Task<BaseResponseMessage> RemoveCover(Guid id);
     }
 }

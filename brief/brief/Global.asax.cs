@@ -84,6 +84,8 @@
                 .As<ICoverRepository>();      
             builder.RegisterType<SeriesRepository>()
                 .As<ISeriesRepository>();
+            builder.RegisterType<DataService>()
+                .As<IDataService>();
 
             // OPTIONAL: Register the Autofac filter provider.
             //builder.RegisterWebApiFilterProvider(config);

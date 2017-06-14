@@ -27,14 +27,7 @@
         {
             var result = await _editionService.CreateEdition(edition);
 
-            return result.CreateRespose(Request, HttpStatusCode.OK, HttpStatusCode.NoContent);
-
-            //if (result.RawData != null)
-            //{
-            //    return Request.CreateResponse(HttpStatusCode.NoContent, result.RawData);
-            //}
-
-            //return Request.CreateResponse(HttpStatusCode.OK, result.Id);
+            return result.CreateRespose(Request, HttpStatusCode.Created, HttpStatusCode.BadRequest);
         }
 
         [HttpPut]
@@ -42,16 +35,15 @@
         {
             var result = await _editionService.CreateEdition(edition);
 
-            if (result.RawData != null)
-            {
-                return Request.CreateResponse(HttpStatusCode.NoContent, result.RawData);
-            }
-
-            return Request.CreateResponse(HttpStatusCode.OK, result.Id);
+            return result.CreateRespose(Request, HttpStatusCode.OK, HttpStatusCode.NoContent);
         }
 
         [HttpDelete]
-        public async Task Delete([FromUri] Guid id)
-            => await _editionService.RemoveEdition(id);
+        public async Task<HttpResponseMessage> Delete([FromUri] Guid id)
+        {
+            var result = await _editionService.RemoveEdition(id);
+
+            return result.CreateRespose(Request, HttpStatusCode.OK, HttpStatusCode.NoContent);
+        }
     }
 }

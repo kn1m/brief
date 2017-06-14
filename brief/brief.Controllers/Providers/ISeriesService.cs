@@ -3,11 +3,12 @@
     using System;
     using System.Threading.Tasks;
     using Models;
+    using Models.BaseEntities;
 
     public interface ISeriesService
     {
-        Task<SeriesModel> CreateSeries(SeriesModel series);
-        Task<SeriesModel> UpdateSeries(SeriesModel series);
-        Task RemoveSeries(Guid id);
+        Task<BaseResponseMessage> CreateSeries(SeriesModel series);
+        Task<BaseResponseMessage> UpdateSeries(SeriesModel series);
+        Task<BaseResponseMessage> RemoveSeries(Guid id);
     }
 }

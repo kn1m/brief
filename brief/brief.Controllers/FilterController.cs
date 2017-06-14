@@ -13,11 +13,11 @@
 
     public class FilterController : ODataController
     {
-        private readonly IBookService _bookService;
+        private readonly IDataService _dataService;
 
-        public FilterController(IBookService bookService)
+        public FilterController(IDataService dataService)
         {
-            _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
+            _dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
         }
 
         [HttpGet]
@@ -25,7 +25,7 @@
         [ODataRoute("book")]
         public PageResult<BookRetrieveModel> Get(ODataQueryOptions<BookRetrieveModel> options)
         {
-            IQueryable results = options.ApplyTo(_bookService.GetBooks(), new ODataQuerySettings { PageSize = 5 });
+            IQueryable results = options.ApplyTo(_dataService.GetBooks(), new ODataQuerySettings { PageSize = 5 });
 
             return new PageResult<BookRetrieveModel>(
                 results as IEnumerable<BookRetrieveModel>,

@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using AutoMapper;
+    using brief.Controllers.Models.BaseEntities;
     using Controllers.Models;
     using Controllers.Providers;
     using Entities;
@@ -42,6 +43,21 @@
         }
 
         public Task RemoveSeries(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> ISeriesService.CreateSeries(SeriesModel series)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> ISeriesService.UpdateSeries(SeriesModel series)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<BaseResponseMessage> ISeriesService.RemoveSeries(Guid id)
         {
             throw new NotImplementedException();
         }
