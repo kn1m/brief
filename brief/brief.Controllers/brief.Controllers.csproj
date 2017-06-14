@@ -104,6 +104,7 @@
     <Compile Include="Extensions\BaseResponseExtensions.cs" />
     <Compile Include="Filters\ExceptionLogger.cs" />
     <Compile Include="BaseImageUploadController.cs" />
+    <Compile Include="Helpers\FilterSettings.cs" />
     <Compile Include="Helpers\StorageSettings.cs" />
     <Compile Include="Models\AuthorModel.cs" />
     <Compile Include="Models\BaseEntities\BaseResponseMessage.cs" />
