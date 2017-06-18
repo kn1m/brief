@@ -11,6 +11,7 @@
         public int? Amount { get; set; }
         public decimal? Price { get; set; }
         public string EditionType { get; set; }
+        public EditionTypeModel? EditionTypeModel { get; set; }
         public string Language { get; set; }
         public string Currency { get; set; }
         public Guid? PublisherId { get; set; }

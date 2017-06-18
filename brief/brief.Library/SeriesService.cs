@@ -24,37 +24,22 @@
             _mapper = mapper;
         }
 
-        public async Task<SeriesModel> CreateSeries(SeriesModel series)
+        public async Task<BaseResponseMessage> CreateSeries(SeriesModel series)
         {
             var newSeries = _mapper.Map<Series>(series);
 
             var createdSeries = await _seriesRepository.CreateSerires(newSeries);
 
-            return _mapper.Map<SeriesModel>(createdSeries);
+            return new BaseResponseMessage { Id = createdSeries.Id };
         }
 
-        public async Task<SeriesModel> UpdateSeries(SeriesModel series)
+        public async Task<BaseResponseMessage> UpdateSeries(SeriesModel series)
         {
             var newSeries = _mapper.Map<Series>(series);
 
             var updatedSeries = await _seriesRepository.CreateSerires(newSeries);
 
-            return _mapper.Map<SeriesModel>(updatedSeries);
-        }
-
-        public Task RemoveSeries(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> ISeriesService.CreateSeries(SeriesModel series)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> ISeriesService.UpdateSeries(SeriesModel series)
-        {
-            throw new NotImplementedException();
+            return new BaseResponseMessage {Id = updatedSeries.Id};
         }
 
         Task<BaseResponseMessage> ISeriesService.RemoveSeries(Guid id)

@@ -10,7 +10,7 @@
     {
         public BookRepository(IApplicationDbContext context) : base(context) {}
 
-        public IQueryable<Book> GetBooks()
+        public Task<Book> GetBook(Guid id)
         {
             throw new NotImplementedException();
         }

@@ -4,6 +4,7 @@
     using System.Web.OData.Builder;
     using System.Web.OData.Extensions;
     using Controllers.Constraints;
+    using Controllers.Models;
     using Controllers.Models.RetrieveModels;
 
     public static class WebApiConfig
@@ -22,8 +23,10 @@
             );
 
             var modelBuilder = new ODataConventionModelBuilder();
-
-            modelBuilder.EntitySet<BookRetrieveModel>("book");
+            config.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
+            modelBuilder.EnableLowerCamelCase();
+            modelBuilder.EntitySet<BookRetrieveModel>("books");
+            modelBuilder.EntitySet<EditionModel>("editions");
 
             config.MapODataServiceRoute(
                 routeName: "OData",

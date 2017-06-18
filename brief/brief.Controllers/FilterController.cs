@@ -13,19 +13,29 @@
 
     public class FilterController : ODataController
     {
-        private readonly IDataService _dataService;
+        private readonly IFilterService _filterService;
 
-        public FilterController(IDataService dataService)
+        public FilterController(IFilterService filterService)
         {
-            _dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
+            _filterService = filterService ?? throw new ArgumentNullException(nameof(filterService));
         }
 
         [HttpGet]
         [EnableQuery]
-        [ODataRoute("book")]
+        [ODataRoute("books({key})")]
+        public SingleResult<BookRetrieveModel> Get([FromODataUri] Guid key)
+        {
+            IQueryable<BookRetrieveModel> result = _filterService.GetBookById(key);
+
+            return SingleResult.Create(result);
+        }
+
+        [HttpGet]
+        [EnableQuery]
+        [ODataRoute("books")]
         public PageResult<BookRetrieveModel> Get(ODataQueryOptions<BookRetrieveModel> options)
         {
-            IQueryable results = options.ApplyTo(_dataService.GetBooks(), new ODataQuerySettings { PageSize = 5 });
+            IQueryable results = options.ApplyTo(_filterService.GetBooks(), new ODataQuerySettings { PageSize = 5 });
 
             return new PageResult<BookRetrieveModel>(
                 results as IEnumerable<BookRetrieveModel>,
