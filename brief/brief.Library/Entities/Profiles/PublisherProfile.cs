@@ -1,14 +1,17 @@
 ﻿namespace brief.Library.Entities.Profiles
 {
+    using System;
     using AutoMapper;
     using Controllers.Models;
 
-    class PublisherProfile : Profile
+    public class PublisherProfile : Profile
     {
         public PublisherProfile()
         {
             CreateMap<Publisher, PublisherModel>();
-            CreateMap<PublisherModel, Publisher>();
+
+            CreateMap<PublisherModel, Publisher>()
+                .ForMember(d => d.Id, opt => opt.MapFrom(o => Guid.NewGuid()));
         }
     }
 }

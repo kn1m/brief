@@ -1,5 +1,6 @@
 ﻿namespace brief.Library.Entities.Profiles
 {
+    using System;
     using AutoMapper;
     using Controllers.Models;
 
@@ -8,7 +9,9 @@
         public AuthorProfile()
         {
             CreateMap<Author, AuthorModel>();
-            CreateMap<AuthorModel, Author>();
+
+            CreateMap<AuthorModel, Author>()
+                .ForMember(d => d.Id, opt => opt.MapFrom(o => Guid.NewGuid()));
         }
     }
 }

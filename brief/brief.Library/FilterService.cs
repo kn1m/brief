@@ -26,7 +26,6 @@
         public IQueryable<BookRetrieveModel> GetBooks()
             => _filterRepository.GetBooks().ProjectTo<BookRetrieveModel>(_mapper.ConfigurationProvider);
         
-
         public IQueryable<BookRetrieveModel> GetBookById(Guid id)
             => _filterRepository.GetBookById(id).ProjectTo<BookRetrieveModel>(_mapper.ConfigurationProvider);
     }

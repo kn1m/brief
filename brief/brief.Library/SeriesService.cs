@@ -3,7 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using AutoMapper;
-    using brief.Controllers.Models.BaseEntities;
+    using Controllers.Models.BaseEntities;
     using Controllers.Models;
     using Controllers.Providers;
     using Entities;

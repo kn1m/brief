@@ -8,24 +8,15 @@
 
     public class FilterRepository : BaseRepository, IFilterRepository
     {
-        public FilterRepository(IApplicationDbContext appContext) : base(appContext)
-        {
-        }
+        public FilterRepository(IApplicationDbContext appContext) : base(appContext) {}
 
         public IQueryable<Book> GetBooks()
-        {
-            return Context.Set<Book>()
-                .Include(b => b.Serieses)
-                .Include(b => b.Authors)
-                .Include(b => b.Editions);
-        }
+            => Context.Set<Book>();
 
         public IQueryable<Book> GetBookById(Guid id)
-        {
-            return Context.Set<Book>().Where(b => b.Id == id)
+            => Context.Set<Book>().Where(b => b.Id == id)
                 .Include(b => b.Serieses)
                 .Include(b => b.Authors)
                 .Include(b => b.Editions);
-        }
     }
 }

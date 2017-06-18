@@ -13,7 +13,9 @@
         public string EditionType { get; set; }
         public EditionTypeModel? EditionTypeModel { get; set; }
         public string Language { get; set; }
+        public LanguageModel? LanguageModel { get; set; }
         public string Currency { get; set; }
+        public CurrencyModel? CurrencyModel { get; set; }
         public Guid? PublisherId { get; set; }
         public Guid? BookId { get; set; }
         public string RawData { get; set; }

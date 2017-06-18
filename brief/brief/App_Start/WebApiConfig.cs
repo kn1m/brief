@@ -23,7 +23,9 @@
             );
 
             var modelBuilder = new ODataConventionModelBuilder();
+
             config.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
+
             modelBuilder.EnableLowerCamelCase();
             modelBuilder.EntitySet<BookRetrieveModel>("books");
             modelBuilder.EntitySet<EditionModel>("editions");

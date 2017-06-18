@@ -24,20 +24,6 @@
             _mapper = mapper;
         }
 
-        public async Task<BookModel> UpdateBook(BookModel book)
-        {
-            var newBook = _mapper.Map<Book>(book);
-
-            var updatedBook = await _bookReporitory.UpdateBook(newBook);
-
-            return _mapper.Map<BookModel>(updatedBook);
-        }
-
-        public async Task RemoveBook(Guid id)
-        {
-            await _bookReporitory.RemoveBook(id);
-        }
-
         public async Task<BaseResponseMessage> CreateBook(BookModel book)
         {
             var newBook = _mapper.Map<Book>(book);
@@ -47,12 +33,16 @@
             return new BaseResponseMessage { Id = createdBook.Id };
         }
 
-        Task<BaseResponseMessage> IBookService.UpdateBook(BookModel book)
+        public async Task<BaseResponseMessage> UpdateBook(BookModel book)
         {
-            throw new NotImplementedException();
+            var newBook = _mapper.Map<Book>(book);
+
+            var updatedBook = await _bookReporitory.UpdateBook(newBook);
+
+            return new BaseResponseMessage { Id = updatedBook.Id };
         }
 
-        Task<BaseResponseMessage> IBookService.RemoveBook(Guid id)
+        public async Task<BaseResponseMessage> RemoveBook(Guid id)
         {
             throw new NotImplementedException();
         }
