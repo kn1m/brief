@@ -10,7 +10,7 @@
         Task<BaseResponseMessage> CreateEdition(EditionModel edition);
         Task<BaseResponseMessage> RetrieveEditionDataFromImage(ImageModel image);
         Task<ResponseMessage<EditionModel>> RetrieveEditionObjectFromImage(ImageModel image);
-        Task<BaseResponseMessage> GetByIsbnFromImage(ImageModel image);
+        Task<ResponseMessage<EditionModel>> GetByIsbnFromImage(ImageModel image);
         Task<BaseResponseMessage> UpdateEdition(EditionModel edition);
         Task<BaseResponseMessage> RemoveEdition(Guid id);
     }

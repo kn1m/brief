@@ -1,7 +1,9 @@
 ﻿namespace brief.Library.Helpers
 {
+    using System.Drawing.Imaging;
+
     public class BaseTransformerSettings
     {
-        public string[] AllowedFormats { get; set; }
+        public ImageFormat MainTransformerFormat { get; set; }
     }
 }

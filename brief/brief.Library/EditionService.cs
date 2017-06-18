@@ -35,15 +35,6 @@
             _mapper = mapper;
         }
 
-        public async Task<EditionModel> CreateEdition(EditionModel edition)
-        {
-            var newEdtition = _mapper.Map<Edition>(edition);
-
-            var createdEdition = await _editionRepository.CreateEdition(newEdtition);
-
-            return _mapper.Map<EditionModel>(createdEdition);
-        }
-
         public async Task<BaseResponseMessage> RetrieveEditionDataFromImage(ImageModel image)
         {
             var fileSavePath = Path.Combine(StorageSettings.StoragePath, image.Path);
@@ -52,10 +43,7 @@
 
             string transformResult = await _transformer.TransformAsync(imagePath);
 
-            //Create new edititon
-            //Create new book
-            //Create new publisher
-            //Create new series
+            CleanUp(imagePath);
 
             return new BaseResponseMessage { RawData = transformResult };
         }
@@ -65,48 +53,40 @@
             throw new NotImplementedException();
         }
 
-        Task<BaseResponseMessage> IEditionService.GetByIsbnFromImage(ImageModel image)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> IEditionService.UpdateEdition(EditionModel edition)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> IEditionService.RemoveEdition(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> IEditionService.CreateEdition(EditionModel edition)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<EditionModel> GetByIsbnFromImage(ImageModel image)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<EditionModel> GetByIsbn(string isbn)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<EditionModel> UpdateEdition(EditionModel edition)
+        public async Task<BaseResponseMessage> UpdateEdition(EditionModel edition)
         {
             var updatedEdition = _mapper.Map<Edition>(edition);
 
             var createdEdition = await _editionRepository.UpdateEdition(updatedEdition);
 
-            return _mapper.Map<EditionModel>(createdEdition);
+            return new BaseResponseMessage { Id = createdEdition.Id };
         }
 
-        public Task RemoveEdition(Guid id)
+        public async Task<BaseResponseMessage> RemoveEdition(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<BaseResponseMessage> CreateEdition(EditionModel edition)
+        {
+            var newEdtition = _mapper.Map<Edition>(edition);
+
+            var createdEdition = await _editionRepository.CreateEdition(newEdtition);
+
+            return new BaseResponseMessage { Id = createdEdition.Id };
+        }
+
+        public async Task<ResponseMessage<EditionModel>> GetByIsbnFromImage(ImageModel image)
+        {
+            var fileSavePath = Path.Combine(StorageSettings.StoragePath, image.Path);
+
+            var imagePath = ConvertToAppropirateFormat(fileSavePath, deleteOriginal: true);
+
+            string transformResult = await _transformer.TransformAsync(imagePath);
+
+            CleanUp(imagePath);
+
+            return new ResponseMessage<EditionModel>();
         }
     }
 }

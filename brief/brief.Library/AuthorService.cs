@@ -2,43 +2,30 @@
 {
     using System;
     using System.Threading.Tasks;
+    using AutoMapper;
     using Controllers.Models.BaseEntities;
     using Controllers.Models;
     using Controllers.Providers;
+    using Repositories;
 
     public class AuthorService : IAuthorService
     {
-        public AuthorService()
+        public AuthorService(IAuthorRepository authorRepository, IMapper mapper)
         {
             
         }
 
-        public Task<AuthorModel> CreateAuthor(AuthorModel author)
+        public async Task<BaseResponseMessage> CreateAuthor(AuthorModel author)
         {
             throw new NotImplementedException();
         }
 
-        public Task<AuthorModel> UpdateAuthor(AuthorModel author)
+        public async Task<BaseResponseMessage> UpdateAuthor(AuthorModel author)
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveAuthor(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> IAuthorService.CreateAuthor(AuthorModel author)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> IAuthorService.UpdateAuthor(AuthorModel author)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> IAuthorService.RemoveAuthor(Guid id)
+        public async Task<BaseResponseMessage> RemoveAuthor(Guid id)
         {
             throw new NotImplementedException();
         }

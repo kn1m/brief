@@ -42,7 +42,7 @@
             return new BaseResponseMessage {Id = updatedSeries.Id};
         }
 
-        Task<BaseResponseMessage> ISeriesService.RemoveSeries(Guid id)
+        public async Task<BaseResponseMessage> RemoveSeries(Guid id)
         {
             throw new NotImplementedException();
         }

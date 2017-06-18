@@ -2,6 +2,7 @@
 {
     using System.Collections.Specialized;
     using System.Configuration;
+    using System.Drawing;
     using Autofac;
     using Autofac.Integration.WebApi;
     using Controllers;
@@ -17,14 +18,17 @@
     using Library.Helpers;
     using Library.Transformers;
     using Tesseract;
+    using ImageFormat = System.Drawing.Imaging.ImageFormat;
 
     public class WebApiApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
+            var imageFormatConverter = new ImageFormatConverter();
+
             var baseTransformerSettings = new BaseTransformerSettings
             {
-                AllowedFormats = ConfigurationManager.AppSettings["allowedFormats"].Split(';')
+                MainTransformerFormat = (ImageFormat)imageFormatConverter.ConvertFromString(ConfigurationManager.AppSettings["mainFormat"])
             };
 
             var builder = new ContainerBuilder();
