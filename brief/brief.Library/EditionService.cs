@@ -21,7 +21,11 @@
         private readonly ITransformer<string, string> _transformer;
         private readonly IMapper _mapper;
 
-        public EditionService(IEditionRepository editionRepository, ITransformer<string, string> transformer, IMapper mapper, BaseTransformerSettings settings, StorageSettings storageSettings) : base(settings)
+        public EditionService(IEditionRepository editionRepository,
+                              ITransformer<string, string> transformer,
+                              IMapper mapper,
+                              BaseTransformerSettings settings,
+                              StorageSettings storageSettings) : base(settings)
         {
             Guard.AssertNotNull(editionRepository);
             Guard.AssertNotNull(transformer);
