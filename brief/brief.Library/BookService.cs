@@ -33,18 +33,31 @@
         {
             var newBook = _mapper.Map<Book>(book);
 
-            var createdBook = await _bookRepository.CreateBook(newBook);
+            var createdBookId = await _bookRepository.CreateBook(newBook);
 
-            return new BaseResponseMessage { Id = createdBook.Id };
+            return new BaseResponseMessage { Id = createdBookId };
         }
 
         public async Task<BaseResponseMessage> UpdateBook(BookModel book)
         {
             var newBook = _mapper.Map<Book>(book);
 
-            var updatedBook = await _bookRepository.UpdateBook(newBook);
+            var response = new BaseResponseMessage();
 
-            return new BaseResponseMessage { Id = updatedBook.Id };
+            var bookToUpdate = await _bookRepository.GetBook(newBook.Id);
+
+            if (bookToUpdate == null)
+            {
+                response.RawData = $"Book with {newBook.Id} wasn't found.";
+
+                return response;
+            }
+
+            await _bookRepository.UpdateBook(newBook);
+
+            response.Id = newBook.Id;
+
+            return response;
         }
 
         public async Task<BaseResponseMessage> RemoveBook(Guid id)

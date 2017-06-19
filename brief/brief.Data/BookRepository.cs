@@ -12,20 +12,20 @@
         public Task<Book> GetBook(Guid id)
             => Context.Set<Book>().FindAsync(id);
 
-        public async Task<Book> CreateBook(Book book)
+        public async Task<Guid> CreateBook(Book book)
         {
             var newBook = Add(book);
             await Commit();
 
-            return newBook;
+            return newBook.Id;
         }
 
-        public async Task<Book> UpdateBook(Book book)
+        public async Task<Guid> UpdateBook(Book book)
         {
             Update(book);
             await Commit();
 
-            return book;
+            return book.Id;
         }
 
         public async Task RemoveBook(Book book)

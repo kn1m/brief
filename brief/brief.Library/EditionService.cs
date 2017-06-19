@@ -57,9 +57,9 @@
         {
             var updatedEdition = _mapper.Map<Edition>(edition);
 
-            var createdEdition = await _editionRepository.UpdateEdition(updatedEdition);
+            var createdEditionId = await _editionRepository.UpdateEdition(updatedEdition);
 
-            return new BaseResponseMessage { Id = createdEdition.Id };
+            return new BaseResponseMessage { Id = createdEditionId };
         }
 
         public async Task<BaseResponseMessage> RemoveEdition(Guid id)
@@ -71,9 +71,9 @@
         {
             var newEdtition = _mapper.Map<Edition>(edition);
 
-            var createdEdition = await _editionRepository.CreateEdition(newEdtition);
+            var createdEditionId = await _editionRepository.CreateEdition(newEdtition);
 
-            return new BaseResponseMessage { Id = createdEdition.Id };
+            return new BaseResponseMessage { Id = createdEditionId };
         }
 
         public async Task<ResponseMessage<EditionModel>> GetByIsbnFromImage(ImageModel image)

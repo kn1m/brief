@@ -7,8 +7,8 @@
     public interface IBookRepository
     {
         Task<Book> GetBook(Guid id);
-        Task<Book> CreateBook(Book book);
-        Task<Book> UpdateBook(Book book);
+        Task<Guid> CreateBook(Book book);
+        Task<Guid> UpdateBook(Book book);
         Task RemoveBook(Book book);
     }
 }

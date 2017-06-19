@@ -9,8 +9,8 @@
     {
         Task<List<Edition>> GetEditionsByBook(Guid id);
         Task<Edition> GetEdition(Guid id); 
-        Task<Edition> CreateEdition(Edition edition);
-        Task<Edition> UpdateEdition(Edition edition);
+        Task<Guid> CreateEdition(Edition edition);
+        Task<Guid> UpdateEdition(Edition edition);
         Task RemoveEdition(Edition edition);
         Task RemoveEditions(IEnumerable<Edition> editions);
     }

@@ -18,19 +18,26 @@
         public Task<Edition> GetEdition(Guid id)
             => Context.Set<Edition>().FindAsync(id);
         
-        public Task<Edition> CreateEdition(Edition edition)
+        public async Task<Guid> CreateEdition(Edition edition)
         {
-            throw new System.NotImplementedException();
+            var newEdition = Add(edition);
+            await Commit();
+
+            return newEdition.Id;
         }
 
-        public Task<Edition> UpdateEdition(Edition edition)
+        public async Task<Guid> UpdateEdition(Edition edition)
         {
-            throw new System.NotImplementedException();
+            Update(edition);
+            await Commit();
+
+            return edition.Id;
         }
 
-        public Task RemoveEdition(Edition edition)
+        public async Task RemoveEdition(Edition edition)
         {
-            throw new System.NotImplementedException();
+            Remove(edition);
+            await Commit();
         }
 
         public async Task RemoveEditions(IEnumerable<Edition> editions)
