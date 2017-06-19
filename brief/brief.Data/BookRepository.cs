@@ -1,19 +1,16 @@
 ﻿namespace brief.Data
 {
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
     using Library.Entities;
     using Library.Repositories;
 
-    public class BookRepository : BaseRepository, IBookReporitory
+    public class BookRepository : BaseRepository, IBookRepository
     {
         public BookRepository(IApplicationDbContext context) : base(context) {}
 
         public Task<Book> GetBook(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+            => Context.Set<Book>().FindAsync(id);
 
         public async Task<Book> CreateBook(Book book)
         {
@@ -23,14 +20,18 @@
             return newBook;
         }
 
-        public Task<Book> UpdateBook(Book book)
+        public async Task<Book> UpdateBook(Book book)
         {
-            throw new NotImplementedException();
+            Update(book);
+            await Commit();
+
+            return book;
         }
 
-        public Task RemoveBook(Guid id)
+        public async Task RemoveBook(Book book)
         {
-            throw new NotImplementedException();
+            Remove(book);
+            await Commit();
         }
     }
 }

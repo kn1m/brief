@@ -4,11 +4,11 @@
     using System.Threading.Tasks;
     using Entities;
 
-    public interface IBookReporitory
+    public interface IBookRepository
     {
         Task<Book> GetBook(Guid id);
         Task<Book> CreateBook(Book book);
         Task<Book> UpdateBook(Book book);
-        Task RemoveBook(Guid id);
+        Task RemoveBook(Book book);
     }
 }

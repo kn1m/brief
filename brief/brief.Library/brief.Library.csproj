@@ -72,7 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublisherService.cs" />
     <Compile Include="Repositories\IAuthorRepository.cs" />
-    <Compile Include="Repositories\IBookReporitory.cs" />
+    <Compile Include="Repositories\IBookRepository.cs" />
     <Compile Include="Repositories\ICoverRepository.cs" />
     <Compile Include="Repositories\IEditionRepository.cs" />
     <Compile Include="Repositories\IFilterRepository.cs" />

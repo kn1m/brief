@@ -1,5 +1,6 @@
 ﻿namespace brief.Data
 {
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
@@ -30,6 +31,9 @@
 
         protected void Remove<TEntity>(TEntity entity) where TEntity : class
             => Context.Set<TEntity>().Remove(entity);
+
+        protected void RemoveRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
+            => Context.Set<TEntity>().RemoveRange(entities);
 
         public Task Commit()
             => Context.Commit();

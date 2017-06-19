@@ -12,15 +12,20 @@
 
     public class BookService : IBookService
     {
-        private readonly IBookReporitory _bookReporitory;
+        private readonly IBookRepository _bookRepository;
+        private readonly IEditionRepository _editionRepository;
         private readonly IMapper _mapper;
 
-        public BookService(IBookReporitory bookReporitory, IMapper mapper)
+        public BookService(IBookRepository bookRepository,
+                           IEditionRepository editionRepository,
+                           IMapper mapper)
         {
-            Guard.AssertNotNull(bookReporitory);
+            Guard.AssertNotNull(bookRepository);
             Guard.AssertNotNull(mapper);
+            Guard.AssertNotNull(editionRepository);
 
-            _bookReporitory = bookReporitory;
+            _editionRepository = editionRepository;
+            _bookRepository = bookRepository;
             _mapper = mapper;
         }
 
@@ -28,7 +33,7 @@
         {
             var newBook = _mapper.Map<Book>(book);
 
-            var createdBook = await _bookReporitory.CreateBook(newBook);
+            var createdBook = await _bookRepository.CreateBook(newBook);
 
             return new BaseResponseMessage { Id = createdBook.Id };
         }
@@ -37,14 +42,33 @@
         {
             var newBook = _mapper.Map<Book>(book);
 
-            var updatedBook = await _bookReporitory.UpdateBook(newBook);
+            var updatedBook = await _bookRepository.UpdateBook(newBook);
 
             return new BaseResponseMessage { Id = updatedBook.Id };
         }
 
         public async Task<BaseResponseMessage> RemoveBook(Guid id)
         {
-            throw new NotImplementedException();
+            var response = new BaseResponseMessage();
+
+            var bookToRemove = await _bookRepository.GetBook(id);
+
+            if (bookToRemove == null)
+            {
+                response.RawData = $"Book with {id} wasn't found.";
+
+                return response;
+            }
+
+            var editionsToRemove = await _editionRepository.GetEditionsByBook(id);
+
+            await _editionRepository.RemoveEditions(editionsToRemove);
+
+            await _bookRepository.RemoveBook(bookToRemove);
+
+            response.Id = id;
+
+            return response;
         }
     }
 }
