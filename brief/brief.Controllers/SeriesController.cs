@@ -35,9 +35,9 @@
         }
 
         [HttpDelete]
-        public async Task<HttpResponseMessage> Delete([FromBody] Guid id)
+        public async Task<HttpResponseMessage> Delete([FromBody] Guid id, [FromBody] bool removeBooks)
         {
-            var result = await _seriesService.RemoveSeries(id);
+            var result = await _seriesService.RemoveSeries(id, removeBooks);
 
             return result.CreateRespose(Request, HttpStatusCode.OK, HttpStatusCode.NoContent);
         }

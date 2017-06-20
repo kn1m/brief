@@ -13,14 +13,19 @@
     public class SeriesService : ISeriesService
     {
         private readonly ISeriesRepository _seriesRepository;
+        private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;
 
-        public SeriesService(ISeriesRepository seriesRepository, IMapper mapper)
+        public SeriesService(ISeriesRepository seriesRepository, 
+                             IBookRepository bookRepository,
+                             IMapper mapper)
         {
             Guard.AssertNotNull(seriesRepository);
+            Guard.AssertNotNull(bookRepository);
             Guard.AssertNotNull(mapper);
 
             _seriesRepository = seriesRepository;
+            _bookRepository = bookRepository;
             _mapper = mapper;
         }
 
@@ -42,7 +47,7 @@
             return new BaseResponseMessage {Id = updatedSeries.Id};
         }
 
-        public async Task<BaseResponseMessage> RemoveSeries(Guid id)
+        public async Task<BaseResponseMessage> RemoveSeries(Guid id, bool removeBooks)
         {
             throw new NotImplementedException();
         }

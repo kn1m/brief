@@ -1,6 +1,7 @@
 ﻿namespace brief.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Library.Entities;
     using Library.Repositories;
@@ -11,6 +12,11 @@
 
         public Task<Book> GetBook(Guid id)
             => Context.Set<Book>().FindAsync(id);
+
+        public Task<List<Book>> GetBooksBySeriesId(Guid id)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<Guid> CreateBook(Book book)
         {
@@ -26,6 +32,11 @@
             await Commit();
 
             return book.Id;
+        }
+
+        public Task RemoveBooks(IEnumerable<Book> books)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task RemoveBook(Book book)

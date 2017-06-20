@@ -11,14 +11,19 @@
 
     public class AuthorService : IAuthorService
     {
+        private readonly IEditionRepository _editionRepository;
         private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;
 
-        public AuthorService(IAuthorRepository authorRepository, IMapper mapper)
+        public AuthorService(IAuthorRepository authorRepository, 
+                             IEditionRepository editionRepository,
+                             IMapper mapper)
         {
             Guard.AssertNotNull(authorRepository);
             Guard.AssertNotNull(mapper);
+            Guard.AssertNotNull(editionRepository);
 
+            _editionRepository = editionRepository;
             _authorRepository = authorRepository;
             _mapper = mapper;
         }

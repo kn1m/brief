@@ -7,8 +7,6 @@
 
     public class SeriesRepository : BaseRepository, ISeriesRepository
     {
-        private readonly IApplicationDbContext _context;
-
         public SeriesRepository(IApplicationDbContext context) : base(context) { }
 
         public Task<Series> CreateSerires(Series serires)
