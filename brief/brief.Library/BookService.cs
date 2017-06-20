@@ -73,7 +73,7 @@
                 return response;
             }
 
-            var editionsToRemove = await _editionRepository.GetEditionsByBook(id);
+            var editionsToRemove = await _editionRepository.GetEditionsByBookOrPublisher(id);
 
             await _editionRepository.RemoveEditions(editionsToRemove);
 

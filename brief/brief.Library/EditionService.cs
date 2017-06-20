@@ -68,7 +68,22 @@
 
         public async Task<BaseResponseMessage> RemoveEdition(Guid id)
         {
-            throw new NotImplementedException();
+            var response = new BaseResponseMessage();
+
+            var editionToRemove = await _editionRepository.GetEdition(id);
+
+            if (editionToRemove == null)
+            {
+                response.RawData = $"Edition with {id} wasn't found.";
+
+                return response;
+            }
+
+            await _editionRepository.RemoveEdition(editionToRemove);
+
+            response.Id = id;
+
+            return response;
         }
 
         public async Task<BaseResponseMessage> CreateEdition(EditionModel edition)

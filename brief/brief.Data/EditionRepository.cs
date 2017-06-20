@@ -12,8 +12,8 @@
     {
         public EditionRepository(IApplicationDbContext context) : base(context) {}
 
-        public Task<List<Edition>> GetEditionsByBook(Guid id)
-            => Context.Set<Edition>().Where(e => e.Book.Id == id).ToListAsync();
+        public Task<List<Edition>> GetEditionsByBookOrPublisher(Guid id)
+            => Context.Set<Edition>().Where(e => e.BookId == id || e.PublisherId == id).ToListAsync();
         
         public Task<Edition> GetEdition(Guid id)
             => Context.Set<Edition>().FindAsync(id);

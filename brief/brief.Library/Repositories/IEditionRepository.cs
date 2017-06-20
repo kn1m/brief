@@ -7,7 +7,7 @@
 
     public interface IEditionRepository
     {
-        Task<List<Edition>> GetEditionsByBook(Guid id);
+        Task<List<Edition>> GetEditionsByBookOrPublisher(Guid id);
         Task<Edition> GetEdition(Guid id); 
         Task<Guid> CreateEdition(Edition edition);
         Task<Guid> UpdateEdition(Edition edition);
