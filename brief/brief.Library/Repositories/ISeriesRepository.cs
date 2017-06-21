@@ -6,8 +6,9 @@
 
     public interface ISeriesRepository
     {
-        Task<Series> CreateSerires(Series serires);
-        Task<Series> UpdateSerires(Series serires);
+        Task<Series> GetSeries(Guid id);
+        Task<Guid> CreateSerires(Series serires);
+        Task<Guid> UpdateSerires(Series serires);
         Task RemoveSerires(Guid id);
     }
 }

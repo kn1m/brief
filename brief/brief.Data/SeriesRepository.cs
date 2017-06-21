@@ -9,12 +9,18 @@
     {
         public SeriesRepository(IApplicationDbContext context) : base(context) { }
 
-        public Task<Series> CreateSerires(Series serires)
+
+        public Task<Series> GetSeries(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Series> UpdateSerires(Series serires)
+        public Task<Guid> CreateSerires(Series serires)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Guid> UpdateSerires(Series serires)
         {
             throw new NotImplementedException();
         }

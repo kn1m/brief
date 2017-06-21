@@ -35,16 +35,29 @@
 
             var createdSeries = await _seriesRepository.CreateSerires(newSeries);
 
-            return new BaseResponseMessage { Id = createdSeries.Id };
+            return new BaseResponseMessage { Id = createdSeries };
         }
 
         public async Task<BaseResponseMessage> UpdateSeries(SeriesModel series)
         {
             var newSeries = _mapper.Map<Series>(series);
 
-            var updatedSeries = await _seriesRepository.CreateSerires(newSeries);
+            var response = new BaseResponseMessage();
 
-            return new BaseResponseMessage {Id = updatedSeries.Id};
+            //var seriesToUpdate = await _seriesRepository.;
+
+            //if (bookToUpdate == null)
+            //{
+            //    response.RawData = $"Book with {newBook.Id} wasn't found.";
+
+            //    return response;
+            //}
+
+            //await _bookRepository.UpdateBook(newBook);
+
+            //response.Id = newBook.Id;
+
+            return response;
         }
 
         public async Task<BaseResponseMessage> RemoveSeries(Guid id, bool removeBooks)
