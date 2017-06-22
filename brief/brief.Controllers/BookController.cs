@@ -1,6 +1,8 @@
 ﻿namespace brief.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
@@ -21,6 +23,9 @@
         [HttpPost]
         public async Task<HttpResponseMessage> Create([FromBody] BookModel book)
         {
+            IEnumerable<string> headerValues = Request.Headers.GetValues("Forced");
+            var isForced = Convert.ToBoolean(headerValues?.FirstOrDefault());
+
             var result = await _bookService.CreateBook(book);
 
             return result.CreateRespose(Request, HttpStatusCode.Created, HttpStatusCode.BadRequest);

@@ -15,12 +15,12 @@
             _coverService = coverService ?? throw new ArgumentNullException(nameof(coverService));
         }
 
-        [HttpPost]
-        public async Task<HttpResponseMessage> SaveCover()
-            => await BaseUpload(_coverService.SaveCover, _coverService.StorageSettings);
+        //[HttpPost]
+        //public async Task<HttpResponseMessage> SaveCover()
+        //    => await BaseUpload(_coverService.SaveCover, _coverService.StorageSettings);
 
-        [HttpPost]
-        public async Task<HttpResponseMessage> RetrieveDataFromCover()
-            => await BaseUpload(_coverService.RetrieveDataFromCover, _coverService.StorageSettings);
+        //[HttpPost]
+        //public async Task<HttpResponseMessage> RetrieveDataFromCover()
+        //    => await BaseUpload(_coverService.RetrieveDataFromCover, _coverService.StorageSettings);
     }
 }

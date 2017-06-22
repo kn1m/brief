@@ -12,6 +12,11 @@
             throw new NotImplementedException();
         }
 
+        public Task<bool> CheckAuthorForUniqueness(Author author)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Guid> CreateAuthor(Author author)
         {
             throw new NotImplementedException();

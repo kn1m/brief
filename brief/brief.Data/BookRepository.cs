@@ -13,6 +13,11 @@
         public Task<Book> GetBook(Guid id)
             => Context.Set<Book>().FindAsync(id);
 
+        public Task<bool> CheckBookForUniqueness(Book book)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<List<Book>> GetBooksBySeriesId(Guid id)
         {
             throw new NotImplementedException();

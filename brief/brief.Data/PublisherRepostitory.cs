@@ -9,6 +9,11 @@
     {
         public PublisherRepostitory(IApplicationDbContext appContext) : base(appContext) {}
 
+        public Task<bool> CheckPublisherForUniqueness(Publisher publisher)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Publisher> GetPublisher(Guid id)
             => Context.Set<Publisher>().FindAsync(id);
 

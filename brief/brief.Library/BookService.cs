@@ -29,7 +29,7 @@
             _mapper = mapper;
         }
 
-        public async Task<BaseResponseMessage> CreateBook(BookModel book)
+        public async Task<BaseResponseMessage> CreateBook(BookModel book, bool force = false)
         {
             var newBook = _mapper.Map<Book>(book);
 
@@ -45,6 +45,13 @@
             var response = new BaseResponseMessage();
 
             var bookToUpdate = await _bookRepository.GetBook(newBook.Id);
+
+            if (!await _bookRepository.CheckBookForUniqueness(newBook))
+            {
+                response.RawData = $"Book {newBook.Name} already existing with similar data.";
+
+                return response;
+            }
 
             if (bookToUpdate == null)
             {

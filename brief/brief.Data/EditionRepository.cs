@@ -12,6 +12,11 @@
     {
         public EditionRepository(IApplicationDbContext context) : base(context) {}
 
+        public Task<bool> CheckEditionForUniqueness(Edition edition)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<List<Edition>> GetEditionsByBookOrPublisher(Guid id)
             => Context.Set<Edition>().Where(e => e.BookId == id || e.PublisherId == id).ToListAsync();
         

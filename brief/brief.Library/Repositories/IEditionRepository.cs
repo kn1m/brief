@@ -7,6 +7,7 @@
 
     public interface IEditionRepository
     {
+        Task<bool> CheckEditionForUniqueness(Edition edition);
         Task<List<Edition>> GetEditionsByBookOrPublisher(Guid id);
         Task<Edition> GetEdition(Guid id); 
         Task<Guid> CreateEdition(Edition edition);

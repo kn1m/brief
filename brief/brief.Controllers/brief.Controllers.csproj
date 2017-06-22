@@ -102,9 +102,12 @@
     <Compile Include="Constraints\LowercaseRouteConstraint.cs" />
     <Compile Include="CoverController.cs" />
     <Compile Include="Extensions\BaseResponseExtensions.cs" />
+    <Compile Include="Extensions\RequestExtensions.cs" />
     <Compile Include="Filters\ExceptionLogger.cs" />
     <Compile Include="BaseImageUploadController.cs" />
     <Compile Include="Helpers\FilterSettings.cs" />
+    <Compile Include="Helpers\HeaderSettings.cs" />
+    <Compile Include="Helpers\IHeaderSettings.cs" />
     <Compile Include="Helpers\StorageSettings.cs" />
     <Compile Include="Models\AuthorModel.cs" />
     <Compile Include="Models\BaseEntities\BaseResponseMessage.cs" />

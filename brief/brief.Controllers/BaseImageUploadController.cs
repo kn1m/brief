@@ -9,18 +9,37 @@
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using Extensions;
     using Helpers;
     using Models.BaseEntities;
     using StreamProviders;
 
     public abstract class BaseImageUploadController : ApiController
     {
-        protected virtual async Task<HttpResponseMessage> BaseUpload<TData>(Func<ImageModel, Task<TData>> strategy, StorageSettings storageSettings) where TData : IRecognizable 
+        protected virtual async Task<HttpResponseMessage> BaseUpload<TData>(Func<ImageModel, Task<TData>> strategy, 
+                                                                            StorageSettings storageSettings,
+                                                                            IHeaderSettings headerSettings) 
+            where TData : IRecognizable 
         {
             if(!Request.Content.IsMimeMultipartContent())
             {
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
+
+            var languageToProccess = Request.RetrieveHeader("Target-Language", headerSettings);
+
+            if (languageToProccess == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Specifiy lang");
+            }
+
+            //IEnumerable<string> headerValues = Request.Headers.GetValues("Target-Language");
+            //var tt = headerValues.FirstOrDefault();
+
+            //if (tt)
+            //{
+                
+            //}
 
             ImageMultipartFormDataStreamProvider provider = new ImageMultipartFormDataStreamProvider(storageSettings.StoragePath);
 

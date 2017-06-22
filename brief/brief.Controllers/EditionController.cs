@@ -6,21 +6,24 @@
     using System.Threading.Tasks;
     using System.Web.Http;
     using Extensions;
+    using Helpers;
     using Models;
     using Providers;
 
     public class EditionController : BaseImageUploadController
     {
         private readonly IEditionService _editionService;
-        
-        public EditionController(IEditionService editionService)
+        private readonly IHeaderSettings _headerSettings;
+
+        public EditionController(IEditionService editionService, IHeaderSettings headerSettings)
         {
             _editionService = editionService ?? throw new ArgumentNullException(nameof(editionService));
+            _headerSettings = headerSettings ?? throw new ArgumentException(nameof(headerSettings));
         }
 
         [HttpPost]
         public async Task<HttpResponseMessage> RetriveData()
-            => await BaseUpload(_editionService.RetrieveEditionDataFromImage, _editionService.StorageSettings);
+            => await BaseUpload(_editionService.RetrieveEditionDataFromImage, _editionService.StorageSettings, _headerSettings);
 
         [HttpPost]
         public async Task<HttpResponseMessage> Create([FromBody] EditionModel edition)

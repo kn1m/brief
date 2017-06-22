@@ -1,5 +1,6 @@
 ﻿namespace brief
 {
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Configuration;
     using System.Drawing;
@@ -92,10 +93,26 @@
                 .As<IFilterRepository>();
             builder.RegisterType<FilterService>()
                 .As<IFilterService>();
+            builder.RegisterType<HeaderSettings>()
+                .As<IHeaderSettings>()
+                .AsSelf();
+
 
             // OPTIONAL: Register the Autofac filter provider.
             //builder.RegisterWebApiFilterProvider(config);
             builder.RegisterApiControllers(typeof(BookController).Assembly);
+
+            builder.RegisterType<EditionController>()
+                .WithParameters(
+                    new Parameter[] {
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.ParameterType == typeof(IEditionService),
+                            (pi, ctx) => ctx.Resolve<IEditionService>()),
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.Name == "headerSettings",
+                            (pi, ctx) => new HeaderSettings { AcceptableValuesForHeader =
+                                new Dictionary<string, string[]> { {"Target-Language" , new[] {"ukr"}}  }}),
+                    });
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
