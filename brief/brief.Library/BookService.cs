@@ -33,9 +33,18 @@
         {
             var newBook = _mapper.Map<Book>(book);
 
+            var response = new BaseResponseMessage();
+
+            if (!await _bookRepository.CheckBookForUniqueness(newBook) || !force)
+            {
+                response.RawData = $"Book {newBook.Name} already existing with similar data.";
+                return response;
+            }
+
             var createdBookId = await _bookRepository.CreateBook(newBook);
 
-            return new BaseResponseMessage { Id = createdBookId };
+            response.Id = createdBookId;
+            return response;
         }
 
         public async Task<BaseResponseMessage> UpdateBook(BookModel book)
@@ -49,21 +58,18 @@
             if (!await _bookRepository.CheckBookForUniqueness(newBook))
             {
                 response.RawData = $"Book {newBook.Name} already existing with similar data.";
-
                 return response;
             }
 
             if (bookToUpdate == null)
             {
                 response.RawData = $"Book with {newBook.Id} wasn't found.";
-
                 return response;
             }
 
             await _bookRepository.UpdateBook(newBook);
 
             response.Id = newBook.Id;
-
             return response;
         }
 
@@ -76,7 +82,6 @@
             if (bookToRemove == null)
             {
                 response.RawData = $"Book with {id} wasn't found.";
-
                 return response;
             }
 
@@ -87,7 +92,6 @@
             await _bookRepository.RemoveBook(bookToRemove);
 
             response.Id = id;
-
             return response;
         }
     }
