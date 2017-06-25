@@ -2,7 +2,9 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Linq;
     using System.Threading.Tasks;
+    using Library.Helpers;
     using Library.Transformers;
     using Tesseract;
 
@@ -13,6 +15,8 @@
 
         public TesseractTransformer(string dataPath, EngineMode mode)
         {
+            Guard.AssertNotNull(dataPath);
+
             _dataPath = dataPath;
             _mode = mode;
         }
@@ -21,13 +25,14 @@
         {
             string result = string.Empty;
 
-            var languages = configurations.Length == 0 ? "auto" 
-                : configurations.Length == 1 ? configurations[0].ToString() 
-                : string.Join("+", configurations);
+            if (configurations.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(configurations));
+            }
 
             try
             {
-                using (var engine = new TesseractEngine(_dataPath, "ukr", _mode))
+                using (var engine = new TesseractEngine(_dataPath, configurations.First().ToString(), _mode))
                 {
                     using (var img = Pix.LoadFromFile(source))
                     {
@@ -54,7 +59,7 @@
                                                 if (iter.IsAtBeginningOf(PageIteratorLevel.Block))
                                                 {
                                                     //Console.WriteLine("<BLOCK>");
-                                                    result += "<BLOCK>";
+                                                    result += Environment.NewLine;
                                                 }
 
                                                 //Console.Write(iter.GetText(PageIteratorLevel.Word));

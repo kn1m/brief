@@ -1,32 +1,42 @@
 ﻿namespace brief.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using System;  
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
     using Extensions;
+    using Helpers;
     using Models;
+    using Models.BaseEntities;
     using Providers;
 
     public class BookController : ApiController
     {
         private readonly IBookService _bookService;
+        private readonly IHeaderSettings _headerSettings;
 
-        public BookController(IBookService bookService)
+        public BookController(IBookService bookService, IHeaderSettings headerSettings)
         {
             _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
+            _headerSettings = headerSettings ?? throw new ArgumentException(nameof(headerSettings));
         }
 
         [HttpPost]
         public async Task<HttpResponseMessage> Create([FromBody] BookModel book)
         {
-            IEnumerable<string> headerValues = Request.Headers.GetValues("Forced");
-            var isForced = Convert.ToBoolean(headerValues?.FirstOrDefault());
+            var forced = Request.RetrieveHeader("Forced", _headerSettings);
 
-            var result = await _bookService.CreateBook(book);
+            BaseResponseMessage result;
+
+            if (forced != null)
+            {
+                result = await _bookService.CreateBook(book, true);
+            }
+            else
+            {
+                result = await _bookService.CreateBook(book);
+            }
 
             return result.CreateRespose(Request, HttpStatusCode.Created, HttpStatusCode.BadRequest);
         }

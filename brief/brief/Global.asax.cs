@@ -97,7 +97,6 @@
                 .As<IHeaderSettings>()
                 .AsSelf();
 
-
             // OPTIONAL: Register the Autofac filter provider.
             //builder.RegisterWebApiFilterProvider(config);
             builder.RegisterApiControllers(typeof(BookController).Assembly);
@@ -111,7 +110,31 @@
                         new ResolvedParameter(
                             (pi, ctx) => pi.Name == "headerSettings",
                             (pi, ctx) => new HeaderSettings { AcceptableValuesForHeader =
-                                new Dictionary<string, string[]> { {"Target-Language" , new[] {"ukr"}}  }}),
+                                new Dictionary<string, string[]> { {"Target-Language" , new[] {"ukr", "rus", "eng"}}  }}),
+                    });
+
+            builder.RegisterType<CoverController>()
+                .WithParameters(
+                    new Parameter[] {
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.ParameterType == typeof(ICoverService),
+                            (pi, ctx) => ctx.Resolve<ICoverService>()),
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.Name == "headerSettings",
+                            (pi, ctx) => new HeaderSettings { AcceptableValuesForHeader =
+                                new Dictionary<string, string[]> { {"Target-Language" , new[] {"ukr", "rus", "eng"}}  }}),
+                    });
+
+            builder.RegisterType<BookController>()
+                .WithParameters(
+                    new Parameter[] {
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.ParameterType == typeof(IBookService),
+                            (pi, ctx) => ctx.Resolve<IBookService>()),
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.Name == "headerSettings",
+                            (pi, ctx) => new HeaderSettings { AcceptableValuesForHeader =
+                                new Dictionary<string, string[]> { { "Forced", new[] {"true"}}  }}),
                     });
 
             // Set the dependency resolver to be Autofac.

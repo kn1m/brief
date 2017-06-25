@@ -16,7 +16,7 @@
 
     public abstract class BaseImageUploadController : ApiController
     {
-        protected virtual async Task<HttpResponseMessage> BaseUpload<TData>(Func<ImageModel, Task<TData>> strategy, 
+        protected virtual async Task<HttpResponseMessage> BaseTextRecognitionUpload<TData>(Func<ImageModel, Task<TData>> strategy, 
                                                                             StorageSettings storageSettings,
                                                                             IHeaderSettings headerSettings) 
             where TData : IRecognizable 
@@ -30,16 +30,8 @@
 
             if (languageToProccess == null)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Specifiy lang");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Specify appropriate target language.");
             }
-
-            //IEnumerable<string> headerValues = Request.Headers.GetValues("Target-Language");
-            //var tt = headerValues.FirstOrDefault();
-
-            //if (tt)
-            //{
-                
-            //}
 
             ImageMultipartFormDataStreamProvider provider = new ImageMultipartFormDataStreamProvider(storageSettings.StoragePath);
 
@@ -56,7 +48,8 @@
 
                     var imageToSave = new ImageModel
                     {
-                        Path = Path.GetFileName(file.LocalFileName)
+                        Path = Path.GetFileName(file.LocalFileName),
+                        TargetLanguage = languageToProccess
                     };
 
                     dataTasks.Add(strategy.Invoke(imageToSave));

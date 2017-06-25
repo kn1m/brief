@@ -7,20 +7,24 @@
 
     public static class RequestExtensions
     {
-        public static string RetrieveHeader(this HttpRequestMessage request, string header, IHeaderSettings settings)
+        public static string RetrieveHeader(this HttpRequestMessage request,
+                                                 string header,
+                                                 IHeaderSettings settings)
         {
             IEnumerable<string> headerValues;
 
             if(request.Headers.TryGetValues(header, out headerValues))
             {
-                if (headerValues.Count() != 1)
+                var headersList = headerValues.ToList();
+
+                if (headersList.Count != 1)
                 {
                     return null;
                 }
 
-                var headerValue = headerValues.FirstOrDefault();
+                var headerValue = headersList.FirstOrDefault();
 
-                if (!settings.AcceptableValuesForHeader[header].Contains(headerValue.ToLower()))
+                if (!settings.AcceptableValuesForHeader[header].Contains(headerValue?.ToLower()))
                 {
                     return null;
                 }

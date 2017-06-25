@@ -23,7 +23,7 @@
 
         [HttpPost]
         public async Task<HttpResponseMessage> RetriveData()
-            => await BaseUpload(_editionService.RetrieveEditionDataFromImage, _editionService.StorageSettings, _headerSettings);
+            => await BaseTextRecognitionUpload(_editionService.RetrieveEditionDataFromImage, _editionService.StorageSettings, _headerSettings);
 
         [HttpPost]
         public async Task<HttpResponseMessage> Create([FromBody] EditionModel edition)

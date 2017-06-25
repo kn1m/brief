@@ -45,7 +45,7 @@
 
             var imagePath = ConvertToAppropirateFormat(fileSavePath, deleteOriginal: true);
 
-            string transformResult = await _transformer.TransformAsync(imagePath);
+            string transformResult = await _transformer.TransformAsync(imagePath, image.TargetLanguage);
 
             CleanUp(imagePath);
 
