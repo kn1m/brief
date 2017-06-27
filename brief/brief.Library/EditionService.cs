@@ -41,20 +41,13 @@
 
         public async Task<BaseResponseMessage> RetrieveEditionDataFromImage(ImageModel image)
         {
-            var fileSavePath = Path.Combine(StorageSettings.StoragePath, image.Path);
-
-            var imagePath = ConvertToAppropirateFormat(fileSavePath, deleteOriginal: true);
+            var imagePath = ConvertToAppropirateFormat(image.Path, deleteOriginal: true);
 
             string transformResult = await _transformer.TransformAsync(imagePath, image.TargetLanguage);
 
             CleanUp(imagePath);
 
             return new BaseResponseMessage { RawData = transformResult };
-        }
-
-        public Task<ResponseMessage<EditionModel>> RetrieveEditionObjectFromImage(ImageModel image)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<BaseResponseMessage> UpdateEdition(EditionModel edition)

@@ -1,9 +1,11 @@
 ﻿namespace brief.Controllers
 {
     using System;
+    using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using Extensions;
     using Helpers;
     using Providers;
 
@@ -19,11 +21,19 @@
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> SaveCover()
-            => await BaseTextRecognitionUpload(_coverService.SaveCover, _coverService.StorageSettings, _headerSettings);
+        public async Task<HttpResponseMessage> SaveCover([FromUri]Guid id)
+            => await BaseImageUpload(_coverService.SaveCover, _coverService.StorageSettings, id);
 
         [HttpPost]
         public async Task<HttpResponseMessage> RetrieveDataFromCover()
             => await BaseTextRecognitionUpload(_coverService.RetrieveDataFromCover, _coverService.StorageSettings, _headerSettings);
+
+        [HttpDelete]
+        public async Task<HttpResponseMessage> Delete([FromUri] Guid id)
+        {
+            var result = await _coverService.RemoveCover(id);
+
+            return result.CreateRespose(Request, HttpStatusCode.OK, HttpStatusCode.NoContent);
+        }
     }
 }

@@ -18,6 +18,7 @@
         public CurrencyModel? CurrencyModel { get; set; }
         public Guid? PublisherId { get; set; }
         public Guid? BookId { get; set; }
+        public string Isbn { get; set; }
         public string RawData { get; set; }
     }
 }

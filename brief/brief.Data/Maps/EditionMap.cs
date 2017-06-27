@@ -33,6 +33,9 @@
             Property(e => e.Language)
                 .IsRequired();
 
+            Property(e => e.Isbn)
+                .HasMaxLength(13);
+
             HasRequired<Publisher>(e => e.Publisher)
                 .WithMany(p => p.Editions)
                 .HasForeignKey(e => e.PublisherId);

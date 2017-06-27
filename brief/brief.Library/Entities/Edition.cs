@@ -18,5 +18,6 @@
         public EditionType EditionType { get; set; }
         public Language Language { get; set; }
         public Currency? Currency { get; set; }
+        public string Isbn { get; set; }
     }
 }

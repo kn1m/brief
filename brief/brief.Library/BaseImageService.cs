@@ -12,6 +12,8 @@
 
         protected BaseImageService(BaseTransformerSettings settings)
         {
+            Guard.AssertNotNull(settings);
+
             _mainTransformerFormat = settings.MainTransformerFormat;
         }
 
