@@ -37,34 +37,17 @@
             _mapper = mapper;
         }
 
-        public Task<CoverModel> SaveCover(ImageModel image)
-        {
-
-
-            return null;
-        }
-
-        public Task<CoverModel> RetrieveDataFromCover(ImageModel cover)
+        public async Task<BaseResponseMessage> SaveCover(ImageModel image)
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveCover(Guid id)
+        public async Task<BaseResponseMessage> RetrieveDataFromCover(ImageModel cover)
         {
             throw new NotImplementedException();
         }
 
-        Task<BaseResponseMessage> ICoverService.SaveCover(ImageModel image)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> ICoverService.RetrieveDataFromCover(ImageModel cover)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<BaseResponseMessage> ICoverService.RemoveCover(Guid id)
+        public async Task<BaseResponseMessage> RemoveCover(Guid id)
         {
             throw new NotImplementedException();
         }

@@ -87,18 +87,5 @@
 
             return new BaseResponseMessage { Id = createdEditionId };
         }
-
-        public async Task<ResponseMessage<EditionModel>> GetByIsbnFromImage(ImageModel image)
-        {
-            var fileSavePath = Path.Combine(StorageSettings.StoragePath, image.Path);
-
-            var imagePath = ConvertToAppropirateFormat(fileSavePath, deleteOriginal: true);
-
-            string transformResult = await _transformer.TransformAsync(imagePath);
-
-            CleanUp(imagePath);
-
-            return new ResponseMessage<EditionModel>();
-        }
     }
 }
