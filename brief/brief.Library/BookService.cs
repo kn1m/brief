@@ -14,16 +14,20 @@
     {
         private readonly IBookRepository _bookRepository;
         private readonly IEditionRepository _editionRepository;
+        private readonly ICoverRepository _coverRepository;
         private readonly IMapper _mapper;
-
+        
         public BookService(IBookRepository bookRepository,
                            IEditionRepository editionRepository,
+                           ICoverRepository coverRepository,
                            IMapper mapper)
         {
             Guard.AssertNotNull(bookRepository);
             Guard.AssertNotNull(mapper);
             Guard.AssertNotNull(editionRepository);
+            Guard.AssertNotNull(coverRepository);
 
+            _coverRepository = coverRepository;
             _editionRepository = editionRepository;
             _bookRepository = bookRepository;
             _mapper = mapper;
@@ -87,7 +91,10 @@
 
             var editionsToRemove = await _editionRepository.GetEditionsByBookOrPublisher(id);
 
-            await _editionRepository.RemoveEditions(editionsToRemove);
+            if (editionsToRemove != null)
+            {
+                await _editionRepository.RemoveEditions(editionsToRemove);
+            }
 
             await _bookRepository.RemoveBook(bookToRemove);
 

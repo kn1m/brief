@@ -9,6 +9,6 @@
     {
         Task<BaseResponseMessage> CreateAuthor(AuthorModel author);
         Task<BaseResponseMessage> UpdateAuthor(AuthorModel author);
-        Task<BaseResponseMessage> RemoveAuthor(Guid id);
+        Task<BaseResponseMessage> RemoveAuthor(Guid id, bool removeEditions = false);
     }
 }

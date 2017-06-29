@@ -9,6 +9,6 @@
     {
         Task<BaseResponseMessage> CreateSeries(SeriesModel series);
         Task<BaseResponseMessage> UpdateSeries(SeriesModel series);
-        Task<BaseResponseMessage> RemoveSeries(Guid id, bool removeBooks);
+        Task<BaseResponseMessage> RemoveSeries(Guid id, bool removeBooks = false);
     }
 }

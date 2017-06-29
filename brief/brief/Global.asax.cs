@@ -58,7 +58,8 @@
 
             builder.RegisterType<ApplicationDbContext>()
                 .As<IApplicationDbContext>()
-                .WithParameter(new NamedParameter("connectionString", ConfigurationManager.ConnectionStrings["briefContext"].ConnectionString));
+                .WithParameter(new NamedParameter("connectionString", ConfigurationManager.ConnectionStrings["briefContext"].ConnectionString))
+                .InstancePerLifetimeScope();
 
             builder.RegisterType<BookService>()
                 .As<IBookService>();

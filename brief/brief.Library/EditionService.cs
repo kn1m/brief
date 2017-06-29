@@ -18,22 +18,26 @@
         public StorageSettings StorageSettings { get; }
 
         private readonly IEditionRepository _editionRepository;
+        private readonly ICoverRepository _coverRepository;
         private readonly ITransformer<string, string> _transformer;
         private readonly IMapper _mapper;
 
         public EditionService(IEditionRepository editionRepository,
+                              ICoverRepository coverRepository,
                               ITransformer<string, string> transformer,
                               IMapper mapper,
                               BaseTransformerSettings settings,
                               StorageSettings storageSettings) : base(settings)
         {
             Guard.AssertNotNull(editionRepository);
+            Guard.AssertNotNull(coverRepository);
             Guard.AssertNotNull(transformer);
             Guard.AssertNotNull(mapper);
             Guard.AssertNotNull(storageSettings);
 
             StorageSettings = storageSettings;
 
+            _coverRepository = coverRepository;
             _editionRepository = editionRepository;
             _transformer = transformer;
             _mapper = mapper;
@@ -73,7 +77,7 @@
             }
 
             await _editionRepository.RemoveEdition(editionToRemove);
-
+            //remove covers
             response.Id = id;
 
             return response;
@@ -83,9 +87,18 @@
         {
             var newEdtition = _mapper.Map<Edition>(edition);
 
+            var response = new BaseResponseMessage();
+
+            if (!await _editionRepository.CheckEditionForUniqueness(newEdtition))
+            {
+                response.RawData = $"Edition {newEdtition.Description} already existing with similar data.";
+                return response;
+            }
+
             var createdEditionId = await _editionRepository.CreateEdition(newEdtition);
 
-            return new BaseResponseMessage { Id = createdEditionId };
+            response.Id = createdEditionId;
+            return response;
         }
     }
 }
