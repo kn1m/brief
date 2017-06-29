@@ -53,7 +53,28 @@
 
         public async Task<BaseResponseMessage> UpdatePublisher(PublisherModel publisher)
         {
-            throw new NotImplementedException();
+            var newPublisher = _mapper.Map<Publisher>(publisher);
+
+            var response = new BaseResponseMessage();
+
+            var publisherToUpdate = await _publisherRepository.GetPublisher(newPublisher.Id);
+
+            if (publisherToUpdate == null)
+            {
+                response.RawData = $"Publisher with {newPublisher.Id} wasn't found.";
+                return response;
+            }
+            
+            if (newPublisher.Equals(publisherToUpdate))
+            {
+                response.RawData = $"Publisher {newPublisher.Name} already existing with similar data.";
+                return response;
+            }
+
+            await _publisherRepository.UpdatePublisher(newPublisher);
+
+            response.Id = newPublisher.Id;
+            return response;
         }
 
         public async Task<BaseResponseMessage> RemovePublisher(Guid id)
@@ -72,9 +93,18 @@
 
             if (editionsToRemove != null)
             {
+                editionsToRemove.ForEach(async e =>
+                {
+                    var covers = await _coverRepository.GetCoversByEdition(e.Id);
+
+                    if (covers != null)
+                    {
+                        await _coverRepository.RemoveCovers(covers);
+                    }
+                });
+                
                 await _editionRepository.RemoveEditions(editionsToRemove);
             }
-            //remove covers
             await _publisherRepository.RemovePublisher(publisherToRemove);
 
             response.Id = id;

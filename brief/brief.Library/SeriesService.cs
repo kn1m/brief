@@ -14,17 +14,25 @@
     {
         private readonly ISeriesRepository _seriesRepository;
         private readonly IBookRepository _bookRepository;
+        private readonly IEditionRepository _editionRepository;
+        private readonly ICoverRepository _coverRepository;
         private readonly IMapper _mapper;
 
         public SeriesService(ISeriesRepository seriesRepository, 
                              IBookRepository bookRepository,
+                             IEditionRepository editionRepository,
+                             ICoverRepository coverRepository,
                              IMapper mapper)
         {
             Guard.AssertNotNull(seriesRepository);
             Guard.AssertNotNull(bookRepository);
+            Guard.AssertNotNull(editionRepository);
+            Guard.AssertNotNull(coverRepository);
             Guard.AssertNotNull(mapper);
 
             _seriesRepository = seriesRepository;
+            _editionRepository = editionRepository;
+            _coverRepository = coverRepository;
             _bookRepository = bookRepository;
             _mapper = mapper;
         }
@@ -44,19 +52,23 @@
 
             var response = new BaseResponseMessage();
 
-            //var seriesToUpdate = await _seriesRepository.;
+            var seriesToUpdate = await _seriesRepository.GetSeries(newSeries.Id);
 
-            //if (bookToUpdate == null)
-            //{
-            //    response.RawData = $"Book with {newBook.Id} wasn't found.";
+            if (seriesToUpdate == null)
+            {
+                response.RawData = $"Series with {newSeries.Id} wasn't found.";
+                return response;
+            }
+            
+            if (seriesToUpdate.Equals(newSeries))
+            {
+                response.RawData = $"Series {newSeries.Name} already existing with similar data.";
+                return response;
+            }
 
-            //    return response;
-            //}
+            await _seriesRepository.UpdateSerires(seriesToUpdate);
 
-            //await _bookRepository.UpdateBook(newBook);
-
-            //response.Id = newBook.Id;
-
+            response.Id = newSeries.Id;
             return response;
         }
 

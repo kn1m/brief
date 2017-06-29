@@ -87,9 +87,19 @@
 
             if (editionsToRemove != null)
             {
+                editionsToRemove.ForEach(async e =>
+                {
+                    var covers = await _coverRepository.GetCoversByEdition(e.Id);
+
+                    if (covers != null)
+                    {
+                        await _coverRepository.RemoveCovers(covers);
+                    }
+                });
+                
                 await _editionRepository.RemoveEditions(editionsToRemove);
             }
-            //remove covers
+
             await _authorRepository.RemoveAuthor(authorToRemove);
 
             response.Id = id;

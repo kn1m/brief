@@ -59,15 +59,15 @@
 
             var bookToUpdate = await _bookRepository.GetBook(newBook.Id);
 
-            if (!await _bookRepository.CheckBookForUniqueness(newBook))
-            {
-                response.RawData = $"Book {newBook.Name} already existing with similar data.";
-                return response;
-            }
-
             if (bookToUpdate == null)
             {
                 response.RawData = $"Book with {newBook.Id} wasn't found.";
+                return response;
+            }
+            
+            if (bookToUpdate.Equals(newBook))
+            {
+                response.RawData = $"Book {newBook.Name} already existing with similar data.";
                 return response;
             }
 
@@ -93,6 +93,16 @@
 
             if (editionsToRemove != null)
             {
+                editionsToRemove.ForEach(async e =>
+                {
+                    var covers = await _coverRepository.GetCoversByEdition(e.Id);
+
+                    if (covers != null)
+                    {
+                        await _coverRepository.RemoveCovers(covers);
+                    }
+                });
+                
                 await _editionRepository.RemoveEditions(editionsToRemove);
             }
 
