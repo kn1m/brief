@@ -30,7 +30,7 @@
             throw new NotImplementedException();
         }
 
-        public Task RemoveSerires(Guid id)
+        public Task RemoveSerires(Series serires)
         {
             throw new NotImplementedException();
         }

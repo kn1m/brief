@@ -74,7 +74,47 @@
 
         public async Task<BaseResponseMessage> RemoveSeries(Guid id, bool removeBooks)
         {
-            throw new NotImplementedException();
+            var response = new BaseResponseMessage();
+
+            var seriesToRemove = await _seriesRepository.GetSeries(id);
+
+            if (seriesToRemove == null)
+            {
+                response.RawData = $"Series with {id} wasn't found.";
+                return response;
+            }
+
+            if (removeBooks)
+            {
+                var editionsToRemove = await _editionRepository.GetEditionsByBookOrPublisher(id);
+
+                if (editionsToRemove != null)
+                {
+                    editionsToRemove.ForEach(async e =>
+                    {
+                        var covers = await _coverRepository.GetCoversByEdition(e.Id);
+
+                        if (covers != null)
+                        {
+                            await _coverRepository.RemoveCovers(covers);
+                        }
+                    });
+
+                    await _editionRepository.RemoveEditions(editionsToRemove);
+                }
+
+                var bookToRemove = await _bookRepository.GetBooksBySeriesId(id);
+
+                if (bookToRemove != null)
+                {
+                    await _bookRepository.RemoveBooks(bookToRemove);
+                }
+            }
+            
+            await _seriesRepository.RemoveSerires(seriesToRemove);
+
+            response.Id = id;
+            return response;
         }
     }
 }
