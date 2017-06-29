@@ -35,7 +35,7 @@
         }
 
         [HttpDelete]
-        public async Task<HttpResponseMessage> Delete([FromBody] Guid id)
+        public async Task<HttpResponseMessage> Delete([FromUri] Guid id)
         {
             var result = await _authorService.RemoveAuthor(id);
 

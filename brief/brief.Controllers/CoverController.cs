@@ -21,7 +21,7 @@
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> SaveCover([FromUri]Guid id)
+        public async Task<HttpResponseMessage> SaveCover([FromUri] Guid id)
             => await BaseImageUpload(_coverService.SaveCover, _coverService.StorageSettings, id);
 
         [HttpPost]
