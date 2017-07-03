@@ -8,6 +8,8 @@
 
     public class CoverRepository : BaseDapperRepository,  ICoverRepository
     {
+        public CoverRepository(string connectionString) : base(connectionString) {}
+
         public Task<List<Cover>> GetCoversByEdition(Guid id)
         {
             throw new NotImplementedException();

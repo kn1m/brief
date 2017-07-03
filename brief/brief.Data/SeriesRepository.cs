@@ -9,7 +9,6 @@
     {
         public SeriesRepository(IApplicationDbContext context) : base(context) { }
 
-
         public Task<bool> CheckSeriesForUniqueness(Series series)
         {
             throw new NotImplementedException();

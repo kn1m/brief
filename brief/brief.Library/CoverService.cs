@@ -44,7 +44,13 @@
 
         public async Task<BaseResponseMessage> RetrieveDataFromCover(ImageModel cover)
         {
-            throw new NotImplementedException();
+            var imagePath = ConvertToAppropirateFormat(cover.Path, deleteOriginal: true);
+
+            string transformResult = await _transformer.TransformAsync(imagePath, cover.TargetLanguage);
+
+            CleanUp(imagePath);
+
+            return new BaseResponseMessage { RawData = transformResult };
         }
 
         public async Task<BaseResponseMessage> RemoveCover(Guid id)

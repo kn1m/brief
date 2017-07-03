@@ -1,6 +1,7 @@
 ﻿namespace brief.Data
 {
     using System;
+    using System.Data.Entity;
     using System.Threading.Tasks;
     using Library.Entities;
     using Library.Repositories;
@@ -10,26 +11,31 @@
         public PublisherRepostitory(IApplicationDbContext appContext) : base(appContext) {}
 
         public Task<bool> CheckPublisherForUniqueness(Publisher publisher)
-        {
-            throw new NotImplementedException();
-        }
+            => Context.Set<Publisher>().AnyAsync(p => p.Name == publisher.Name && p.Founded == publisher.Founded);
 
         public Task<Publisher> GetPublisher(Guid id)
             => Context.Set<Publisher>().FindAsync(id);
 
-        public Task<Guid> CreatePublisher(Publisher publisher)
+        public async Task<Guid> CreatePublisher(Publisher publisher)
         {
-            throw new NotImplementedException();
+            var newPublisher = Add(publisher);
+            await Commit();
+
+            return newPublisher.Id;
         }
 
-        public Task<Guid> UpdatePublisher(Publisher publisher)
+        public async Task<Guid> UpdatePublisher(Publisher publisher)
         {
-            throw new NotImplementedException();
+            Update(publisher);
+            await Commit();
+
+            return publisher.Id;
         }
 
-        public Task RemovePublisher(Publisher publisher)
+        public async Task RemovePublisher(Publisher publisher)
         {
-            throw new NotImplementedException();
+            Remove(publisher);
+            await Commit();
         }
     }
 }

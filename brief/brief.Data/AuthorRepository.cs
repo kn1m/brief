@@ -1,20 +1,40 @@
 ﻿namespace brief.Data
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
+    using Dapper;
     using Library.Entities;
     using Library.Repositories;
 
     public class AuthorRepository : BaseDapperRepository, IAuthorRepository
     {
-        public Task<Author> GetAuthor(Guid id)
+        public AuthorRepository(string connectionString) : base(connectionString) {}
+
+        public async Task<Author> GetAuthor(Guid id)
         {
-            throw new NotImplementedException();
+            var author = await Connection.QueryFirstAsync<Author>("select Id, AuthorFirstName, AuthorSecondName, AuthorLastName " +
+                                                                  "from dbo.authors where Id = @authorId", new { authorId = id });
+
+            return author;
         }
 
-        public Task<bool> CheckAuthorForUniqueness(Author author)
+        public async Task<bool> CheckAuthorForUniqueness(Author author)
         {
-            throw new NotImplementedException();
+            var existingCount = (await Connection.QueryAsync<int>("select count(*) from dbo.authors where AuthorFirstName = @authorFirstName and " +
+                                                                  "AuthorSecondName = @authorSecondName and AuthorLastName = @authorLastName",
+                                                                  new
+                                                                  {
+                                                                      authorFirstName = author.AuthorFirstName,
+                                                                      authorSecondName = author.AuthorSecondName,
+                                                                      authorLastName = author.AuthorLastName
+                                                                  })).Single();
+
+            if (existingCount != 0)
+            {
+                return false;
+            }
+            return true;
         }
 
         public Task<Guid> CreateAuthor(Author author)

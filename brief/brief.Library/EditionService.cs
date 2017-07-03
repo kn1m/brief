@@ -56,11 +56,28 @@
 
         public async Task<BaseResponseMessage> UpdateEdition(EditionModel edition)
         {
-            var updatedEdition = _mapper.Map<Edition>(edition);
+            var newEdition = _mapper.Map<Edition>(edition);
 
-            var createdEditionId = await _editionRepository.UpdateEdition(updatedEdition);
+            var response = new BaseResponseMessage();
 
-            return new BaseResponseMessage { Id = createdEditionId };
+            var editionToUpdate = await _editionRepository.GetEdition(newEdition.Id);
+
+            if (editionToUpdate == null)
+            {
+                response.RawData = $"Edition with {newEdition.Id} wasn't found.";
+                return response;
+            }
+            
+            if (newEdition.Equals(editionToUpdate))
+            {
+                response.RawData = $"Edition {newEdition.Description} already existing with similar data.";
+                return response;
+            }
+
+            await _editionRepository.UpdateEdition(newEdition);
+
+            response.Id = newEdition.Id;
+            return response;
         }
 
         public async Task<BaseResponseMessage> RemoveEdition(Guid id)
@@ -72,14 +89,19 @@
             if (editionToRemove == null)
             {
                 response.RawData = $"Edition with {id} wasn't found.";
-
                 return response;
             }
+            
+            var covers = await _coverRepository.GetCoversByEdition(id);
 
+            if (covers != null)
+            {
+                await _coverRepository.RemoveCovers(covers);
+            }
+            
             await _editionRepository.RemoveEdition(editionToRemove);
-            //remove covers
+            
             response.Id = id;
-
             return response;
         }
 

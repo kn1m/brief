@@ -103,11 +103,9 @@
                     await _editionRepository.RemoveEditions(editionsToRemove);
                 }
 
-                var bookToRemove = await _bookRepository.GetBooksBySeriesId(id);
-
-                if (bookToRemove != null)
+                if (seriesToRemove.BooksInSeries != null)
                 {
-                    await _bookRepository.RemoveBooks(bookToRemove);
+                    await _bookRepository.RemoveBooks(seriesToRemove.BooksInSeries);
                 }
             }
             

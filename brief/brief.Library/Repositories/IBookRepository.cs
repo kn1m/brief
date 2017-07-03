@@ -9,7 +9,6 @@
     {
         Task<Book> GetBook(Guid id);
         Task<bool> CheckBookForUniqueness(Book book);
-        Task<List<Book>> GetBooksBySeriesId(Guid id);
         Task<Guid> CreateBook(Book book);
         Task<Guid> UpdateBook(Book book);
         Task RemoveBooks(IEnumerable<Book> books);

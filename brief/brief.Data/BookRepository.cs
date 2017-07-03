@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Threading.Tasks;
     using Library.Entities;
     using Library.Repositories;
@@ -14,15 +15,8 @@
             => Context.Set<Book>().FindAsync(id);
 
         public Task<bool> CheckBookForUniqueness(Book book)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Book>> GetBooksBySeriesId(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
+            => Context.Set<Book>().AnyAsync(b => b.Name == book.Name);
+            
         public async Task<Guid> CreateBook(Book book)
         {
             var newBook = Add(book);
@@ -39,9 +33,10 @@
             return book.Id;
         }
 
-        public Task RemoveBooks(IEnumerable<Book> books)
+        public async Task RemoveBooks(IEnumerable<Book> books)
         {
-            throw new NotImplementedException();
+            RemoveRange(books);
+            await Commit();
         }
 
         public async Task RemoveBook(Book book)
