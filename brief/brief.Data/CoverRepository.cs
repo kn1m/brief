@@ -10,27 +10,27 @@
     {
         public CoverRepository(string connectionString) : base(connectionString) {}
 
-        public Task<List<Cover>> GetCoversByEdition(Guid id)
+        public async Task<List<Cover>> GetCoversByEdition(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Edition> GetCover(Guid id)
+        public async Task<Cover> GetCover(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> CheckCoverForUniqueness(Cover cover)
+        public async Task<bool> CheckCoverForUniqueness(Cover cover)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task RemoveCovers(IEnumerable<Cover> covers)
+        public async Task RemoveCovers(IEnumerable<Cover> covers)
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveCover(Cover covers)
+        public async Task RemoveCover(Cover covers)
         {
             throw new NotImplementedException();
         }

@@ -86,14 +86,23 @@
                 .As<IBookRepository>();
             builder.RegisterType<EditionRepository>()
                 .As<IEditionRepository>();
+
+
             builder.RegisterType<CoverRepository>()
-                .As<ICoverRepository>();      
+                .As<ICoverRepository>()
+                .WithParameter(new TypedParameter(typeof(string), ConfigurationManager.ConnectionStrings["briefContext"].ConnectionString));      
             builder.RegisterType<SeriesRepository>()
-                .As<ISeriesRepository>();
+                .As<ISeriesRepository>()
+                .WithParameter(new TypedParameter(typeof(string), ConfigurationManager.ConnectionStrings["briefContext"].ConnectionString));
+            builder.RegisterType<AuthorRepository>()
+                .As<IAuthorRepository>()
+                .WithParameter(new TypedParameter(typeof(string), ConfigurationManager.ConnectionStrings["briefContext"].ConnectionString));
+
             builder.RegisterType<FilterRepository>()
                 .As<IFilterRepository>();
             builder.RegisterType<FilterService>()
                 .As<IFilterService>();
+
             builder.RegisterType<HeaderSettings>()
                 .As<IHeaderSettings>()
                 .AsSelf();

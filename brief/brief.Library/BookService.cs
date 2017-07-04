@@ -33,6 +33,11 @@
             _mapper = mapper;
         }
 
+        public async Task<BaseResponseMessage> AddAuthorForBook(Guid bookId, Guid seriesId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<BaseResponseMessage> CreateBook(BookModel book, bool force = false)
         {
             var newBook = _mapper.Map<Book>(book);

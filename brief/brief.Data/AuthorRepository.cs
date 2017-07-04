@@ -51,7 +51,7 @@
         {
             await Connection.ExecuteAsync("update dbo.authors set AuthorFirstName = @authorFirstName," +
                                           " AuthorSecondName = @authorSecondName," +
-                                          " AuthorLastName = @authorLastName) where Id = @id",
+                                          " AuthorLastName = @authorLastName where Id = @id",
                 new
                 {
                     id = author.Id,

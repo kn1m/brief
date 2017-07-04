@@ -8,9 +8,9 @@
     public interface ICoverRepository
     {
         Task<List<Cover>> GetCoversByEdition(Guid id);
-        Task<Edition> GetCover(Guid id);
+        Task<Cover> GetCover(Guid id);
         Task<bool> CheckCoverForUniqueness(Cover cover);
         Task RemoveCovers(IEnumerable<Cover> covers);
-        Task RemoveCover(Cover covers);
+        Task RemoveCover(Cover cover);
     }
 }

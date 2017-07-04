@@ -37,6 +37,11 @@
             _mapper = mapper;
         }
 
+        public async Task<BaseResponseMessage> AddBookToSeries(Guid bookId, Guid seriesId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<BaseResponseMessage> CreateSeries(SeriesModel series)
         {
             var newSeries = _mapper.Map<Series>(series);

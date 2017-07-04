@@ -55,7 +55,22 @@
 
         public async Task<BaseResponseMessage> RemoveCover(Guid id)
         {
-            throw new NotImplementedException();
+            var response = new BaseResponseMessage();
+
+            var coverToRemove = await _coverRepository.GetCover(id);
+
+            if (coverToRemove == null)
+            {
+                response.RawData = $"Cover with {id} wasn't found.";
+                return response;
+            }
+
+            CleanUp(coverToRemove.LinkTo);
+
+            await _coverRepository.RemoveCover(coverToRemove);
+
+            response.Id = id;
+            return response;
         }
     }
 }
