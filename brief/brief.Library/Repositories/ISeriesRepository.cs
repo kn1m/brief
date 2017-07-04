@@ -6,6 +6,7 @@
 
     public interface ISeriesRepository
     {
+        Task AddBookToSeries(Guid bookId, Guid seriesId);
         Task<bool> CheckSeriesForUniqueness(Series series);
         Task<Series> GetSeries(Guid id);
         Task<Guid> CreateSerires(Series serires);

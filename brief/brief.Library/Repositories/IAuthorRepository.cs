@@ -6,6 +6,7 @@
 
     public interface IAuthorRepository
     {
+        Task AddAuthorToBook(Guid authorId, Guid bookId);
         Task<Author> GetAuthor(Guid id);
         Task<bool> CheckAuthorForUniqueness(Author author);
         Task<Guid> CreateAuthor(Author author);

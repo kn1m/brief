@@ -11,6 +11,11 @@
     {
         public AuthorRepository(string connectionString) : base(connectionString) {}
 
+        public Task AddAuthorToBook(Guid authorId, Guid bookId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Author> GetAuthor(Guid id)
             => await Connection.QueryFirstAsync<Author>("select Id, AuthorFirstName, AuthorSecondName, AuthorLastName " +
                                                                   "from dbo.authors where Id = @authorId", new { authorId = id });
@@ -52,13 +57,13 @@
             await Connection.ExecuteAsync("update dbo.authors set AuthorFirstName = @authorFirstName," +
                                           " AuthorSecondName = @authorSecondName," +
                                           " AuthorLastName = @authorLastName where Id = @id",
-                new
-                {
-                    id = author.Id,
-                    authorFirstName = author.AuthorFirstName,
-                    authorSecondName = author.AuthorSecondName,
-                    authorLastName = author.AuthorLastName
-                });
+                                          new
+                                          {
+                                              id = author.Id,
+                                              authorFirstName = author.AuthorFirstName,
+                                              authorSecondName = author.AuthorSecondName,
+                                              authorLastName = author.AuthorLastName
+                                          });
 
             return author.Id;
         }

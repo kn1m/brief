@@ -33,7 +33,7 @@
             _mapper = mapper;
         }
 
-        public async Task<BaseResponseMessage> AddAuthorForBook(Guid bookId, Guid seriesId)
+        public async Task<BaseResponseMessage> AddAuthorForBook(Guid authorId, Guid bookId)
         {
             throw new NotImplementedException();
         }
