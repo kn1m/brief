@@ -11,7 +11,7 @@
     {
         public SeriesRepository(string connectionString) : base(connectionString) {}
 
-        public Task AddBookToSeries(Guid bookId, Guid seriesId)
+        public Task<(Guid bookId, Guid seriesId)> AddBookToSeries(Guid bookId, Guid seriesId)
         {
             throw new NotImplementedException();
         }

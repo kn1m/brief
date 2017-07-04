@@ -11,7 +11,7 @@
     using Repositories;
     using Transformers;
 
-    public class CoverService : BaseImageService, ICoverService
+    public class CoverService : BaseTransformService, ICoverService
     {
         public StorageSettings StorageSettings { get; }
 

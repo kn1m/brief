@@ -13,7 +13,7 @@
     using Repositories;
     using Transformers;
 
-    public class EditionService : BaseImageService, IEditionService
+    public class EditionService : BaseTransformService, IEditionService
     {
         public StorageSettings StorageSettings { get; }
 
@@ -96,6 +96,8 @@
 
             if (covers != null)
             {
+                covers.ForEach(c => CleanUp(c.LinkTo));
+
                 await _coverRepository.RemoveCovers(covers);
             }
             

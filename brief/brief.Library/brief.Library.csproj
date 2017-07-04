@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="AuthorService.cs" />
     <Compile Include="BaseImageService.cs" />
+    <Compile Include="BaseTransformService.cs" />
     <Compile Include="CoverService.cs" />
     <Compile Include="FilterService.cs" />
     <Compile Include="Entities\Author.cs" />

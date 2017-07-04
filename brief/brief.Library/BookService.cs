@@ -10,7 +10,7 @@
     using Helpers;
     using Repositories;
 
-    public class BookService : IBookService
+    public class BookService : BaseImageService, IBookService
     {
         private readonly IBookRepository _bookRepository;
         private readonly IEditionRepository _editionRepository;
@@ -104,6 +104,8 @@
 
                     if (covers != null)
                     {
+                        covers.ForEach(c => CleanUp(c.LinkTo));
+
                         await _coverRepository.RemoveCovers(covers);
                     }
                 });

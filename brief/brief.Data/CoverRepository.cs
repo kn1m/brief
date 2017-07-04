@@ -37,7 +37,7 @@
 
         public async Task RemoveCovers(IEnumerable<Cover> covers)
         {
-            var columnName = "ID";
+            var columnName = "Id";
             var coversList = covers.ToList();
 
             await Connection.ExecuteAsync(string.Format("CREATE TABLE #{0}s({0} UNIQUEIDENTIFIER PRIMARY KEY)", columnName));
@@ -48,7 +48,7 @@
                 bulkCopy.DestinationTableName = $"#{columnName}s";
 
                 var table = new DataTable();
-                table.Columns.Add(columnName, typeof(int));
+                table.Columns.Add(columnName, typeof(Guid));
                 bulkCopy.ColumnMappings.Add(columnName, columnName);
 
                 foreach (var cover in coversList)

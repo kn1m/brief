@@ -10,7 +10,7 @@
     using Helpers;
     using Repositories;
 
-    public class PublisherService : IPublisherService
+    public class PublisherService : BaseImageService, IPublisherService
     {
         private readonly IPublisherRepository _publisherRepository;
         private readonly IEditionRepository _editionRepository;
@@ -99,6 +99,8 @@
 
                     if (covers != null)
                     {
+                        covers.ForEach(c => CleanUp(c.LinkTo));
+
                         await _coverRepository.RemoveCovers(covers);
                     }
                 });
