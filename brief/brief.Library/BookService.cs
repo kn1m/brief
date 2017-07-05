@@ -42,9 +42,18 @@
             throw new NotImplementedException();
         }
 
-        public Task<ResponseMessage<(Guid authorId, Guid bookId)>> RemoveAuthorFromBook(Guid authorId, Guid bookId)
+        public async Task<ResponseMessage<(Guid authorId, Guid bookId)>> RemoveAuthorFromBook(Guid authorId, Guid bookId)
         {
-            throw new NotImplementedException();
+            var response = new ResponseMessage<(Guid authorId, Guid bookId)>();
+
+            if (await _authorRepository.RemoveAuthorFromBook(authorId, bookId) == 0)
+            {
+                response.RawData = $"Linked record with {authorId} and {bookId} wasn't found.";
+                return response;
+            }
+
+            response.Payload = (authorId, bookId);
+            return response;
         }
 
         public async Task<BaseResponseMessage> CreateBook(BookModel book, bool force = false)

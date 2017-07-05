@@ -16,7 +16,12 @@
             throw new NotImplementedException();
         }
 
-        public Task<(Guid authorId, Guid bookId)> RemoveAuthorFromBook(Guid authorId, Guid bookId)
+        public Task<int> RemoveAuthorFromBook(Guid authorId, Guid bookId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CheckAvailabilityAddingAuthorToBook(Guid authorId, Guid bookId)
         {
             throw new NotImplementedException();
         }

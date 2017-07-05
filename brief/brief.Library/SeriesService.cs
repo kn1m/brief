@@ -46,16 +46,34 @@
 
         public async Task<ResponseMessage<(Guid bookId, Guid seriesId)>> RemoveBookFromSeries(Guid bookId, Guid seriesId)
         {
-            throw new NotImplementedException();
+            var response = new ResponseMessage<(Guid bookId, Guid seriesId)>();
+
+            if (await _seriesRepository.RemoveBookFromSeries(bookId, seriesId) == 0)
+            {
+                response.RawData = $"Linked record with {seriesId} and {bookId} wasn't found.";
+                return response;
+            }
+
+            response.Payload = (bookId, seriesId);
+            return response;
         }
 
         public async Task<BaseResponseMessage> CreateSeries(SeriesModel series)
         {
             var newSeries = _mapper.Map<Series>(series);
 
-            var createdSeries = await _seriesRepository.CreateSerires(newSeries);
+            var response = new BaseResponseMessage();
 
-            return new BaseResponseMessage { Id = createdSeries };
+            if (!await _seriesRepository.CheckSeriesForUniqueness(newSeries))
+            {
+                response.RawData = $"Series {newSeries.Name} already existing with similar data.";
+                return response;
+            }
+
+            var createdSeriesId = await _seriesRepository.CreateSerires(newSeries);
+
+            response.Id = createdSeriesId;
+            return response;
         }
 
         public async Task<BaseResponseMessage> UpdateSeries(SeriesModel series)

@@ -7,7 +7,8 @@
     public interface IAuthorRepository
     {
         Task<(Guid authorId, Guid bookId)> AddAuthorToBook(Guid authorId, Guid bookId);
-        Task<(Guid authorId, Guid bookId)> RemoveAuthorFromBook(Guid authorId, Guid bookId);
+        Task<int> RemoveAuthorFromBook(Guid authorId, Guid bookId);
+        Task<bool> CheckAvailabilityAddingAuthorToBook(Guid authorId, Guid bookId);
         Task<Author> GetAuthor(Guid id);
         Task<bool> CheckAuthorForUniqueness(Author author);
         Task<Guid> CreateAuthor(Author author);

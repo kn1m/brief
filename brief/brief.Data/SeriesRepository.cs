@@ -11,12 +11,24 @@
     {
         public SeriesRepository(string connectionString) : base(connectionString) {}
 
-        public Task<(Guid bookId, Guid seriesId)> AddBookToSeries(Guid bookId, Guid seriesId)
+        public async Task<(Guid bookId, Guid seriesId)> AddBookToSeries(Guid bookId, Guid seriesId)
         {
-            throw new NotImplementedException();
+            await Connection.ExecuteAsync("insert into dbo.books_in_series (BookId, SeriesId)" +
+                                          " values (@book, @series)",
+                                          new
+                                          {
+                                              book = bookId,
+                                              series = seriesId
+                                          });
+            return (bookId, seriesId);
         }
 
-        public Task<(Guid bookId, Guid seriesId)> RemoveBookFromSeries(Guid bookId, Guid seriesId)
+        public async Task<int> RemoveBookFromSeries(Guid bookId, Guid seriesId)
+            => await Connection.ExecuteAsync("delete from dbo.books_in_series where BookId = @book and SeriesId = @series",
+                new { book = bookId,
+                      series = seriesId });
+
+        public Task<bool> CheckAvailabilityAddingBookToSeries(Guid bookId, Guid seriesId)
         {
             throw new NotImplementedException();
         }
