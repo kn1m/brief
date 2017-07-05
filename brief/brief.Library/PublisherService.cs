@@ -99,7 +99,7 @@
 
                     if (covers != null)
                     {
-                        covers.ForEach(c => CleanUp(c.LinkTo));
+                        covers.ForEach(c => TryCleanUp(c.LinkTo));
 
                         await _coverRepository.RemoveCovers(covers);
                     }

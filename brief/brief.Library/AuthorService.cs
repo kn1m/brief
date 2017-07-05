@@ -10,7 +10,7 @@
     using Helpers;
     using Repositories;
 
-    public class AuthorService : IAuthorService
+    public class AuthorService : BaseImageService, IAuthorService
     {
         private readonly IEditionRepository _editionRepository;
         private readonly IAuthorRepository _authorRepository;
@@ -93,6 +93,8 @@
 
                     if (covers != null)
                     {
+                        covers.ForEach(c => TryCleanUp(c.LinkTo));
+
                         await _coverRepository.RemoveCovers(covers);
                     }
                 });

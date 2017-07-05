@@ -16,6 +16,11 @@
             throw new NotImplementedException();
         }
 
+        public Task<(Guid authorId, Guid bookId)> RemoveAuthorFromBook(Guid authorId, Guid bookId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Author> GetAuthor(Guid id)
             => await Connection.QueryFirstAsync<Author>("select Id, AuthorFirstName, AuthorSecondName, AuthorLastName " +
                                                                   "from dbo.authors where Id = @authorId", new { authorId = id });

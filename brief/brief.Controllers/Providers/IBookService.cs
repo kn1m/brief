@@ -7,7 +7,8 @@
 
     public interface IBookService
     {
-        Task<BaseResponseMessage> AddAuthorForBook(Guid authorId, Guid bookId);
+        Task<ResponseMessage<(Guid authorId, Guid bookId)>> AddAuthorForBook(Guid authorId, Guid bookId);
+        Task<ResponseMessage<(Guid authorId, Guid bookId)>> RemoveAuthorFromBook(Guid authorId, Guid bookId);
         Task<BaseResponseMessage> CreateBook(BookModel book, bool force = false);
         Task<BaseResponseMessage> UpdateBook(BookModel book);
         Task<BaseResponseMessage> RemoveBook(Guid id);

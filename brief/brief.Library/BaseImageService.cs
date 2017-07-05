@@ -4,9 +4,14 @@
 
     public abstract class BaseImageService
     {
-        public virtual void CleanUp(string imagePath)
+        public virtual bool TryCleanUp(string imagePath)
         {
-            File.Delete(imagePath);
+            if (File.Exists(imagePath))
+            {
+                File.Delete(imagePath);
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -15,25 +15,34 @@
         private readonly IBookRepository _bookRepository;
         private readonly IEditionRepository _editionRepository;
         private readonly ICoverRepository _coverRepository;
+        private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;
         
         public BookService(IBookRepository bookRepository,
                            IEditionRepository editionRepository,
                            ICoverRepository coverRepository,
+                           IAuthorRepository authorRepository,
                            IMapper mapper)
         {
             Guard.AssertNotNull(bookRepository);
             Guard.AssertNotNull(mapper);
             Guard.AssertNotNull(editionRepository);
+            Guard.AssertNotNull(authorRepository);
             Guard.AssertNotNull(coverRepository);
 
+            _authorRepository = authorRepository;
             _coverRepository = coverRepository;
             _editionRepository = editionRepository;
             _bookRepository = bookRepository;
             _mapper = mapper;
         }
 
-        public async Task<BaseResponseMessage> AddAuthorForBook(Guid authorId, Guid bookId)
+        public Task<ResponseMessage<(Guid authorId, Guid bookId)>> AddAuthorForBook(Guid authorId, Guid bookId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ResponseMessage<(Guid authorId, Guid bookId)>> RemoveAuthorFromBook(Guid authorId, Guid bookId)
         {
             throw new NotImplementedException();
         }
@@ -104,7 +113,7 @@
 
                     if (covers != null)
                     {
-                        covers.ForEach(c => CleanUp(c.LinkTo));
+                        covers.ForEach(c => TryCleanUp(c.LinkTo));
 
                         await _coverRepository.RemoveCovers(covers);
                     }

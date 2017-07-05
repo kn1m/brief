@@ -7,7 +7,8 @@
 
     public interface ISeriesService
     {
-        Task<BaseResponseMessage> AddBookToSeries(Guid bookId, Guid seriesId);
+        Task<ResponseMessage<(Guid bookId, Guid seriesId)>> AddBookToSeries(Guid bookId, Guid seriesId);
+        Task<ResponseMessage<(Guid bookId, Guid seriesId)>> RemoveBookFromSeries(Guid bookId, Guid seriesId);
         Task<BaseResponseMessage> CreateSeries(SeriesModel series);
         Task<BaseResponseMessage> UpdateSeries(SeriesModel series);
         Task<BaseResponseMessage> RemoveSeries(Guid id, bool removeBooks = false);

@@ -16,6 +16,11 @@
             throw new NotImplementedException();
         }
 
+        public Task<(Guid bookId, Guid seriesId)> RemoveBookFromSeries(Guid bookId, Guid seriesId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> CheckSeriesForUniqueness(Series series)
         {
             var existingCount = (await Connection.QueryAsync<int>("select count(*) from dbo.serieses where Name = @name and " +

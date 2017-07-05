@@ -48,7 +48,7 @@
 
             string transformResult = await _transformer.TransformAsync(imagePath, cover.TargetLanguage);
 
-            CleanUp(imagePath);
+            TryCleanUp(imagePath);
 
             return new BaseResponseMessage { RawData = transformResult };
         }
@@ -65,7 +65,7 @@
                 return response;
             }
 
-            CleanUp(coverToRemove.LinkTo);
+            TryCleanUp(coverToRemove.LinkTo);
 
             await _coverRepository.RemoveCover(coverToRemove);
 

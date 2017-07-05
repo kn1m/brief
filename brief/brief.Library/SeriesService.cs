@@ -37,7 +37,14 @@
             _mapper = mapper;
         }
 
-        public async Task<BaseResponseMessage> AddBookToSeries(Guid bookId, Guid seriesId)
+        public async Task<ResponseMessage<(Guid bookId, Guid seriesId)>> AddBookToSeries(Guid bookId, Guid seriesId)
+        {
+            var response = new ResponseMessage<(Guid bookId, Guid seriesId)>();
+
+            return response;
+        }
+
+        public async Task<ResponseMessage<(Guid bookId, Guid seriesId)>> RemoveBookFromSeries(Guid bookId, Guid seriesId)
         {
             throw new NotImplementedException();
         }
@@ -101,7 +108,7 @@
 
                         if (covers != null)
                         {
-                            covers.ForEach(c => CleanUp(c.LinkTo));
+                            covers.ForEach(c => TryCleanUp(c.LinkTo));
 
                             await _coverRepository.RemoveCovers(covers);
                         }
