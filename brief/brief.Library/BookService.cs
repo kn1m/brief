@@ -37,9 +37,18 @@
             _mapper = mapper;
         }
 
-        public Task<ResponseMessage<(Guid authorId, Guid bookId)>> AddAuthorForBook(Guid authorId, Guid bookId)
+        public async Task<ResponseMessage<(Guid authorId, Guid bookId)>> AddAuthorForBook(Guid authorId, Guid bookId)
         {
-            throw new NotImplementedException();
+            var response = new ResponseMessage<(Guid authorId, Guid bookId)>();
+
+            if (!await _authorRepository.CheckAvailabilityAddingAuthorToBook(authorId, bookId))
+            {
+                response.RawData = $"Can't add author with id {authorId} to book with id {bookId}";
+                return response;
+            }
+
+            response.Payload = (authorId, bookId);
+            return response;
         }
 
         public async Task<ResponseMessage<(Guid authorId, Guid bookId)>> RemoveAuthorFromBook(Guid authorId, Guid bookId)

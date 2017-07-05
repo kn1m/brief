@@ -28,9 +28,29 @@
                 new { book = bookId,
                       series = seriesId });
 
-        public Task<bool> CheckAvailabilityAddingBookToSeries(Guid bookId, Guid seriesId)
+        public async Task<bool> CheckAvailabilityAddingBookToSeries(Guid bookId, Guid seriesId)
         {
-            throw new NotImplementedException();
+            var sql = "select count(*) from dbo.serieses where Id = @series; " +
+                      "select count(*) from dbo.books where Id = @book;" +
+                      "select count(*) from dbo.books_in_series where SeriesId = @series and BookId = @book;";
+
+            int seriesAmount;
+            int booksAmount;
+            int booksInSeriesAmount;
+
+            using (SqlMapper.GridReader multi = await Connection.QueryMultipleAsync(sql, new { series = seriesId, book = bookId }))
+            {
+                seriesAmount = multi.Read<int>().Single();
+                booksAmount = multi.Read<int>().Single();
+                booksInSeriesAmount = multi.Read<int>().Single();
+            }
+
+            if (booksAmount == 1 && seriesAmount == 1 && booksInSeriesAmount == 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<bool> CheckSeriesForUniqueness(Series series)
@@ -52,7 +72,7 @@
 
         public async Task<Series> GetSeries(Guid id)
         {
-            const string sql = "select * from dbo.serieses where Id = @seriesId; " +
+            var sql = "select * from dbo.serieses where Id = @seriesId; " +
                                  "select b.Id, b.Name, b.Description from dbo.books b inner join books_in_series bs on b.Id = bs.BookId and SeriesId = @seriesId";
 
             Series series;

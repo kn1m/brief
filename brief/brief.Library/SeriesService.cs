@@ -41,6 +41,13 @@
         {
             var response = new ResponseMessage<(Guid bookId, Guid seriesId)>();
 
+            if (!await _seriesRepository.CheckAvailabilityAddingBookToSeries(bookId, seriesId))
+            {
+                response.RawData = $"Can't add book with id {bookId} to series with id {seriesId}.";
+                return response;
+            }
+
+            response.Payload = (bookId, seriesId);
             return response;
         }
 

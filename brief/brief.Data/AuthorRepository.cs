@@ -11,19 +11,46 @@
     {
         public AuthorRepository(string connectionString) : base(connectionString) {}
 
-        public Task<(Guid authorId, Guid bookId)> AddAuthorToBook(Guid authorId, Guid bookId)
+        public async Task<(Guid authorId, Guid bookId)> AddAuthorToBook(Guid authorId, Guid bookId)
         {
-            throw new NotImplementedException();
+            await Connection.ExecuteAsync("insert into dbo.books_by_author (BookId, AuthorId)" +
+                                          " values (@book, @author)",
+                                          new
+                                          {
+                                              book = bookId,
+                                              author = authorId
+                                          });
+            return (authorId, bookId);
         }
 
-        public Task<int> RemoveAuthorFromBook(Guid authorId, Guid bookId)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<int> RemoveAuthorFromBook(Guid authorId, Guid bookId)
+            => await Connection.ExecuteAsync("delete from dbo.books_by_author where BookId = @book and AuthorId = @author",
+                new { book = bookId,
+                      author = authorId });
 
-        public Task<bool> CheckAvailabilityAddingAuthorToBook(Guid authorId, Guid bookId)
+        public async Task<bool> CheckAvailabilityAddingAuthorToBook(Guid authorId, Guid bookId)
         {
-            throw new NotImplementedException();
+            var sql = "select count(*) from dbo.authors where Id = @author; " +
+                      "select count(*) from dbo.books where Id = @book;" +
+                      "select count(*) from dbo.books_by_author where AuthorId = @author and BookId = @book;";
+
+            int authorsAmount;
+            int booksAmount;
+            int booksWithAuthors;
+
+            using (SqlMapper.GridReader multi = await Connection.QueryMultipleAsync(sql, new { author = authorId, book = bookId }))
+            {
+                authorsAmount = multi.Read<int>().Single();
+                booksAmount = multi.Read<int>().Single();
+                booksWithAuthors = multi.Read<int>().Single();
+            }
+
+            if (booksAmount == 1 && authorsAmount == 1 && booksWithAuthors == 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<Author> GetAuthor(Guid id)
