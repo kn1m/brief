@@ -57,7 +57,7 @@
 
             if (await _seriesRepository.RemoveBookFromSeries(bookId, seriesId) == 0)
             {
-                response.RawData = $"Linked record with {seriesId} and {bookId} wasn't found.";
+                response.RawData = $"Linked record with series id {seriesId} and book id {bookId} wasn't found.";
                 return response;
             }
 

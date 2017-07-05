@@ -57,7 +57,7 @@
 
             if (await _authorRepository.RemoveAuthorFromBook(authorId, bookId) == 0)
             {
-                response.RawData = $"Linked record with {authorId} and {bookId} wasn't found.";
+                response.RawData = $"Linked record with author id {authorId} and book id {bookId} wasn't found.";
                 return response;
             }
 
