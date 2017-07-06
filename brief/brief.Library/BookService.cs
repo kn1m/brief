@@ -47,7 +47,7 @@
                 return response;
             }
 
-            response.Payload = (authorId, bookId);
+            response.Payload = await _authorRepository.AddAuthorToBook(authorId, bookId);
             return response;
         }
 
@@ -57,7 +57,7 @@
 
             if (await _authorRepository.RemoveAuthorFromBook(authorId, bookId) == 0)
             {
-                response.RawData = $"Linked record with author id {authorId} and book id {bookId} wasn't found.";
+                response.RawData = $"Linked record with author id {authorId} and book with id {bookId} wasn't found.";
                 return response;
             }
 

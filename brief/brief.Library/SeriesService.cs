@@ -47,7 +47,7 @@
                 return response;
             }
 
-            response.Payload = (bookId, seriesId);
+            response.Payload = await _seriesRepository.AddBookToSeries(bookId, seriesId);
             return response;
         }
 

@@ -7,6 +7,7 @@
 
     public interface ICoverRepository
     {
+        Task<Guid> SaveCover(Cover cover);
         Task<List<Cover>> GetCoversByEdition(Guid id);
         Task<Cover> GetCover(Guid id);
         Task<bool> CheckCoverForUniqueness(Cover cover);

@@ -7,6 +7,7 @@
     using Controllers.Helpers;
     using Controllers.Models;
     using Controllers.Providers;
+    using Entities;
     using Helpers;
     using Repositories;
     using Transformers;
@@ -17,15 +18,18 @@
 
         private readonly ICoverRepository _coverRepository;
         private readonly ITransformer<string, string> _transformer;
+        private readonly IEditionRepository _editionRepository;
         private readonly IMapper _mapper;
 
         public CoverService(ICoverRepository coverRepository,
                             ITransformer<string, string> transformer,
+                            IEditionRepository editionRepository,
                             IMapper mapper,
                             BaseTransformerSettings settings,
                             StorageSettings storageSettings) : base(settings)
         {
             Guard.AssertNotNull(coverRepository);
+            Guard.AssertNotNull(editionRepository);
             Guard.AssertNotNull(transformer);
             Guard.AssertNotNull(mapper);
             Guard.AssertNotNull(storageSettings);
@@ -33,13 +37,25 @@
             StorageSettings = storageSettings;
 
             _coverRepository = coverRepository;
+            _editionRepository = editionRepository;
             _transformer = transformer;
             _mapper = mapper;
         }
 
         public async Task<BaseResponseMessage> SaveCover(ImageModel image)
         {
-            throw new NotImplementedException();
+            var cover = _mapper.Map<Cover>(image);
+
+            var response = new BaseResponseMessage();
+
+            if (await _editionRepository.GetEdition(cover.EditionId) == null)
+            {
+                response.RawData = $"Edition with id {cover.EditionId} couldn't been found.";
+                return response;
+            }
+
+            response.Id = await _coverRepository.SaveCover(cover);
+            return response;
         }
 
         public async Task<BaseResponseMessage> RetrieveDataFromCover(ImageModel cover)

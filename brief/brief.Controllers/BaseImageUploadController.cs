@@ -103,9 +103,15 @@
             {
                 await Request.Content.ReadAsMultipartAsync(provider);
 
+                var newFilename = Guid.NewGuid() + "_" + Path.GetFileName(provider.FileData.First().LocalFileName);
+                string newAbsolutePath = Path.Combine(storageSettings.StoragePath, newFilename);
+
+                File.Move(provider.FileData.First().LocalFileName, newAbsolutePath);
+
                 var imageToSave = new ImageModel
                 {
-                    Path = Path.Combine(Path.GetFileName(provider.FileData.First().LocalFileName))
+                    TargetId = targetId,
+                    Path = newAbsolutePath
                 };
 
                 var result = await strategy.Invoke(imageToSave);

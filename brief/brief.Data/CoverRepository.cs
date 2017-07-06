@@ -14,6 +14,19 @@
     {
         public CoverRepository(string connectionString) : base(connectionString) {}
 
+        public async Task<Guid> SaveCover(Cover cover)
+        {
+            await Connection.ExecuteAsync("insert into dbo.covers (Id, LinkTo, EditionId)" +
+                                          " values (@id, @linkTo, @editionId)",
+                                          new
+                                          {
+                                              id = cover.Id,
+                                              linkTo = cover.LinkTo,
+                                              editionId = cover.EditionId
+                                          });
+            return cover.Id;
+        }
+
         public async Task<List<Cover>> GetCoversByEdition(Guid id)
             => (List<Cover>) await Connection.QueryAsync<Cover>("select * from dbo.covers where EditionId = @editionId", new { editionId = id});
 
