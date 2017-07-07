@@ -19,6 +19,22 @@
         }
 
         [HttpPost]
+        public async Task<HttpResponseMessage> AddBookToSeries([FromUri] Guid bookId, [FromUri] Guid seriesId)
+        {
+            var result = await _seriesService.AddBookToSeries(bookId, seriesId);
+
+            return result.CreateRespose(Request, HttpStatusCode.OK, HttpStatusCode.NoContent);
+        }
+
+        [HttpDelete]
+        public async Task<HttpResponseMessage> RemoveBookFromSeries([FromUri] Guid bookId, [FromUri] Guid seriesId)
+        {
+            var result = await _seriesService.RemoveBookFromSeries(bookId, seriesId);
+
+            return result.CreateRespose(Request, HttpStatusCode.Created, HttpStatusCode.BadRequest);
+        }
+
+        [HttpPost]
         public async Task<HttpResponseMessage> Create([FromBody] SeriesModel series)
         {
             var result = await _seriesService.CreateSeries(series);

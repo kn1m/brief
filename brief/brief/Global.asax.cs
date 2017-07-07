@@ -144,7 +144,7 @@
                         new ResolvedParameter(
                             (pi, ctx) => pi.Name == "headerSettings",
                             (pi, ctx) => new HeaderSettings { AcceptableValuesForHeader =
-                                new Dictionary<string, string[]> { { "Forced", new[] {"true"}}  }}),
+                                new Dictionary<string, string[]> { { "Forced", new[] { "true" }}  }}),
                     });
 
             // Set the dependency resolver to be Autofac.

@@ -23,6 +23,22 @@
         }
 
         [HttpPost]
+        public async Task<HttpResponseMessage> AddAuthorToBook([FromUri] Guid authorId, [FromUri] Guid bookId)
+        {
+            var result = await _bookService.AddAuthorForBook(authorId, bookId);
+
+            return result.CreateRespose(Request, HttpStatusCode.OK, HttpStatusCode.NoContent);
+        }
+
+        [HttpDelete]
+        public async Task<HttpResponseMessage> RemoveAuthorFromBook([FromUri] Guid authorId, [FromUri] Guid bookId)
+        {
+            var result = await _bookService.RemoveAuthorFromBook(authorId, bookId);
+
+            return result.CreateRespose(Request, HttpStatusCode.Created, HttpStatusCode.BadRequest);
+        }
+
+        [HttpPost]
         public async Task<HttpResponseMessage> Create([FromBody] BookModel book)
         {
             var forced = Request.RetrieveHeader("Forced", _headerSettings);
