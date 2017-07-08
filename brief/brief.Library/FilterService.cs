@@ -4,6 +4,7 @@
     using System.Linq;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
+    using Controllers.Models;
     using Controllers.Models.RetrieveModels;
     using Controllers.Providers;
     using Helpers;
@@ -28,5 +29,8 @@
         
         public IQueryable<BookRetrieveModel> GetBookById(Guid id)
             => _filterRepository.GetBookById(id).ProjectTo<BookRetrieveModel>(_mapper.ConfigurationProvider);
+
+        public CoverModel GetCoverById(Guid id)
+            => _mapper.Map<CoverModel>(_filterRepository.GetCoverById(id));
     }
 }

@@ -29,6 +29,7 @@
             modelBuilder.EnableLowerCamelCase();
             modelBuilder.EntitySet<BookRetrieveModel>("books");
             modelBuilder.EntitySet<EditionModel>("editions");
+            modelBuilder.EntitySet<CoverModel>("covers");
 
             config.MapODataServiceRoute(
                 routeName: "OData",

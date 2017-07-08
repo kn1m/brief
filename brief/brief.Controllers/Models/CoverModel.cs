@@ -1,14 +1,11 @@
 ﻿namespace brief.Controllers.Models
 {
     using System;
-    using BaseEntities;
 
-    public class CoverModel : IRecognizable
+    public class CoverModel
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Path { get; set; }
-        public byte[] CoverData { get; set; }
-        public string RawData { get; set; }
+        public string LinkTo { get; set; }
+        public Guid EditionId { get; set; }
     }
 }

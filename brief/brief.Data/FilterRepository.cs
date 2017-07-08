@@ -18,5 +18,8 @@
                 .Include(b => b.Serieses)
                 .Include(b => b.Authors)
                 .Include(b => b.Editions);
+
+        public Cover GetCoverById(Guid id)
+            => Context.Set<Cover>().Find(id);
     }
 }

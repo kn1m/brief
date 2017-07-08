@@ -2,12 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Web.Http;
     using System.Web.OData;
     using System.Web.OData.Extensions;
     using System.Web.OData.Query;
     using System.Web.OData.Routing;
+    using Models;
     using Models.RetrieveModels;
     using Providers;
 
@@ -41,6 +46,20 @@
                 results as IEnumerable<BookRetrieveModel>,
                 Request.ODataProperties().NextLink,
                 Request.ODataProperties().TotalCount);
+        }
+
+        [HttpGet]
+        [ODataRoute("covers({key})")]
+        public HttpResponseMessage GetCover([FromODataUri] Guid key)
+        {
+            var cover = _filterService.GetCoverById(key);
+
+            StreamContent sc = new StreamContent(new FileStream(cover.LinkTo, FileMode.Open));
+            HttpResponseMessage response = new HttpResponseMessage();
+            response.Content = sc;
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
         }
     }
 }

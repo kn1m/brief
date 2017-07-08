@@ -8,5 +8,6 @@
     {
         IQueryable<Book> GetBooks();
         IQueryable<Book> GetBookById(Guid id);
+        Cover GetCoverById(Guid id);
     }
 }
