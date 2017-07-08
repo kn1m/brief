@@ -71,7 +71,7 @@
 
             var response = new BaseResponseMessage();
 
-            if (!await _bookRepository.CheckBookForUniqueness(newBook) || !force)
+            if (await _bookRepository.CheckBookForUniqueness(newBook) && !force)
             {
                 response.RawData = $"Book {newBook.Name} already existing with similar data.";
                 return response;

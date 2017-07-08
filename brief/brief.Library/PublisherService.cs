@@ -39,7 +39,7 @@
 
             var response = new BaseResponseMessage();
 
-            if (!await _publisherRepository.CheckPublisherForUniqueness(newPublisher))
+            if (await _publisherRepository.CheckPublisherForUniqueness(newPublisher))
             {
                 response.RawData = $"Publisher {newPublisher.Name} already existing with similar data.";
                 return response;

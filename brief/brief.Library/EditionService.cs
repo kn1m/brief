@@ -113,7 +113,7 @@
 
             var response = new BaseResponseMessage();
 
-            if (!await _editionRepository.CheckEditionForUniqueness(newEdtition))
+            if (await _editionRepository.CheckEditionForUniqueness(newEdtition))
             {
                 response.RawData = $"Edition {newEdtition.Description} already existing with similar data.";
                 return response;
