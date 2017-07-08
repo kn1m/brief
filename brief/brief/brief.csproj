@@ -168,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Modules\CommonModule.cs" />
     <Compile Include="Modules\ControllersModule.cs" />
     <Compile Include="Modules\DataModule.cs" />
     <Compile Include="Modules\ServicesModule.cs" />

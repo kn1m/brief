@@ -3,8 +3,6 @@
     using System.Web.Http;
     using Autofac;
     using Autofac.Integration.WebApi;
-    using AutoMapper;
-    using Library.Entities.Profiles;
     using Modules;
     using Owin;
 
@@ -15,14 +13,8 @@
             var config = new HttpConfiguration();
 
             var builder = new ContainerBuilder();
-            
-            builder.Register(ctx => new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfiles(typeof(BookProfile).Assembly);
-            }));
 
-            builder.Register(ctx => ctx.Resolve<MapperConfiguration>().CreateMapper()).As<IMapper>();
-
+            builder.RegisterModule(new CommonModule());
             builder.RegisterModule(new ServicesModule());
             builder.RegisterModule(new DataModule());
             builder.RegisterModule(new ControllersModule());
