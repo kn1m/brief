@@ -11,7 +11,7 @@
             CreateMap<Author, AuthorModel>();
 
             CreateMap<AuthorModel, Author>()
-                .ForMember(d => d.Id, opt => opt.MapFrom(o => Guid.NewGuid()));
+                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id ?? Guid.NewGuid()));
         }
     }
 }

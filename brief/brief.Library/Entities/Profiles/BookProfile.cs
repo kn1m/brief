@@ -10,7 +10,7 @@
         public BookProfile()
         {
             CreateMap<BookModel, Book>()
-                .ForMember(d => d.Id, opt => opt.MapFrom(o => Guid.NewGuid()));
+                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id ?? Guid.NewGuid()));
 
             CreateMap<Book, BookModel>();
             CreateMap<Book, BookRetrieveModel>();
