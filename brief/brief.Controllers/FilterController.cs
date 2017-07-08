@@ -12,7 +12,6 @@
     using System.Web.OData.Extensions;
     using System.Web.OData.Query;
     using System.Web.OData.Routing;
-    using Models;
     using Models.RetrieveModels;
     using Providers;
 
