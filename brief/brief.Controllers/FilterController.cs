@@ -2,16 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using System.Net;
     using System.Net.Http;
-    using System.Net.Http.Headers;
     using System.Web.Http;
     using System.Web.OData;
     using System.Web.OData.Extensions;
     using System.Web.OData.Query;
     using System.Web.OData.Routing;
+    using Extensions;
     using Models.RetrieveModels;
     using Providers;
 
@@ -53,12 +51,9 @@
         {
             var cover = _filterService.GetCoverById(key);
 
-            StreamContent sc = new StreamContent(new FileStream(cover.LinkTo, FileMode.Open));
-            HttpResponseMessage response = new HttpResponseMessage();
-            response.Content = sc;
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
-            response.StatusCode = HttpStatusCode.OK;
-            return response;
+            var response = new HttpResponseMessage();
+
+            return response.RetrieveContentFromCover(cover);
         }
     }
 }
