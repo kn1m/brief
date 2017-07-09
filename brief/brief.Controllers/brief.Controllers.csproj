@@ -106,6 +106,7 @@
     <Compile Include="Extensions\ResponseMessageExtensions.cs" />
     <Compile Include="Filters\ExceptionLogger.cs" />
     <Compile Include="BaseImageUploadController.cs" />
+    <Compile Include="Filters\UnhandledExceptionHandler.cs" />
     <Compile Include="Helpers\FilterSettings.cs" />
     <Compile Include="Helpers\HeaderSettings.cs" />
     <Compile Include="Helpers\IHeaderSettings.cs" />

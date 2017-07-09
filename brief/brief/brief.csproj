@@ -171,6 +171,8 @@
     <Compile Include="Modules\CommonModule.cs" />
     <Compile Include="Modules\ControllersModule.cs" />
     <Compile Include="Modules\DataModule.cs" />
+    <Compile Include="Modules\FiltersModule.cs" />
+    <Compile Include="Modules\LoggingModule.cs" />
     <Compile Include="Modules\ServicesModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

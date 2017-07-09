@@ -8,18 +8,16 @@
     public class ExceptionLogger : IExceptionLogger
     {
         private readonly ILog _logger;
+
         public ExceptionLogger(ILog logger)
         {
             _logger = logger;
         }
 
         public Task LogAsync(ExceptionLoggerContext context, CancellationToken cancellationToken)
-        {
-            return Task.Run(() =>
-            {
-                _logger.Error(
-                    $"Unhandled exception thrown in {context.Request.Method} for request {context.Request.RequestUri}: {context.Exception}");
-            });
-        }
+            => Task.Run(() => {
+                _logger.Error($"Unhandled exception thrown in {context.Request.Method} for request {context.Request.RequestUri}: {context.Exception}");
+                              });
+        
     }
 }

@@ -2,6 +2,7 @@
 {
     using Autofac;
     using AutoMapper;
+    using log4net;
     using Library.Entities.Profiles;
 
     public class CommonModule : Module
