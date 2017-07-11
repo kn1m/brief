@@ -58,25 +58,20 @@
                                             {
                                                 if (iter.IsAtBeginningOf(PageIteratorLevel.Block))
                                                 {
-                                                    //Console.WriteLine("<BLOCK>");
                                                     result += Environment.NewLine;
                                                 }
 
-                                                //Console.Write(iter.GetText(PageIteratorLevel.Word));
-                                                //Console.Write(" ");
                                                 result += iter.GetText(PageIteratorLevel.Word);
                                                 result += " ";
 
                                                 if (iter.IsAtFinalOf(PageIteratorLevel.TextLine, PageIteratorLevel.Word))
                                                 {
-                                                    //Console.WriteLine();
                                                     result += Environment.NewLine;
                                                 }
                                             } while (iter.Next(PageIteratorLevel.TextLine, PageIteratorLevel.Word));
 
                                             if (iter.IsAtFinalOf(PageIteratorLevel.Para, PageIteratorLevel.TextLine))
                                             {
-                                                //Console.WriteLine();
                                                 result += Environment.NewLine;
                                             }
                                         } while (iter.Next(PageIteratorLevel.Para, PageIteratorLevel.TextLine));
@@ -91,9 +86,6 @@
             {
                 Trace.TraceError(e.ToString());
                 throw;
-                //Console.WriteLine("Unexpected Error: " + e.Message);
-                //Console.WriteLine("Details: ");
-                //Console.WriteLine(e.ToString());
             }
 
             return result;
