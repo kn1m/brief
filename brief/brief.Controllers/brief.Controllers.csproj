@@ -110,7 +110,7 @@
     <Compile Include="Filters\UnhandledExceptionHandler.cs" />
     <Compile Include="Helpers\FilterSettings.cs" />
     <Compile Include="Helpers\HeaderSettings.cs" />
-    <Compile Include="Helpers\IHeaderSettings.cs" />
+    <Compile Include="Helpers\Base\IHeaderSettings.cs" />
     <Compile Include="Helpers\StorageSettings.cs" />
     <Compile Include="Models\AuthorModel.cs" />
     <Compile Include="Models\BaseEntities\BaseResponseMessage.cs" />

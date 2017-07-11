@@ -1,4 +1,4 @@
-﻿namespace brief.Controllers.Helpers
+﻿namespace brief.Controllers.Helpers.Base
 {
     using System.Collections.Generic;
 

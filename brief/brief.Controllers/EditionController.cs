@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using System.Web.Http;
     using Extensions;
-    using Helpers;
+    using Helpers.Base;
     using Models;
     using Providers;
 

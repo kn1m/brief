@@ -37,7 +37,11 @@
         public SqlConnection GetClosedConnection()
         {
             var conn = new SqlConnection(ConnectionString);
-            if (conn.State != ConnectionState.Closed) throw new InvalidOperationException("should be closed!");
+            if (conn.State != ConnectionState.Closed)
+            {
+                throw new InvalidOperationException("Connection should be closed!");
+            }
+
             return conn;
         }
     }

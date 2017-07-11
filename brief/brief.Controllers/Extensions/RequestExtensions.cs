@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
-    using Helpers;
+    using Helpers.Base;
 
     public static class RequestExtensions
     {

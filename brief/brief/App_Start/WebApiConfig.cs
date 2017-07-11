@@ -18,11 +18,11 @@
             // log4net configuration
             XmlConfigurator.Configure();
 
+            // Web API configuration and services
             config.Services.Replace(typeof(IExceptionHandler), new UnhandledExceptionHandler());
             config.Filters.Add((ActionLogger)config.DependencyResolver.GetService(typeof(ActionLogger)));
             config.Services.Add(typeof(IExceptionLogger), config.DependencyResolver.GetService(typeof(ExceptionLogger)));
 
-            // Web API configuration and services
             // Web API routes
             config.MapHttpAttributeRoutes();
 
