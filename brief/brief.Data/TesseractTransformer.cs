@@ -84,6 +84,7 @@
             }
             catch (Exception e)
             {
+                //TODO: to config
                 Trace.TraceError(e.ToString());
                 throw;
             }
