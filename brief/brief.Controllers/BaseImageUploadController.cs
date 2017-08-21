@@ -1,6 +1,5 @@
 ﻿namespace brief.Controllers
 {
-    using System.IO;
     using Models;
     using System;
     using System.Collections.Generic;
@@ -15,9 +14,19 @@
     using Helpers.Base;
     using Models.BaseEntities;
     using StreamProviders;
+    using System.IO.Abstractions;
 
     public abstract class BaseImageUploadController : ApiController
     {
+        private readonly IFileSystem _fileSystem;
+
+        protected BaseImageUploadController() : this(new FileSystem()) {}
+
+        protected BaseImageUploadController(IFileSystem fileSystem)
+        {
+            _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+        }
+
         protected virtual async Task<HttpResponseMessage> BaseTextRecognitionUpload<TData>(Func<ImageModel, Task<TData>> strategy, 
                                                                                            StorageSettings storageSettings,
                                                                                            IHeaderSettings headerSettings) 
@@ -36,9 +45,9 @@
             }
 
             var clientFolderId = Guid.NewGuid();
-            string currentProviderPath = Path.Combine(storageSettings.StoragePath, clientFolderId.ToString());
+            string currentProviderPath = _fileSystem.Path.Combine(storageSettings.StoragePath, clientFolderId.ToString());
 
-            Directory.CreateDirectory(currentProviderPath);
+            _fileSystem.Directory.CreateDirectory(currentProviderPath);
 
             ImageMultipartFormDataStreamProvider provider = new ImageMultipartFormDataStreamProvider(currentProviderPath);
 
@@ -51,11 +60,11 @@
 
                 foreach (MultipartFileData file in provider.FileData)
                 {
-                    files.Add(Path.GetFileName(file.LocalFileName));
+                    files.Add(_fileSystem.Path.GetFileName(file.LocalFileName));
 
                     var imageToSave = new ImageModel
                     {
-                        Path = Path.Combine(currentProviderPath, file.LocalFileName),
+                        Path = _fileSystem.Path.Combine(currentProviderPath, file.LocalFileName),
                         TargetLanguage = languageToProccess
                     };
 
@@ -64,7 +73,7 @@
 
                 var results = await Task.WhenAll(dataTasks);
 
-                Directory.Delete(currentProviderPath);
+                _fileSystem.Directory.Delete(currentProviderPath);
 
                 var resultingDict = Enumerable.Range(0, results.Length).ToDictionary(i => files[i], i => results[i].RawData);
 
@@ -104,10 +113,10 @@
             {
                 await Request.Content.ReadAsMultipartAsync(provider);
 
-                var newFilename = Guid.NewGuid() + "_" + Path.GetFileName(provider.FileData.First().LocalFileName);
-                string newAbsolutePath = Path.Combine(storageSettings.StoragePath, newFilename);
+                var newFilename = Guid.NewGuid() + "_" + _fileSystem.Path.GetFileName(provider.FileData.First().LocalFileName);
+                string newAbsolutePath = _fileSystem.Path.Combine(storageSettings.StoragePath, newFilename);
 
-                File.Move(provider.FileData.First().LocalFileName, newAbsolutePath);
+                _fileSystem.File.Move(provider.FileData.First().LocalFileName, newAbsolutePath);
 
                 var imageToSave = new ImageModel
                 {
