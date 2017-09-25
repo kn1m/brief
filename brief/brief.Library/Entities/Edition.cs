@@ -15,6 +15,7 @@
         public Guid PublisherId { get; set; }
         public virtual Publisher Publisher { get; set; }
         public virtual IList<Cover> Covers { get; set; }
+        public virtual List<Note> Notes { get; set; }
         public EditionType EditionType { get; set; }
         public Language Language { get; set; }
         public Currency? Currency { get; set; }

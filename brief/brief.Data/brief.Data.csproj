@@ -68,6 +68,7 @@
     <Compile Include="Maps\PublisherMap.cs" />
     <Compile Include="Maps\SeriesMap.cs" />
     <Compile Include="EditionRepository.cs" />
+    <Compile Include="NoteRepository.cs" />
     <Compile Include="PublisherRepostitory.cs" />
     <Compile Include="SeriesRepository.cs" />
     <Compile Include="IApplicationDbContext.cs" />

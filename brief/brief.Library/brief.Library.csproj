@@ -49,6 +49,9 @@
     <Compile Include="BaseImageService.cs" />
     <Compile Include="BaseTransformService.cs" />
     <Compile Include="CoverService.cs" />
+    <Compile Include="Entities\Note.cs" />
+    <Compile Include="Entities\NoteType.cs" />
+    <Compile Include="ExportService.cs" />
     <Compile Include="FilterService.cs" />
     <Compile Include="Entities\Author.cs" />
     <Compile Include="Entities\Currency.cs" />
@@ -77,6 +80,7 @@
     <Compile Include="Repositories\ICoverRepository.cs" />
     <Compile Include="Repositories\IEditionRepository.cs" />
     <Compile Include="Repositories\IFilterRepository.cs" />
+    <Compile Include="Repositories\INoteRepository.cs" />
     <Compile Include="Repositories\IPublisherRepository.cs" />
     <Compile Include="Repositories\ISeriesRepository.cs" />
     <Compile Include="SeriesService.cs" />
