@@ -129,6 +129,8 @@
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\BaseEntities\IRecognizable.cs" />
     <Compile Include="Models\LanguageModel.cs" />
+    <Compile Include="Models\NoteModel.cs" />
+    <Compile Include="Models\NoteTypeModel.cs" />
     <Compile Include="Models\PublisherModel.cs" />
     <Compile Include="Models\RetrieveModels\BookRetrieveModel.cs" />
     <Compile Include="Models\SeriesModel.cs" />
@@ -138,9 +140,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IAuthorService.cs" />
     <Compile Include="Providers\ICoverService.cs" />
+    <Compile Include="Providers\IExportService.cs" />
     <Compile Include="Providers\IFilterService.cs" />
     <Compile Include="Providers\IEditionService.cs" />
     <Compile Include="Providers\IImageService.cs" />
+    <Compile Include="Providers\INoteService.cs" />
     <Compile Include="Providers\IPublisherService.cs" />
     <Compile Include="Providers\ISeriesService.cs" />
     <Compile Include="Providers\IBookService.cs" />

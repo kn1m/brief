@@ -10,7 +10,7 @@
     using Helpers;
     using Repositories;
 
-    public class AuthorService : BaseImageService, IAuthorService
+    public class AuthorService : BaseFileService, IAuthorService
     {
         private readonly IEditionRepository _editionRepository;
         private readonly IAuthorRepository _authorRepository;

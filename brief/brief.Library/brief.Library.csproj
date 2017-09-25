@@ -46,11 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorService.cs" />
-    <Compile Include="BaseImageService.cs" />
+    <Compile Include="BaseFileService.cs" />
     <Compile Include="BaseTransformService.cs" />
     <Compile Include="CoverService.cs" />
     <Compile Include="Entities\Note.cs" />
     <Compile Include="Entities\NoteType.cs" />
+    <Compile Include="Entities\Profiles\NoteProfile.cs" />
     <Compile Include="ExportService.cs" />
     <Compile Include="FilterService.cs" />
     <Compile Include="Entities\Author.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Helpers\Guard.cs" />
     <Compile Include="Helpers\BaseTransformerSettings.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="NoteService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublisherService.cs" />
     <Compile Include="Repositories\IAuthorRepository.cs" />

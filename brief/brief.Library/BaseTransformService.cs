@@ -6,7 +6,7 @@
     using System.IO;
     using Helpers;
 
-    public abstract class BaseTransformService : BaseImageService
+    public abstract class BaseTransformService : BaseFileService
     {
         private readonly ImageFormat _mainTransformerFormat;
 

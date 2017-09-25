@@ -10,7 +10,7 @@
     using Helpers;
     using Repositories;
 
-    public class BookService : BaseImageService, IBookService
+    public class BookService : BaseFileService, IBookService
     {
         private readonly IBookRepository _bookRepository;
         private readonly IEditionRepository _editionRepository;

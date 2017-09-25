@@ -2,7 +2,7 @@
 {
     using System.IO;
 
-    public abstract class BaseImageService
+    public abstract class BaseFileService
     {
         public virtual bool TryCleanUp(string imagePath)
         {

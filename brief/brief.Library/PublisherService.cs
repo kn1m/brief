@@ -10,7 +10,7 @@
     using Helpers;
     using Repositories;
 
-    public class PublisherService : BaseImageService, IPublisherService
+    public class PublisherService : BaseFileService, IPublisherService
     {
         private readonly IPublisherRepository _publisherRepository;
         private readonly IEditionRepository _editionRepository;
