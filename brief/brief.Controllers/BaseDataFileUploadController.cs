@@ -10,7 +10,6 @@
     using System.Web.Http;
     using Extensions;
     using Helpers;
-    using Models;
     using Models.BaseEntities;
     using StreamProviders;
 
@@ -25,16 +24,10 @@
             _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         }
 
-        protected virtual async Task<HttpResponseMessage> BaseImageUpload<TData>(Func<ImageModel, Task<TData>> strategy,
-            StorageSettings storageSettings,
-            Guid targetId)
+        protected virtual async Task<HttpResponseMessage> BaseImageUpload<TData>(Func<string, Task<TData>> strategy,
+            StorageSettings storageSettings)
             where TData : BaseResponseMessage
         {
-            if (targetId == Guid.Empty)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Target id should be provided.");
-            }
-
             if (!Request.Content.IsMimeMultipartContent())
             {
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
@@ -47,7 +40,7 @@
                 return Request.CreateResponse(HttpStatusCode.BadRequest, $"Single-file upload is only allowed. But {filesCount} files detected.");
             }
 
-            ImageMultipartFormDataStreamProvider provider = new ImageMultipartFormDataStreamProvider(storageSettings.StoragePath);
+            FileMultipartFormDataStreamProvider provider = new FileMultipartFormDataStreamProvider(storageSettings.StoragePath);
 
             try
             {
@@ -58,13 +51,7 @@
 
                 _fileSystem.File.Move(provider.FileData.First().LocalFileName, newAbsolutePath);
 
-                var imageToSave = new ImageModel
-                {
-                    TargetId = targetId,
-                    Path = newAbsolutePath
-                };
-
-                var result = await strategy.Invoke(imageToSave);
+                var result = await strategy.Invoke(newAbsolutePath);
 
                 return result.CreateRespose(Request, HttpStatusCode.Created, HttpStatusCode.BadRequest);
             }

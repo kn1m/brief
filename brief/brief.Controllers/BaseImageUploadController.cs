@@ -49,7 +49,7 @@
 
             _fileSystem.Directory.CreateDirectory(currentProviderPath);
 
-            ImageMultipartFormDataStreamProvider provider = new ImageMultipartFormDataStreamProvider(currentProviderPath);
+            FileMultipartFormDataStreamProvider provider = new FileMultipartFormDataStreamProvider(currentProviderPath);
 
             try
             {
@@ -107,7 +107,7 @@
                 return Request.CreateResponse(HttpStatusCode.BadRequest, $"Single-file upload is only allowed. But {filesCount} files detected.");
             }
 
-            ImageMultipartFormDataStreamProvider provider = new ImageMultipartFormDataStreamProvider(storageSettings.StoragePath);
+            FileMultipartFormDataStreamProvider provider = new FileMultipartFormDataStreamProvider(storageSettings.StoragePath);
 
             try
             {

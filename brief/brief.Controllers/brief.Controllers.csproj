@@ -107,6 +107,7 @@
     <Compile Include="CoverController.cs" />
     <Compile Include="ExportController.cs" />
     <Compile Include="Extensions\BaseResponseExtensions.cs" />
+    <Compile Include="Extensions\HttpContentExtensions.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Extensions\RequestExtensions.cs" />
     <Compile Include="Extensions\ResponseMessageExtensions.cs" />
@@ -146,7 +147,7 @@
     <Compile Include="PublisherController.cs" />
     <Compile Include="FilterController.cs" />
     <Compile Include="SeriesController.cs" />
-    <Compile Include="StreamProviders\ImageMultipartFormDataStreamProvider.cs" />
+    <Compile Include="StreamProviders\FileMultipartFormDataStreamProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
