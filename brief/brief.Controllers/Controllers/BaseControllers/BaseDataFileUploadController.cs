@@ -1,4 +1,4 @@
-﻿namespace brief.Controllers
+﻿namespace brief.Controllers.Controllers.BaseControllers
 {
     using System;
     using System.IO.Abstractions;

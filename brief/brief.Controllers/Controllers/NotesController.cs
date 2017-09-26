@@ -1,4 +1,4 @@
-﻿namespace brief.Controllers
+﻿namespace brief.Controllers.Controllers
 {
     using System.Web.OData;
 

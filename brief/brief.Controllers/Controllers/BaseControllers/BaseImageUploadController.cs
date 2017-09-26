@@ -1,8 +1,8 @@
-﻿namespace brief.Controllers
+﻿namespace brief.Controllers.Controllers.BaseControllers
 {
-    using Models;
     using System;
     using System.Collections.Generic;
+    using System.IO.Abstractions;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -12,9 +12,9 @@
     using Extensions;
     using Helpers;
     using Helpers.Base;
+    using Models;
     using Models.BaseEntities;
     using StreamProviders;
-    using System.IO.Abstractions;
 
     public abstract class BaseImageUploadController : ApiController
     {

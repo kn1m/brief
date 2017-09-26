@@ -9,7 +9,6 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Hosting;
 using System.Web.Http.Routing;
-using brief.Controllers;
 using brief.Controllers.Helpers;
 using brief.Controllers.Models;
 using brief.Controllers.Models.BaseEntities;
@@ -17,6 +16,8 @@ using NUnit.Framework;
 
 namespace brief.Tests.Controllers
 {
+    using brief.Controllers.Controllers.BaseControllers;
+
     [TestFixture]
     public class BaseImageUploadControllerTests
     {
