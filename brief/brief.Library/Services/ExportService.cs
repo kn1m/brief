@@ -1,4 +1,4 @@
-﻿namespace brief.Library
+﻿namespace brief.Library.Services
 {
     using Repositories;
 

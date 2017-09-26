@@ -1,4 +1,4 @@
-﻿namespace brief.Data
+﻿namespace brief.Data.Repositories
 {
     using System;
     using System.Data.Entity;

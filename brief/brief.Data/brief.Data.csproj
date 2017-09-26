@@ -56,26 +56,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
-    <Compile Include="AuthorRepository.cs" />
+    <Compile Include="Repositories\AuthorRepository.cs" />
     <Compile Include="BaseDapperRepository.cs" />
     <Compile Include="BaseRepository.cs" />
-    <Compile Include="FilterRepository.cs" />
+    <Compile Include="Repositories\FilterRepository.cs" />
     <Compile Include="Maps\AuthorMap.cs" />
     <Compile Include="Maps\BaseTypeConfiguration.cs" />
     <Compile Include="Maps\BookMap.cs" />
     <Compile Include="Maps\CoverMap.cs" />
     <Compile Include="Maps\EditionMap.cs" />
+    <Compile Include="Maps\NoteMap.cs" />
     <Compile Include="Maps\PublisherMap.cs" />
     <Compile Include="Maps\SeriesMap.cs" />
-    <Compile Include="EditionRepository.cs" />
-    <Compile Include="NoteRepository.cs" />
-    <Compile Include="PublisherRepostitory.cs" />
-    <Compile Include="SeriesRepository.cs" />
+    <Compile Include="Repositories\EditionRepository.cs" />
+    <Compile Include="Repositories\NoteRepository.cs" />
+    <Compile Include="Repositories\PublisherRepostitory.cs" />
+    <Compile Include="Repositories\SeriesRepository.cs" />
     <Compile Include="IApplicationDbContext.cs" />
-    <Compile Include="BookRepository.cs" />
-    <Compile Include="CoverRepository.cs" />
+    <Compile Include="Repositories\BookRepository.cs" />
+    <Compile Include="Repositories\CoverRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TesseractTransformer.cs" />
+    <Compile Include="Transformers\TesseractTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\brief.Library\brief.Library.csproj">

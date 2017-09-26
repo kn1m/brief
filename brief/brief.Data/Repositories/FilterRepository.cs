@@ -1,10 +1,10 @@
-﻿namespace brief.Data
+﻿namespace brief.Data.Repositories
 {
     using System;
+    using System.Data.Entity;
     using System.Linq;
     using Library.Entities;
     using Library.Repositories;
-    using System.Data.Entity;
 
     public class FilterRepository : BaseRepository, IFilterRepository
     {

@@ -1,4 +1,4 @@
-﻿namespace brief.Data
+﻿namespace brief.Data.Transformers
 {
     using System;
     using System.Diagnostics;

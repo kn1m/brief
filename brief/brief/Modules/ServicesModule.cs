@@ -7,10 +7,10 @@
     using Autofac.Core;
     using Controllers.Helpers;
     using Controllers.Providers;
-    using Data;
-    using Library;
+    using Data.Repositories;
     using Library.Helpers;
     using Library.Repositories;
+    using Library.Services;
 
     public class ServicesModule : Module
     {

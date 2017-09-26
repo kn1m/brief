@@ -1,11 +1,12 @@
-﻿namespace brief.Library
+﻿namespace brief.Library.Services
 {
     using System;
     using System.Threading.Tasks;
     using AutoMapper;
-    using Controllers.Models.BaseEntities;
+    using BaseServices;
     using Controllers.Helpers;
     using Controllers.Models;
+    using Controllers.Models.BaseEntities;
     using Controllers.Providers;
     using Entities;
     using Helpers;
