@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BaseImageUploadControllerTests.cs" />
+    <Compile Include="Library\Services\ExportServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +77,10 @@
     <ProjectReference Include="..\brief.Controllers\brief.Controllers.csproj">
       <Project>{E662B59C-B692-4788-8C62-7936BE57C51A}</Project>
       <Name>brief.Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\brief.Library\brief.Library.csproj">
+      <Project>{BA3EC3FD-72F2-4A85-9BF7-AEFFD9260FDC}</Project>
+      <Name>brief.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
