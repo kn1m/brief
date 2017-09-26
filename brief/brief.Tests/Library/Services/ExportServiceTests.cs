@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace brief.Tests.Library.Services
+﻿namespace brief.Tests.Library.Services
 {
     using brief.Library.Repositories;
     using brief.Library.Services;
@@ -11,10 +9,12 @@ namespace brief.Tests.Library.Services
     class ExportServiceTests
     {
         [Test]
-        public async Task ExportNotesTest()
+        public void ExportNotesTest()
         {
             var noteRepository = new Mock<INoteRepository>();
             var exportService = new ExportService(noteRepository.Object);
+
+            
 
         }
     }
