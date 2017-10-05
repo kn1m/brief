@@ -8,5 +8,6 @@
         public string Path { get; set; }
         public bool IsReaded { get; set; }
         public EBookFileType Type { get; set; }
+        public virtual Edition Edition { get; set; }
     }
 }

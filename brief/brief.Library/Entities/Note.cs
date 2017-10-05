@@ -11,5 +11,6 @@
         public int? Page { get; set; }
         public DateTime CreatedOn { get; set; }
         public NoteType NoteType { get; set; }
+        public virtual Edition Edition { get; set; }
     }
 }
