@@ -20,7 +20,8 @@
         public EditionType EditionType { get; set; }
         public Language Language { get; set; }
         public Currency? Currency { get; set; }
-        public string Isbn { get; set; }
+        public string Isbn10 { get; set; }
+        public string Isbn13 { get; set; }
 
         public override bool Equals(object obj)
         {

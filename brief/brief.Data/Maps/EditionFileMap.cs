@@ -1,6 +1,6 @@
 ﻿namespace brief.Data.Maps
 {
-    class NoteMap
+    class EditionFileMap
     {
     }
 }
