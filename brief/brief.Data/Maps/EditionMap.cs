@@ -33,7 +33,7 @@
             Property(e => e.Language)
                 .IsRequired();
 
-            Property(e => e.Isbn)
+            Property(e => e.Isbn13)
                 .HasMaxLength(13);
 
             HasRequired<Publisher>(e => e.Publisher)

@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="Maps\EditionFileMap.cs" />
     <Compile Include="Repositories\AuthorRepository.cs" />
     <Compile Include="BaseDapperRepository.cs" />
     <Compile Include="BaseRepository.cs" />

@@ -13,7 +13,7 @@
         public EditionRepository(IApplicationDbContext context) : base(context) {}
 
         public Task<bool> CheckEditionForUniqueness(Edition edition)
-            => Context.Set<Edition>().AnyAsync(e => e.Isbn == edition.Isbn);
+            => Context.Set<Edition>().AnyAsync(e => e.Isbn13 == edition.Isbn13);
 
         public Task<List<Edition>> GetEditionsByBookOrPublisher(Guid id)
             => Context.Set<Edition>().Where(e => e.BookId == id || e.PublisherId == id).ToListAsync();
