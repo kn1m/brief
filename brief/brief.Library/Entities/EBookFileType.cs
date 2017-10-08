@@ -8,6 +8,9 @@
         AZW3,
         PDF,
         DJVU,
-        TXT
+        TXT,
+        DOC,
+        DOCX,
+        ODT
     }
 }
