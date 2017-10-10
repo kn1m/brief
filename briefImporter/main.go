@@ -10,7 +10,14 @@ type NoteRecord struct
 {
 	BookTile string
 	BookOriginalName string
-	BookAuthor string
+	BookAuthor []Author
+}
+
+type Author struct {
+	FirstName string
+	SecondName string
+	PaternalName string
+	Surname string
 }
 
 func main() {
@@ -22,19 +29,25 @@ func main() {
 	str := string(b)
 
 	recordRegexp := regexp.MustCompile(`(g?)(?P<title>[\wА-Яа-я#\-*:*\s*\.*\,*]+)\s` +
-		`(?P<publishingyear>[\d]+)?\s?` +
-		`(?P<alttitle>\({1}[\wА-Яа-я\s*\.*\,*]+\){1})?\s?`+
-		`(?P<author>\({1}[\wА-Яа-я\;*\s*\.*\,*]+\){1}){1}`)
+		                                      `(?P<alttitle>\({1}[\wА-Яа-я\s*\.*\,*]+\){1})?\s?` +
+		                                      `(\({1}(?P<author>[\wА-Яа-я\;*\s*\.*\,*]+)\){1}){1}` +
+		                                      `[\r\n]*-\sYour\s(Note|Highlight)\son\s` +
+		                                      `(page\s(?P<page>[\d]+)\s\|\s)?` +
+		                                      `Location\s(?P<location>[\d]+)\-?(?P<slocation>[\d]+)?\s\|\sAdded\son\s`)
 
 	splitted := regexp.MustCompile("[==========]+").Split(str, -1)
 
 	for i:= range splitted {
 		fmt.Printf("record: %d", i)
 		params := getParams(recordRegexp, splitted[i])
-		fmt.Printf("\nBook name: %s, publishing year: %s, original title: %s, book author: %s\n", params["title"],
+
+		fmt.Printf("\nBook name: %s, publishing year: %s, original title: %s, book author: %s, on page: %s, locations: %s - %s \n", params["title"],
 			params["publishingyear"],
 			params["alttitle"],
-			params["author"])
+			params["author"],
+		    params["page"],
+			params["location"],
+			params["slocation"])
 	}
 
 	//fmt.Println(str) // print the content as a 'string'
