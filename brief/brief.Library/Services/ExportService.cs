@@ -19,5 +19,10 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public Task<BaseResponseMessage> SaveNotesFile(string notesFilePath, NoteTypeModel noteType)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

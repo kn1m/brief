@@ -8,5 +8,6 @@
     public interface IExportService
     {
         Task<BaseResponseMessage> ExportNotes(IList<NoteModel> notes, NoteTypeModel noteType);
+        Task<BaseResponseMessage> SaveNotesFile(string notesFilePath, NoteTypeModel noteType);
     }
 }

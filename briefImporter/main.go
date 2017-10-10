@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"regexp"
+	"os"
 )
 
 type NoteRecord struct
@@ -11,6 +12,10 @@ type NoteRecord struct
 	BookTile string
 	BookOriginalName string
 	BookAuthor []Author
+	Page int
+	FirstLocation int
+	SecondLocation int
+	CreatedOn string
 }
 
 type Author struct {
@@ -21,10 +26,13 @@ type Author struct {
 }
 
 func main() {
-	b, err := ioutil.ReadFile("D:\\brief\\unittestdata\\My Clippings.txt")
-	if err != nil {
-		fmt.Print(err)
+	if len(os.Args) != 2 {
+		fmt.Fprintf(os.Stderr, "Usage: <textfilepath>\n")
+		os.Exit(1)
 	}
+
+	b, err := ioutil.ReadFile(os.Args[1])
+	check(err)
 
 	str := string(b)
 
@@ -39,22 +47,21 @@ func main() {
 
 	for i:= range splitted {
 		fmt.Printf("record: %d", i)
-		params := getParams(recordRegexp, splitted[i])
+		groups := getGroupsData(recordRegexp, splitted[i])
 
-		fmt.Printf("\nBook name: %s, publishing year: %s, original title: %s, book author: %s, on page: %s, locations: %s - %s \n", params["title"],
-			params["publishingyear"],
-			params["alttitle"],
-			params["author"],
-		    params["page"],
-			params["location"],
-			params["slocation"])
+		fmt.Printf("\nBook name: %s, publishing year: %s, original title: %s, book author: %s, on page: %s, locations: %s - %s \n",
+			groups["title"],
+			groups["publishingyear"],
+			groups["alttitle"],
+			groups["author"],
+			groups["page"],
+			groups["location"],
+			groups["slocation"])
 	}
-
-	//fmt.Println(str) // print the content as a 'string'
 }
 
-func getParams(regEx *regexp.Regexp, url string) (paramsMap map[string]string) {
-	match := regEx.FindStringSubmatch(url)
+func getGroupsData(regEx *regexp.Regexp, matchedString string) (paramsMap map[string]string) {
+	match := regEx.FindStringSubmatch(matchedString)
 
 	paramsMap = make(map[string]string)
 	for i, name := range regEx.SubexpNames() {
@@ -63,4 +70,10 @@ func getParams(regEx *regexp.Regexp, url string) (paramsMap map[string]string) {
 		}
 	}
 	return
+}
+
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
 }
