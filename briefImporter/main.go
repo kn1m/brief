@@ -36,27 +36,30 @@ func main() {
 
 	str := string(b)
 
-	recordRegexp := regexp.MustCompile(`(g?)(?P<title>[\wА-Яа-я#\-*:*\s*\.*\,*]+)\s` +
-		                                      `(?P<alttitle>\({1}[\wА-Яа-я\s*\.*\,*]+\){1})?\s?` +
-		                                      `(\({1}(?P<author>[\wА-Яа-я\;*\s*\.*\,*]+)\){1}){1}` +
+	recordRegexp := regexp.MustCompile(`(g?)(i?)(?P<title>[\wА-Яа-яіїєґ'#\-*:*\s*\.*\,*]+)\s` +
+		                                      `(?P<alttitle>\({1}[\wА-Яа-яіїєґ\s*\.*\,*]+\){1})?\s?` +
+		                                      `(\({1}(?P<author>[\wА-Яа-яіїєґ\;*\s*\.*\,*]+)\){1}){1}` +
 		                                      `[\r\n]*-\sYour\s(Note|Highlight)\son\s` +
 		                                      `(page\s(?P<page>[\d]+)\s\|\s)?` +
-		                                      `Location\s(?P<location>[\d]+)\-?(?P<slocation>[\d]+)?\s\|\sAdded\son\s`)
+		                                      `Location\s(?P<location>[\d]+)\-?(?P<slocation>[\d]+)?\s\|\sAdded\son\s`)/* +
+		                                      `(P?<datetime>[\w\d\s\,\:]+)[\r\n]*`)*/
 
 	splitted := regexp.MustCompile("[==========]+").Split(str, -1)
 
 	for i:= range splitted {
 		fmt.Printf("record: %d", i)
-		groups := getGroupsData(recordRegexp, splitted[i])
+		titleGroups := getGroupsData(recordRegexp, splitted[i])
 
-		fmt.Printf("\nBook name: %s, publishing year: %s, original title: %s, book author: %s, on page: %s, locations: %s - %s \n",
-			groups["title"],
-			groups["publishingyear"],
-			groups["alttitle"],
-			groups["author"],
-			groups["page"],
-			groups["location"],
-			groups["slocation"])
+		fmt.Printf("\nBook name: %s, publishing year: %s, original title: %s, book author: %s,"+
+			             " on page: %s, locations: %s - %s, date: %s\n",
+			titleGroups["title"],
+			titleGroups["publishingyear"],
+			titleGroups["alttitle"],
+			titleGroups["author"],
+			titleGroups["page"],
+			titleGroups["location"],
+			titleGroups["slocation"],
+		    titleGroups["datetime"])
 	}
 }
 
