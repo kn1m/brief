@@ -47,11 +47,10 @@ func main() {
 	splitted := regexp.MustCompile("[==========]+").Split(str, -1)
 
 	for i:= range splitted {
-		fmt.Printf("record: %d", i)
 		titleGroups := getGroupsData(recordRegexp, splitted[i])
 
-		fmt.Printf("\nBook name: %s, publishing year: %s, original title: %s, book author: %s,"+
-			             " on page: %s, locations: %s - %s, date: %s\n",
+		fmt.Printf("Book name: %s, publishing year: %s, original title: %s, book author: %s,"+
+			             " on page: %s, locations: %s - %s, date: %s \n",
 			titleGroups["title"],
 			titleGroups["publishingyear"],
 			titleGroups["alttitle"],
