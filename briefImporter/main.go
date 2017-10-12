@@ -27,6 +27,8 @@ type Author struct {
 	Surname string
 }
 
+const titleGroupName = "title"
+
 func main() {
 	if len(os.Args) != 2 {
 		fmt.Fprintf(os.Stderr, "Usage: <textfilepath>\n")
@@ -38,7 +40,7 @@ func main() {
 
 	str := string(b)
 
-	recordRegexp := regexp.MustCompile(`(g?)(i?)(?P<title>[\wА-Яа-яіїєґ'#\-*:*\s*\.*\,*]+)\s` +
+	recordRegexp := regexp.MustCompile(`(g?)(i?)(?P<`+ titleGroupName + `>[\wА-Яа-яіїєґ'#\-*:*\s*\.*\,*]+)\s` +
 		                                      `(?P<alttitle>\({1}[\wА-Яа-яіїєґ\s*\.*\,*]+\){1})?\s?` +
 		                                      `(\({1}(?P<author>[\wА-Яа-яіїєґ\;*\s*\.*\,*]+)\){1}){1}` +
 		                                      `[\r\n]*-\sYour\s(Note|Highlight)\son\s` +
@@ -81,7 +83,7 @@ func (note *NoteRecord) checkField(noteTitleData map[string]string, noteData map
 	return note, nil
 }
 
-func CheckNoteFiled(titleData string, noteData string, fns ...func(titleData string, noteData string) (*NoteRecord, error)) (err error) {
+func CheckNoteFiled(titleData map[string]string, noteData map[string]string, fns ...func(titleData map[string]string, noteData map[string]string) (*NoteRecord, error)) (err error) {
 	for _, fn := range fns {
 		if _, err = fn(titleData, noteData); err != nil {
 			break
@@ -90,4 +92,6 @@ func CheckNoteFiled(titleData string, noteData string, fns ...func(titleData str
 	return
 }
 
+/*func (note *NoteRecord) checkTitle(titleData map[string]string, noteData map[string]string) (*NoteRecord, error) {
 
+}*/
