@@ -49,28 +49,20 @@ func main() {
 
 	splitted := regexp.MustCompile("[==========]+").Split(str, -1)
 
-/*	for i:= range splitted {
-		titleGroups := getGroupsData(recordRegexp, splitted[i])
+	var notes []NoteRecord
+	for i:= 0; i < len(splitted) - 1; i = i + 2 {
+		noteTitleGroups := common.GetGroupsData(recordRegexp, splitted[i])
+		noteDataGroups := common.GetGroupsData(recordRegexp, splitted[i+1])
 
-		fmt.Printf("Name: %s, pyear: %s, origtitle: %s, author: %s,"+
-			             " on page: %s, locations: %s - %s, datetime: %s - %s \n",
-			titleGroups["title"],
-			titleGroups["publishingyear"],
-			titleGroups["alttitle"],
-			titleGroups["author"],
-			titleGroups["page"],
-			titleGroups["location"],
-			titleGroups["slocation"],
-		    titleGroups["createdondate"],
-			titleGroups["createdontime"])
-	}*/
+		note := NoteRecord{}
 
-	for i:= 0; i < len(splitted) - 1; i++ {
-		titleGroups := common.GetGroupsData(recordRegexp, splitted[i])
-		titleGroups1 := common.GetGroupsData(recordRegexp, splitted[i+1])
-
-		fmt.Println(titleGroups)
-		fmt.Println(titleGroups1)
+		if noteTitleGroups["title"] != "" &&  noteTitleGroups["title"] == noteDataGroups["title"]  {
+			note.BookTile = noteTitleGroups["title"]
+			notes = append(notes, note)
+		} else {
+			continue
+		}
 	}
 
+	fmt.Println(notes)
 }
