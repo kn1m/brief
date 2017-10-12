@@ -41,8 +41,8 @@ func main() {
 		                                      `(\({1}(?P<author>[\wА-Яа-яіїєґ\;*\s*\.*\,*]+)\){1}){1}` +
 		                                      `[\r\n]*-\sYour\s(Note|Highlight)\son\s` +
 		                                      `(page\s(?P<page>[\d]+)\s\|\s)?` +
-		                                      `Location\s(?P<location>[\d]+)\-?(?P<slocation>[\d]+)?\s\|\sAdded\son\s`)/* +
-		                                      `(P?<datetime>[\w\d\s\,\:]+)[\r\n]*`)*/
+		                                      `Location\s(?P<location>[\d]+)\-?(?P<slocation>[\d]+)?\s\|\sAdded\son\s` +
+		                                      `(P?<datetime>()`)
 
 	splitted := regexp.MustCompile("[==========]+").Split(str, -1)
 

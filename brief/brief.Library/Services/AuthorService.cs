@@ -1,6 +1,7 @@
 ﻿namespace brief.Library.Services
 {
     using System;
+    using System.IO.Abstractions;
     using System.Threading.Tasks;
     using AutoMapper;
     using BaseServices;
@@ -21,7 +22,8 @@
         public AuthorService(IAuthorRepository authorRepository, 
                              IEditionRepository editionRepository,
                              ICoverRepository coverRepository,
-                             IMapper mapper)
+                             IFileSystem fileSystem,
+                             IMapper mapper) : base(fileSystem)
         {
             Guard.AssertNotNull(authorRepository);
             Guard.AssertNotNull(mapper);

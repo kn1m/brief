@@ -3,14 +3,14 @@
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;
-    using System.IO;
+    using System.IO.Abstractions;
     using Helpers;
 
     public abstract class BaseTransformService : BaseFileService
     {
         private readonly ImageFormat _mainTransformerFormat;
 
-        protected BaseTransformService(BaseTransformerSettings settings)
+        protected BaseTransformService(BaseTransformerSettings settings, IFileSystem fileSystem) : base(fileSystem)
         {
             Guard.AssertNotNull(settings);
 
@@ -34,7 +34,7 @@
 
             if (deleteOriginal)
             {
-                File.Delete(existingFilePath);
+                FileSystem.File.Delete(existingFilePath);
             }
 
             return newPath;

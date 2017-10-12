@@ -1,18 +1,24 @@
 ﻿namespace brief.Library.Services
 {
     using System.Collections.Generic;
+    using System.IO.Abstractions;
     using System.Threading.Tasks;
     using Controllers.Models.BaseEntities;
     using Controllers.Providers;
     using Repositories;
     using BaseServices;
     using Controllers.Models;
+    using Helpers;
 
     public class ExportService : BaseFileService, IExportService
     {
-        public ExportService(INoteRepository noteRepository)
+        private readonly INoteRepository _noteRepository;
+
+        public ExportService(IFileSystem fileSystem, INoteRepository noteRepository) : base(fileSystem)
         {
-            
+            Guard.AssertNotNull(noteRepository);
+
+            _noteRepository = noteRepository;
         }
 
         public Task<BaseResponseMessage> ExportNotes(IList<NoteModel> notes, NoteTypeModel noteType)

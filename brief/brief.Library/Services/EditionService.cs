@@ -1,6 +1,7 @@
 ﻿namespace brief.Library.Services
 {
     using System;
+    using System.IO.Abstractions;
     using System.Threading.Tasks;
     using AutoMapper;
     using BaseServices;
@@ -25,9 +26,10 @@
         public EditionService(IEditionRepository editionRepository,
                               ICoverRepository coverRepository,
                               ITransformer<string, string> transformer,
+                              IFileSystem fileSystem,
                               IMapper mapper,
                               BaseTransformerSettings settings,
-                              StorageSettings storageSettings) : base(settings)
+                              StorageSettings storageSettings) : base(settings, fileSystem)
         {
             Guard.AssertNotNull(editionRepository);
             Guard.AssertNotNull(coverRepository);
