@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"regexp"
 	"os"
+	"brief/briefImporter/common"
 )
 
 type NoteRecord struct
@@ -32,7 +33,7 @@ func main() {
 	}
 
 	b, err := ioutil.ReadFile(os.Args[1])
-	check(err)
+	common.Check(err)
 
 	str := string(b)
 
@@ -42,15 +43,17 @@ func main() {
 		                                      `[\r\n]*-\sYour\s(Note|Highlight)\son\s` +
 		                                      `(page\s(?P<page>[\d]+)\s\|\s)?` +
 		                                      `Location\s(?P<location>[\d]+)\-?(?P<slocation>[\d]+)?\s\|\sAdded\son\s` +
-		                                      `(P?<datetime>()`)
+		                                      `(?P<createdondate>[\w]+\,{1}\s[\w]+\s[\d]+\,\s\d{4})`+
+		                                      `\s(?P<createdontime>\d{1,2}:\d{2}:\d{2}\s(AM|PM))` +
+		                                      `[\r\n]*(?P<notedata>[\wА-Яа-яіїєґ'#\-*:*\s*\.*\,*]+)`)
 
 	splitted := regexp.MustCompile("[==========]+").Split(str, -1)
 
-	for i:= range splitted {
+/*	for i:= range splitted {
 		titleGroups := getGroupsData(recordRegexp, splitted[i])
 
-		fmt.Printf("Book name: %s, publishing year: %s, original title: %s, book author: %s,"+
-			             " on page: %s, locations: %s - %s, date: %s \n",
+		fmt.Printf("Name: %s, pyear: %s, origtitle: %s, author: %s,"+
+			             " on page: %s, locations: %s - %s, datetime: %s - %s \n",
 			titleGroups["title"],
 			titleGroups["publishingyear"],
 			titleGroups["alttitle"],
@@ -58,24 +61,16 @@ func main() {
 			titleGroups["page"],
 			titleGroups["location"],
 			titleGroups["slocation"],
-		    titleGroups["datetime"])
-	}
-}
+		    titleGroups["createdondate"],
+			titleGroups["createdontime"])
+	}*/
 
-func getGroupsData(regEx *regexp.Regexp, matchedString string) (paramsMap map[string]string) {
-	match := regEx.FindStringSubmatch(matchedString)
+	for i:= 0; i < len(splitted) - 1; i++ {
+		titleGroups := common.GetGroupsData(recordRegexp, splitted[i])
+		titleGroups1 := common.GetGroupsData(recordRegexp, splitted[i+1])
 
-	paramsMap = make(map[string]string)
-	for i, name := range regEx.SubexpNames() {
-		if i > 0 && i <= len(match) {
-			paramsMap[name] = match[i]
-		}
+		fmt.Println(titleGroups)
+		fmt.Println(titleGroups1)
 	}
-	return
-}
 
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
 }
