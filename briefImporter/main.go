@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"os"
 	"brief/briefImporter/common"
+	"errors"
 )
 
 type NoteRecord struct
@@ -47,7 +48,7 @@ func main() {
 		                                      `\s(?P<createdontime>\d{1,2}:\d{2}:\d{2}\s(AM|PM))` +
 		                                      `[\r\n]*(?P<notedata>[\wА-Яа-яіїєґ'#\-*:*\s*\.*\,*]+)`)
 
-	splitted := regexp.MustCompile("[==========]+").Split(str, -1)
+	splitted := regexp.MustCompile("={10}").Split(str, -1)
 
 	var notes []NoteRecord
 	for i:= 0; i < len(splitted) - 1; i = i + 2 {
@@ -66,3 +67,27 @@ func main() {
 
 	fmt.Println(notes)
 }
+
+func (note *NoteRecord) checkField(noteTitleData map[string]string, noteData map[string]string, groupName string, strategy func(string, string) bool) (*NoteRecord, error) {
+
+	if noteTitleData[groupName] != "" && noteTitleData[groupName] == noteData[groupName] {
+		if strategy != nil {
+			couldBeProcessedFurther := strategy(noteTitleData[groupName], noteData[groupName])
+			if !couldBeProcessedFurther {
+				return note, errors.New("Could not be processed further!")
+			}
+		}
+	}
+	return note, nil
+}
+
+func CheckNoteFiled(titleData string, noteData string, fns ...func(titleData string, noteData string) (*NoteRecord, error)) (err error) {
+	for _, fn := range fns {
+		if _, err = fn(titleData, noteData); err != nil {
+			break
+		}
+	}
+	return
+}
+
+
