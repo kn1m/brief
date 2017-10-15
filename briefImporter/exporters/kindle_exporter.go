@@ -63,8 +63,7 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 
 	var notes []NoteRecord
 	for i:= 0; i < len(splitted) - 1; i = i + 2 {
-		var noteData *NoteData
-		noteData = &NoteData{}
+		var noteData NoteData
 		noteData.titleNoteData = common.GetGroupsData(recordRegexp, splitted[i])
 		noteData.noteData = common.GetGroupsData(recordRegexp, splitted[i+1])
 
@@ -77,7 +76,7 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 	return notes, nil
 }
 
-func checkNoteFiled(data *NoteData, fns ...func(data *NoteData) (*NoteRecord, error)) (err error) {
+func checkNoteFiled(data NoteData, fns ...func(data NoteData) (*NoteRecord, error)) (err error) {
 	for _, fn := range fns {
 		if _, err = fn(data); err != nil {
 			break
@@ -86,21 +85,21 @@ func checkNoteFiled(data *NoteData, fns ...func(data *NoteData) (*NoteRecord, er
 	return
 }
 
-func (note *NoteRecord) checkTitle(data *NoteData) (*NoteRecord, error) {
+func (note *NoteRecord) checkTitle(data NoteData) (*NoteRecord, error) {
 	if baseNoteFieldCheck(data, titleGroupName) {
 		note.BookTile = data.titleNoteData[titleGroupName]
 	}
 	return note, errors.New(titleGroupName + " Could not be processed further!")
 }
 
-func (note *NoteRecord) checkAltTitle(data *NoteData) (*NoteRecord, error) {
+func (note *NoteRecord) checkAltTitle(data NoteData) (*NoteRecord, error) {
 	if baseNoteFieldCheck(data, alttitleGroupName){
 		note.BookTile = data.titleNoteData[alttitleGroupName]
 	}
 	return note, errors.New(alttitleGroupName + " Could not be processed further!")
 }
 
-func (note *NoteRecord) checkAuthor(data *NoteData) (*NoteRecord, error) {
+func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 	if baseNoteFieldCheck(data, authorGroupName){
 		authors := strings.Split(data.titleNoteData[authorGroupName], ";")
 		for i := range authors {
@@ -111,7 +110,7 @@ func (note *NoteRecord) checkAuthor(data *NoteData) (*NoteRecord, error) {
 	return note, errors.New(authorGroupName + " Could not be processed further!")
 }
 
-func baseNoteFieldCheck(data *NoteData, groupName string) bool {
+func baseNoteFieldCheck(data NoteData, groupName string) bool {
 	if data.titleNoteData[groupName] != "" && data.titleNoteData[groupName] == data.noteData[groupName] {
 		return true
 	}
