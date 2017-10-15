@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"brief/briefImporter/exporters"
+	"brief/briefImporter/common"
 )
 
 func main() {
@@ -12,7 +13,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	notes, _ := exporters.GetNotesFromFile(os.Args[1])
+	notes, err := exporters.GetNotesFromFile(os.Args[1])
+	common.Check(err)
 
 	fmt.Println(notes)
 }
