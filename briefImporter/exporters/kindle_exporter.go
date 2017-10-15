@@ -6,6 +6,8 @@ import (
 	"regexp"
 	"io/ioutil"
 	"brief/briefImporter/common"
+	"sort"
+	"strconv"
 )
 
 const titleGroupName = "title"
@@ -69,7 +71,7 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 
 		note := &NoteRecord{}
 
-		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle, note.checkAuthor)
+		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle, note.checkPageOrLocations)
 		notes = append(notes, *note)
 	}
 
@@ -88,26 +90,51 @@ func checkNoteFiled(data NoteData, fns ...func(data NoteData) (*NoteRecord, erro
 func (note *NoteRecord) checkTitle(data NoteData) (*NoteRecord, error) {
 	if baseNoteFieldCheck(data, titleGroupName) {
 		note.BookTile = data.titleNoteData[titleGroupName]
+		return note, nil
 	}
-	return note, errors.New(titleGroupName + " Could not be processed further!")
+	return note, errors.New(titleGroupName + " could not be processed further!")
 }
 
 func (note *NoteRecord) checkAltTitle(data NoteData) (*NoteRecord, error) {
 	if baseNoteFieldCheck(data, alttitleGroupName){
-		note.BookTile = data.titleNoteData[alttitleGroupName]
+		note.BookOriginalName = data.titleNoteData[alttitleGroupName]
+		return note, nil
 	}
-	return note, errors.New(alttitleGroupName + " Could not be processed further!")
+	return note, errors.New(alttitleGroupName + " could not be processed further!")
 }
 
 func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 	if baseNoteFieldCheck(data, authorGroupName){
 		authors := strings.Split(data.titleNoteData[authorGroupName], ";")
-		for i := range authors {
-			bookAuthor := Author{FirstName:authors[i]}
-			note.BookAuthor = append(note.BookAuthor, bookAuthor)
+		if len(authors) != 0 {
+			for i := range authors {
+				parsedAuthor := strings.Split(authors[i], ",")
+				if len(parsedAuthor) != 0 {
+					sort.Sort(sort.Reverse(sort.StringSlice(parsedAuthor)))
+				} else {
+
+				}
+
+				bookAuthor := Author{FirstName: authors[i]}
+				note.BookAuthor = append(note.BookAuthor, bookAuthor)
+
+			}
+		} else {
+
 		}
+
+		return note, nil
 	}
-	return note, errors.New(authorGroupName + " Could not be processed further!")
+	return note, errors.New(authorGroupName + " could not be processed further!")
+}
+
+func (note *NoteRecord) checkPageOrLocations(data NoteData) (*NoteRecord, error) {
+	if baseNoteFieldCheck(data, pageGroupName){
+		var err error
+		note.Page, err = strconv.Atoi(data.titleNoteData[pageGroupName])
+		return note, err
+	}
+	return note, errors.New(pageGroupName + " could not be processed further!")
 }
 
 func baseNoteFieldCheck(data NoteData, groupName string) bool {
