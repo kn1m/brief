@@ -25,10 +25,13 @@ type NoteRecord struct
 	BookTile string
 	BookOriginalName string
 	BookAuthor []Author
-	Page int
+	FirstPage int
+	SecondPage int
 	FirstLocation int
 	SecondLocation int
 	CreatedOn string
+	NoteTitle string
+	NoteText string
 }
 
 type Author struct {
@@ -59,9 +62,9 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 		`(?P<`+ secondLocationGroupName +`>[\d]+)?\s\|\sAdded\son\s` +
 		`(?P<`+ createdOnDateGroupName +`>[\w]+\,{1}\s[\w]+\s[\d]+\,\s\d{4})`+
 		`\s(?P<`+ createdOnTimeGroupName +`>\d{1,2}:\d{2}:\d{2}\s(AM|PM))` +
-		`[\r\n]*(?P<`+ noteDataGroupName +`>[\wА-Яа-яіїєґ'#\-*:*\s*\.*\,*]+)`)
+		`[\r\n]*(?P<`+ noteDataGroupName +`>[\wА-Яа-яіїєґ\'*#\(*\)*\-*:\*\;*\=*\s*\.*\,*]+)`)
 
-	splitted := regexp.MustCompile("={10}").Split(str, -1)
+	splitted := regexp.MustCompile("={10}[\r\n]*").Split(str, -1)
 
 	var notes []NoteRecord
 	for i:= 0; i < len(splitted) - 1; i = i + 2 {
@@ -71,7 +74,7 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 
 		note := &NoteRecord{}
 
-		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle, note.checkPageOrLocations)
+		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle, note.checkPageOrLocations, note.checkNoteTitleAndText)
 		notes = append(notes, *note)
 	}
 
@@ -129,12 +132,26 @@ func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 }
 
 func (note *NoteRecord) checkPageOrLocations(data NoteData) (*NoteRecord, error) {
-	if baseNoteFieldCheck(data, pageGroupName){
-		var err error
-		note.Page, err = strconv.Atoi(data.titleNoteData[pageGroupName])
+	var err error
+	if data.noteData[pageGroupName] != "" || data.titleNoteData[pageGroupName] != "" {
+		if data.titleNoteData[pageGroupName] != "" {
+			note.FirstPage, err = strconv.Atoi(data.titleNoteData[pageGroupName])
+		}
+		if data.noteData[pageGroupName] != "" {
+			note.SecondPage, err = strconv.Atoi(data.noteData[pageGroupName])
+		}
 		return note, err
 	}
 	return note, errors.New(pageGroupName + " could not be processed further!")
+}
+
+func (note *NoteRecord) checkNoteTitleAndText(data NoteData) (*NoteRecord, error) {
+	if data.noteData[noteDataGroupName] != "" {
+		note.NoteTitle = data.titleNoteData[noteDataGroupName]
+		note.NoteText = data.noteData[noteDataGroupName]
+		return note, nil
+	}
+	return note, errors.New(alttitleGroupName + " could not be processed further!")
 }
 
 func baseNoteFieldCheck(data NoteData, groupName string) bool {
