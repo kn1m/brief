@@ -19,6 +19,9 @@ const secondLocationGroupName = "slocation"
 const createdOnDateGroupName = "createdondate"
 const createdOnTimeGroupName = "createdontime"
 const noteDataGroupName = "notedata"
+const recordTypeGroupName  = "recordtype"
+
+var recordTypesToSkip  = []string{"Highlight", "Bookmark"}
 
 type NoteRecord struct
 {
@@ -56,7 +59,7 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 	recordRegexp := regexp.MustCompile(`(g?)(i?)(?P<`+ titleGroupName +`>[\wА-Яа-яіїєґ'#\-*:*\s*\.*\,*]+)\s` +
 		`(?P<`+ alttitleGroupName +`>\({1}[\wА-Яа-яіїєґ\s*\.*\,*]+\){1})?\s?` +
 		`(\({1}(?P<`+ authorGroupName +`>[\wА-Яа-яіїєґ\;*\s*\.*\,*]+)\){1}){1}` +
-		`[\r\n]*-\sYour\s(Note|Highlight)\son\s` +
+		`[\r\n]*-\sYour\s(?P<`+ recordTypeGroupName +`>(Note|Highlight|Bookmark))\son\s` +
 		`(page\s(?P<`+ pageGroupName +`>[\d]+)\s\|\s)?` +
 		`Location\s(?P<`+ firstLocationGroupName +`>[\d]+)\-?`+
 		`(?P<`+ secondLocationGroupName +`>[\d]+)?\s\|\sAdded\son\s` +
@@ -73,8 +76,9 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 		var noteData NoteData
 		titleGroup := common.GetGroupsData(recordRegexp, splitted[i])
 
-		//handle of Bookmark records
-		if len(titleGroup) == 0 {
+		//handling of Highlights and Bookmarks
+
+		if common.Contains(recordTypesToSkip, titleGroup[recordTypeGroupName]) {
 			i++
 			continue
 		}
