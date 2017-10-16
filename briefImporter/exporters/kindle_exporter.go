@@ -67,24 +67,23 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 		`\s(?P<`+ createdOnTimeGroupName +`>\d{1,2}:\d{2}:\d{2}\s(AM|PM))` +
 		`[\r\n]*(?P<`+ noteDataGroupName +`>[\wА-Яа-яіІїЇєЄґҐ\s*\'*#*\(*\)*\-*:*\*\;*\=*\.*\,*—*]+)[\r\n]*`)
 
-	splitted := regexp.MustCompile("={10}[\r\n]*").Split(str, -1)
+	split := regexp.MustCompile("={10}[\r\n]*").Split(str, -1)
 
 	var notes []NoteRecord
 
 	i := 0
-	for i < len(splitted) - 1 {
+	for i < len(split) - 1 {
 		var noteData NoteData
-		titleGroup := common.GetGroupsData(recordRegexp, splitted[i])
+		titleGroup := common.GetGroupsData(recordRegexp, split[i])
 
 		//handling of Highlights and Bookmarks
-
 		if common.Contains(recordTypesToSkip, titleGroup[recordTypeGroupName]) {
 			i++
 			continue
 		}
 
 		noteData.titleNoteData = titleGroup
-		noteData.noteData = common.GetGroupsData(recordRegexp, splitted[i+1])
+		noteData.noteData = common.GetGroupsData(recordRegexp, split[i+1])
 		note := &NoteRecord{}
 
 		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle, note.checkPageOrLocations, note.checkNoteTitleAndText)
