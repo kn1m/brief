@@ -9,7 +9,6 @@ import (
 	"flag"
 	"errors"
     //"github.com/ahmetb/go-linq"
-	"strings"
 )
 
 func main() {
@@ -37,15 +36,9 @@ func main() {
 	notes, err := exporters.GetNotesFromFile(filepath)
 	common.Check(err)
 
-	var k int
 	for i := range notes {
-		if strings.Contains(notes[i].BookTile,"Async") {
-			k++
-		}
-
-		fmt.Printf("\n%d: %s %s %d-%d", i, notes[i].BookTile,
-			notes[i].BookOriginalName, notes[i].FirstPage, notes[i].SecondPage)
-
+		fmt.Printf("\n%d: %s %s %d-%d :: %s :: %s", i, notes[i].BookTile,
+			notes[i].BookOriginalName, notes[i].FirstPage, notes[i].SecondPage, notes[i].NoteTitle, notes[i].NoteText)
 	}
 
 	if *logFlag {
