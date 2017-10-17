@@ -195,3 +195,7 @@ func baseNoteFieldCheck(data NoteData, groupName string, isOptional bool) bool {
 	}
 	return false
 }
+
+func handleAuthor(authorData []string) (Author, error) {
+	return Author{}, nil
+}
