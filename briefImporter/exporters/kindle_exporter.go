@@ -39,8 +39,7 @@ type NoteRecord struct
 
 type Author struct {
 	FirstName string
-	SecondName string
-	PaternalName string
+	SecondaryName string
 	Surname string
 }
 

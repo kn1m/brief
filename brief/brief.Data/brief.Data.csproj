@@ -60,6 +60,7 @@
     <Compile Include="Repositories\AuthorRepository.cs" />
     <Compile Include="BaseDapperRepository.cs" />
     <Compile Include="BaseRepository.cs" />
+    <Compile Include="Repositories\EditionFileRepository.cs" />
     <Compile Include="Repositories\FilterRepository.cs" />
     <Compile Include="Maps\AuthorMap.cs" />
     <Compile Include="Maps\BaseTypeConfiguration.cs" />
