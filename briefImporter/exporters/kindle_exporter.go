@@ -85,7 +85,7 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 		noteData.noteData = common.GetGroupsData(recordRegexp, split[i+1])
 		note := &NoteRecord{}
 
-		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle, note.checkPageOrLocations, note.checkNoteTitleAndText)
+		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle, note.checkAuthor, note.checkPageOrLocations, note.checkNoteTitleAndText)
 		notes = append(notes, *note)
 
 		i += 2
@@ -121,7 +121,7 @@ func (note *NoteRecord) checkAltTitle(data NoteData) (*NoteRecord, error) {
 func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 	if baseNoteFieldCheck(data, authorGroupName, false){
 		authors := strings.Split(data.titleNoteData[authorGroupName], ";")
-		if len(authors) != 0 {
+		if len(authors) > 1 {
 			for i := range authors {
 				parsedAuthor := strings.Split(authors[i], ",")
 				if len(parsedAuthor) != 0 {
@@ -135,9 +135,28 @@ func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 
 			}
 		} else {
-
+			parsedAuthor := strings.Split(data.titleNoteData[authorGroupName], ",")
+			if len(parsedAuthor) > 1 {
+				sort.Sort(sort.Reverse(sort.StringSlice(parsedAuthor)))
+			} else {
+				authorData := strings.Split(data.titleNoteData[authorGroupName], " ")
+				var author Author
+				switch len(authorData) {
+					case 1:
+						author.FirstName = authorData[0]
+					case 2:
+						author.FirstName = authorData[0]
+						author.Surname = authorData[1]
+					case 3:
+						author.FirstName = authorData[0]
+						author.SecondaryName = authorData[1]
+						author.Surname = authorData[2]
+					default:
+						return note, errors.New("can't handle author name")
+				}
+				note.BookAuthor = append(note.BookAuthor, author)
+			}
 		}
-
 		return note, nil
 	}
 	return note, errors.New(authorGroupName + " could not be processed further!")
