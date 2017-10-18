@@ -6,7 +6,6 @@ import (
 	"regexp"
 	"io/ioutil"
 	"brief/briefImporter/common"
-	"sort"
 	"strconv"
 )
 
@@ -85,7 +84,7 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 		noteData.noteData = common.GetGroupsData(recordRegexp, split[i+1])
 		note := &NoteRecord{}
 
-		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle, note.checkAuthor, note.checkPageOrLocations, note.checkNoteTitleAndText)
+		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle, note.checkAuthor, note.checkPage, note.checkNoteTitleAndText)
 		notes = append(notes, *note)
 
 		i += 2
@@ -123,20 +122,15 @@ func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 		authors := strings.Split(data.titleNoteData[authorGroupName], ";")
 		if len(authors) > 1 {
 			for i := range authors {
-				parsedAuthor := strings.Split(authors[i], ",")
+				parsedAuthor := regexp.MustCompile(",{1}\\s*").Split(authors[i], -1)
 				if len(parsedAuthor) > 1 {
-					sort.Sort(sort.Reverse(sort.StringSlice(parsedAuthor)))
+					common.Reverse(parsedAuthor)
 
-					for j := range parsedAuthor {
-						authorData := strings.Split(parsedAuthor[j], " ")
-
-						author, err := handleAuthor(authorData)
-						if err != nil {
-							return note, errors.New(authorGroupName + " could not be processed further!")
-						}
-
-						note.BookAuthor = append(note.BookAuthor, *author)
+					author, err := handleAuthor(parsedAuthor)
+					if err != nil {
+						return note, errors.New(authorGroupName + " could not be processed further!")
 					}
+					note.BookAuthor = append(note.BookAuthor, *author)
 
 				} else {
 					authorData := strings.Split(data.titleNoteData[authorGroupName], " ")
@@ -145,18 +139,19 @@ func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 					if err != nil {
 						return note, errors.New(authorGroupName + " could not be processed further!")
 					}
-
 					note.BookAuthor = append(note.BookAuthor, *author)
 				}
-
-				bookAuthor := Author{FirstName: authors[i]}
-				note.BookAuthor = append(note.BookAuthor, bookAuthor)
-
 			}
 		} else {
-			parsedAuthor := strings.Split(data.titleNoteData[authorGroupName], ",")
+			parsedAuthor := regexp.MustCompile(",{1}\\s*").Split(data.titleNoteData[authorGroupName], -1)
 			if len(parsedAuthor) > 1 {
-				sort.Sort(sort.Reverse(sort.StringSlice(parsedAuthor)))
+				common.Reverse(parsedAuthor)
+
+				author, err := handleAuthor(parsedAuthor)
+				if err != nil {
+					return note, errors.New(authorGroupName + " could not be processed further!")
+				}
+				note.BookAuthor = append(note.BookAuthor, *author)
 			} else {
 				authorData := strings.Split(data.titleNoteData[authorGroupName], " ")
 
@@ -173,7 +168,21 @@ func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 	return note, errors.New(authorGroupName + " could not be processed further!")
 }
 
-func (note *NoteRecord) checkPageOrLocations(data NoteData) (*NoteRecord, error) {
+func (note *NoteRecord) checkPage(data NoteData) (*NoteRecord, error) {
+	var err error
+	if data.noteData[pageGroupName] != "" || data.titleNoteData[pageGroupName] != "" {
+		if data.titleNoteData[pageGroupName] != "" {
+			note.FirstPage, err = strconv.Atoi(data.titleNoteData[pageGroupName])
+		}
+		if data.noteData[pageGroupName] != "" {
+			note.SecondPage, err = strconv.Atoi(data.noteData[pageGroupName])
+		}
+		return note, err
+	}
+	return note, errors.New(pageGroupName + " could not be processed further!")
+}
+
+func (note *NoteRecord) checkLocations(data NoteData) (*NoteRecord, error) {
 	var err error
 	if data.noteData[pageGroupName] != "" || data.titleNoteData[pageGroupName] != "" {
 		if data.titleNoteData[pageGroupName] != "" {
@@ -208,7 +217,7 @@ func baseNoteFieldCheck(data NoteData, groupName string, isOptional bool) bool {
 }
 
 func handleAuthor(authorData []string) (*Author, error) {
-	var author *Author
+	author := &Author{}
 	switch len(authorData) {
 		case 1:
 			author.FirstName = authorData[0]
@@ -220,7 +229,7 @@ func handleAuthor(authorData []string) (*Author, error) {
 			author.SecondaryName = authorData[1]
 			author.Surname = authorData[2]
 		default:
-			return nil, errors.New("can't handle author name")
+			return &Author{FirstName:"Authors unknown"}, nil
 	}
 	return author, nil
 }
