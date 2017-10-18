@@ -124,10 +124,29 @@ func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 		if len(authors) > 1 {
 			for i := range authors {
 				parsedAuthor := strings.Split(authors[i], ",")
-				if len(parsedAuthor) != 0 {
+				if len(parsedAuthor) > 1 {
 					sort.Sort(sort.Reverse(sort.StringSlice(parsedAuthor)))
-				} else {
 
+					for j := range parsedAuthor {
+						authorData := strings.Split(parsedAuthor[j], " ")
+
+						author, err := handleAuthor(authorData)
+						if err != nil {
+							return note, errors.New(authorGroupName + " could not be processed further!")
+						}
+
+						note.BookAuthor = append(note.BookAuthor, *author)
+					}
+
+				} else {
+					authorData := strings.Split(data.titleNoteData[authorGroupName], " ")
+
+					author, err := handleAuthor(authorData)
+					if err != nil {
+						return note, errors.New(authorGroupName + " could not be processed further!")
+					}
+
+					note.BookAuthor = append(note.BookAuthor, *author)
 				}
 
 				bookAuthor := Author{FirstName: authors[i]}
@@ -140,21 +159,13 @@ func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 				sort.Sort(sort.Reverse(sort.StringSlice(parsedAuthor)))
 			} else {
 				authorData := strings.Split(data.titleNoteData[authorGroupName], " ")
-				var author Author
-				switch len(authorData) {
-					case 1:
-						author.FirstName = authorData[0]
-					case 2:
-						author.FirstName = authorData[0]
-						author.Surname = authorData[1]
-					case 3:
-						author.FirstName = authorData[0]
-						author.SecondaryName = authorData[1]
-						author.Surname = authorData[2]
-					default:
-						return note, errors.New("can't handle author name")
+
+				author, err := handleAuthor(authorData)
+				if err != nil {
+					return note, errors.New(authorGroupName + " could not be processed further!")
 				}
-				note.BookAuthor = append(note.BookAuthor, author)
+
+				note.BookAuthor = append(note.BookAuthor, *author)
 			}
 		}
 		return note, nil
@@ -196,6 +207,20 @@ func baseNoteFieldCheck(data NoteData, groupName string, isOptional bool) bool {
 	return false
 }
 
-func handleAuthor(authorData []string) (Author, error) {
-	return Author{}, nil
+func handleAuthor(authorData []string) (*Author, error) {
+	var author *Author
+	switch len(authorData) {
+		case 1:
+			author.FirstName = authorData[0]
+		case 2:
+			author.FirstName = authorData[0]
+			author.Surname = authorData[1]
+		case 3:
+			author.FirstName = authorData[0]
+			author.SecondaryName = authorData[1]
+			author.Surname = authorData[2]
+		default:
+			return nil, errors.New("can't handle author name")
+	}
+	return author, nil
 }
