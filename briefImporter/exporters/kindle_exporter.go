@@ -170,16 +170,16 @@ func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 
 func (note *NoteRecord) checkPage(data NoteData) (*NoteRecord, error) {
 	var err error
-	if data.noteData[pageGroupName] != "" || data.titleNoteData[pageGroupName] != "" {
-		if data.titleNoteData[pageGroupName] != "" {
-			note.FirstPage, err = strconv.Atoi(data.titleNoteData[pageGroupName])
+	if data.noteData[firstLocationGroupName] != "" || data.titleNoteData[firstLocationGroupName] != "" {
+		if data.titleNoteData[firstLocationGroupName] != "" {
+			note.FirstPage, err = strconv.Atoi(data.titleNoteData[firstLocationGroupName])
 		}
-		if data.noteData[pageGroupName] != "" {
-			note.SecondPage, err = strconv.Atoi(data.noteData[pageGroupName])
+		if data.noteData[firstLocationGroupName] != "" {
+			note.SecondPage, err = strconv.Atoi(data.noteData[firstLocationGroupName])
 		}
 		return note, err
 	}
-	return note, errors.New(pageGroupName + " could not be processed further!")
+	return note, errors.New(firstLocationGroupName + " could not be processed further!")
 }
 
 func (note *NoteRecord) checkLocations(data NoteData) (*NoteRecord, error) {
