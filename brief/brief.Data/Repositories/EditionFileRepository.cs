@@ -4,5 +4,9 @@
 
     class EditionFileRepository : IEditionFileRepository
     {
+        public EditionFileRepository()
+        {
+            
+        }
     }
 }
