@@ -14,6 +14,7 @@
         public DateTime? CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public NoteType NoteType { get; set; }
+        public Guid EditionId { get; set; }
         public virtual Edition Edition { get; set; }
     }
 }
