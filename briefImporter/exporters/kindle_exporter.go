@@ -84,7 +84,8 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 		noteData.noteData = common.GetGroupsData(recordRegexp, split[i+1])
 		note := &NoteRecord{}
 
-		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle, note.checkAuthor, note.checkPage, note.checkNoteTitleAndText)
+		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle,
+			           note.checkAuthor, note.checkPage, note.checkLocations, note.checkNoteTitleAndText)
 		notes = append(notes, *note)
 
 		i += 2
@@ -184,16 +185,16 @@ func (note *NoteRecord) checkPage(data NoteData) (*NoteRecord, error) {
 
 func (note *NoteRecord) checkLocations(data NoteData) (*NoteRecord, error) {
 	var err error
-	if data.noteData[pageGroupName] != "" || data.titleNoteData[pageGroupName] != "" {
-		if data.titleNoteData[pageGroupName] != "" {
-			note.FirstPage, err = strconv.Atoi(data.titleNoteData[pageGroupName])
+	if data.noteData[firstLocationGroupName] != "" || data.titleNoteData[firstLocationGroupName] != "" {
+		if data.titleNoteData[firstLocationGroupName] != "" {
+			note.FirstLocation, err = strconv.Atoi(data.titleNoteData[firstLocationGroupName])
 		}
-		if data.noteData[pageGroupName] != "" {
-			note.SecondPage, err = strconv.Atoi(data.noteData[pageGroupName])
+		if data.noteData[secondLocationGroupName] != "" {
+			note.SecondLocation, err = strconv.Atoi(data.noteData[secondLocationGroupName])
 		}
 		return note, err
 	}
-	return note, errors.New(pageGroupName + " could not be processed further!")
+	return note, errors.New(firstLocationGroupName + " could not be processed further!")
 }
 
 func (note *NoteRecord) checkNoteTitleAndText(data NoteData) (*NoteRecord, error) {
