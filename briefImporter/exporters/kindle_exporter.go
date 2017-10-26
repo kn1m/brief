@@ -20,6 +20,8 @@ const createdOnTimeGroupName = "createdontime"
 const noteDataGroupName = "notedata"
 const recordTypeGroupName  = "recordtype"
 
+const dateFormat = "Jan 2, 2006 at 3:04pm (MST)"
+
 var recordTypesToSkip  = []string{"Highlight", "Bookmark"}
 
 type NoteRecord struct
@@ -199,6 +201,15 @@ func (note *NoteRecord) checkLocations(data NoteData) (*NoteRecord, error) {
 
 func (note *NoteRecord) checkNoteTitleAndText(data NoteData) (*NoteRecord, error) {
 	if data.noteData[noteDataGroupName] != "" {
+		note.NoteTitle = data.titleNoteData[noteDataGroupName]
+		note.NoteText = data.noteData[noteDataGroupName]
+		return note, nil
+	}
+	return note, errors.New(noteDataGroupName + " could not be processed further!")
+}
+
+func (note *NoteRecord) checkDateAndTime(data NoteData) (*NoteRecord, error) {
+	if !baseNoteFieldCheck(data, createdOnDateGroupName, false) || !baseNoteFieldCheck(data, createdOnTimeGroupName, false) {
 		note.NoteTitle = data.titleNoteData[noteDataGroupName]
 		note.NoteText = data.noteData[noteDataGroupName]
 		return note, nil
