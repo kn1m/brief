@@ -7,6 +7,9 @@ import (
 	"io/ioutil"
 	"brief/briefImporter/common"
 	"strconv"
+	"fmt"
+	"time"
+	"reflect"
 )
 
 const titleGroupName = "title"
@@ -20,7 +23,7 @@ const createdOnTimeGroupName = "createdontime"
 const noteDataGroupName = "notedata"
 const recordTypeGroupName  = "recordtype"
 
-const dateFormat = "Jan 2, 2006 at 3:04pm (MST)"
+const dateFormat = "Friday, May 6, 2016 12:09:23 PM"
 
 var recordTypesToSkip  = []string{"Highlight", "Bookmark"}
 
@@ -33,7 +36,7 @@ type NoteRecord struct
 	SecondPage int
 	FirstLocation int
 	SecondLocation int
-	CreatedOn string
+	CreatedOn time.Time
 	NoteTitle string
 	NoteText string
 }
@@ -87,7 +90,7 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 		note := &NoteRecord{}
 
 		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle,
-			           note.checkAuthor, note.checkPage, note.checkLocations, note.checkNoteTitleAndText)
+			           note.checkAuthor, note.checkPage, note.checkLocations, note.checkDateAndTime, note.checkNoteTitleAndText)
 		notes = append(notes, *note)
 
 		i += 2
@@ -210,8 +213,12 @@ func (note *NoteRecord) checkNoteTitleAndText(data NoteData) (*NoteRecord, error
 
 func (note *NoteRecord) checkDateAndTime(data NoteData) (*NoteRecord, error) {
 	if !baseNoteFieldCheck(data, createdOnDateGroupName, false) || !baseNoteFieldCheck(data, createdOnTimeGroupName, false) {
-		note.NoteTitle = data.titleNoteData[noteDataGroupName]
-		note.NoteText = data.noteData[noteDataGroupName]
+		//note.NoteTitle = data.titleNoteData[noteDataGroupName]
+		//note.NoteText = data.noteData[noteDataGroupName]
+		//fmt.Println(data.noteData[createdOnDateGroupName] + " " + data.noteData[createdOnTimeGroupName])
+		t, _ := time.Parse(dateFormat, data.noteData[createdOnDateGroupName] + " " + data.noteData[createdOnTimeGroupName])
+		fmt.Println(t)
+		fmt.Println(reflect.TypeOf(t))
 		return note, nil
 	}
 	return note, errors.New(noteDataGroupName + " could not be processed further!")
