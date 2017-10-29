@@ -7,9 +7,6 @@ import (
 	"io/ioutil"
 	"brief/briefImporter/common"
 	"strconv"
-	"fmt"
-	"time"
-	"reflect"
 )
 
 const titleGroupName = "title"
@@ -23,8 +20,6 @@ const createdOnTimeGroupName = "createdontime"
 const noteDataGroupName = "notedata"
 const recordTypeGroupName  = "recordtype"
 
-const dateFormat = "Friday, May 6, 2016 12:09:23 PM"
-
 var recordTypesToSkip  = []string{"Highlight", "Bookmark"}
 
 type NoteRecord struct
@@ -36,7 +31,7 @@ type NoteRecord struct
 	SecondPage int
 	FirstLocation int
 	SecondLocation int
-	CreatedOn time.Time
+	CreatedOn string
 	NoteTitle string
 	NoteText string
 }
@@ -66,7 +61,7 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 		`(page\s(?P<`+ pageGroupName +`>[\d]+)\s\|\s)?` +
 		`Location\s(?P<`+ firstLocationGroupName +`>[\d]+)\-?`+
 		`(?P<`+ secondLocationGroupName +`>[\d]+)?\s\|\sAdded\son\s` +
-		`(?P<`+ createdOnDateGroupName +`>[\w]+\,{1}\s[\w]+\s[\d]+\,\s\d{4})`+
+		`[\w]+\,{1}\s(?P<`+ createdOnDateGroupName +`>[\w]+\s[\d]+\,\s\d{4})`+
 		`\s(?P<`+ createdOnTimeGroupName +`>\d{1,2}:\d{2}:\d{2}\s(AM|PM))` +
 		`[\r\n]*(?P<`+ noteDataGroupName +`>[\wА-Яа-яіІїЇєЄґҐ\s*\'*#*\(*\)*\/*\-*:*\*\;*\=*\.*\,*—*–*]+)[\r\n]*`)
 
@@ -185,7 +180,7 @@ func (note *NoteRecord) checkPage(data NoteData) (*NoteRecord, error) {
 		}
 		return note, err
 	}
-	return note, errors.New(pageGroupName + " could not be processed further!")
+	return note, nil
 }
 
 func (note *NoteRecord) checkLocations(data NoteData) (*NoteRecord, error) {
@@ -212,13 +207,8 @@ func (note *NoteRecord) checkNoteTitleAndText(data NoteData) (*NoteRecord, error
 }
 
 func (note *NoteRecord) checkDateAndTime(data NoteData) (*NoteRecord, error) {
-	if !baseNoteFieldCheck(data, createdOnDateGroupName, false) || !baseNoteFieldCheck(data, createdOnTimeGroupName, false) {
-		//note.NoteTitle = data.titleNoteData[noteDataGroupName]
-		//note.NoteText = data.noteData[noteDataGroupName]
-		//fmt.Println(data.noteData[createdOnDateGroupName] + " " + data.noteData[createdOnTimeGroupName])
-		t, _ := time.Parse(dateFormat, data.noteData[createdOnDateGroupName] + " " + data.noteData[createdOnTimeGroupName])
-		fmt.Println(t)
-		fmt.Println(reflect.TypeOf(t))
+	if baseNoteFieldCheck(data, createdOnDateGroupName, false) || baseNoteFieldCheck(data, createdOnTimeGroupName, false) {
+		note.CreatedOn = data.noteData[createdOnDateGroupName] + " " + data.noteData[createdOnTimeGroupName]
 		return note, nil
 	}
 	return note, errors.New(noteDataGroupName + " could not be processed further!")

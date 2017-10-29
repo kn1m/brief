@@ -37,9 +37,9 @@ func main() {
 	common.Check(err)
 
 	for i := range notes {
-		fmt.Printf("\n%d: %s %s %+v p: %d-%d l:%d-%d :: %s :: %s", i, notes[i].BookTile,
+		fmt.Printf("\n%d: %s %s %+v p: %d-%d l:%d-%d :: %s :: %s %s", i, notes[i].BookTile,
 			notes[i].BookOriginalName, notes[i].BookAuthor, notes[i].FirstPage, notes[i].SecondPage,
-			notes[i].FirstLocation, notes[i].SecondLocation, notes[i].NoteTitle, notes[i].NoteText)
+			notes[i].FirstLocation, notes[i].SecondLocation, notes[i].NoteTitle, notes[i].NoteText, notes[i].CreatedOn)
 	}
 
 	if *logFlag {
