@@ -63,7 +63,7 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 		`(?P<`+ secondLocationGroupName +`>[\d]+)?\s\|\sAdded\son\s` +
 		`[\w]+\,{1}\s(?P<`+ createdOnDateGroupName +`>[\w]+\s[\d]+\,\s\d{4})`+
 		`\s(?P<`+ createdOnTimeGroupName +`>\d{1,2}:\d{2}:\d{2}\s(AM|PM))` +
-		`[\r\n]*(?P<`+ noteDataGroupName +`>[\wА-Яа-яіІїЇєЄґҐ\s*\'*#*\(*\)*\/*\-*:*\*\;*\=*\.*\,*—*–*]+)[\r\n]*`)
+		`[\r\n]*(?P<`+ noteDataGroupName +`>[\S\s]+)[\r\n]*`)
 
 	split := regexp.MustCompile("={10}[\r\n]*").Split(str, -1)
 
