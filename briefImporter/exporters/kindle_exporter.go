@@ -63,7 +63,7 @@ func GetNotesFromFile(path string) ([]NoteRecord, error){
 		`(?P<`+ secondLocationGroupName +`>[\d]+)?\s\|\sAdded\son\s` +
 		`(?P<`+ createdOnDateGroupName +`>[\w]+\,{1}\s[\w]+\s[\d]+\,\s\d{4})`+
 		`\s(?P<`+ createdOnTimeGroupName +`>\d{1,2}:\d{2}:\d{2}\s(AM|PM))` +
-		`[\r\n]*(?P<`+ noteDataGroupName +`>[\wА-Яа-яіІїЇєЄґҐ\s*\'*#*\(*\)*\/*\-*:*\*\;*\=*\.*\,*—*]+)[\r\n]*`)
+		`[\r\n]*(?P<`+ noteDataGroupName +`>[\wА-Яа-яіІїЇєЄґҐ\s*\'*#*\(*\)*\/*\-*:*\*\;*\=*\.*\,*—*–*]+)[\r\n]*`)
 
 	split := regexp.MustCompile("={10}[\r\n]*").Split(str, -1)
 
@@ -171,16 +171,16 @@ func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 
 func (note *NoteRecord) checkPage(data NoteData) (*NoteRecord, error) {
 	var err error
-	if data.noteData[firstLocationGroupName] != "" || data.titleNoteData[firstLocationGroupName] != "" {
-		if data.titleNoteData[firstLocationGroupName] != "" {
-			note.FirstPage, err = strconv.Atoi(data.titleNoteData[firstLocationGroupName])
+	if data.noteData[pageGroupName] != "" || data.titleNoteData[pageGroupName] != "" {
+		if data.titleNoteData[pageGroupName] != "" {
+			note.FirstPage, err = strconv.Atoi(data.titleNoteData[pageGroupName])
 		}
-		if data.noteData[firstLocationGroupName] != "" {
-			note.SecondPage, err = strconv.Atoi(data.noteData[firstLocationGroupName])
+		if data.noteData[pageGroupName] != "" {
+			note.SecondPage, err = strconv.Atoi(data.noteData[pageGroupName])
 		}
 		return note, err
 	}
-	return note, errors.New(firstLocationGroupName + " could not be processed further!")
+	return note, errors.New(pageGroupName + " could not be processed further!")
 }
 
 func (note *NoteRecord) checkLocations(data NoteData) (*NoteRecord, error) {

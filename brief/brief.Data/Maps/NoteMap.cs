@@ -3,7 +3,7 @@
     using System.Data.Entity.ModelConfiguration;
     using Library.Entities;
 
-    public class NoteMap : EntityTypeConfiguration<Note>
+    class NoteMap : EntityTypeConfiguration<Note>
     {
         public NoteMap()
         {
@@ -20,6 +20,28 @@
 
             Property(n => n.NoteType)
                 .IsRequired();
+
+            Property(n => n.Exported)
+                .IsRequired();
+
+            Property(n => n.CreatedOn)
+                .IsOptional();
+
+            Property(n => n.ModifiedOn)
+                .IsOptional();
+
+            Property(n => n.Page)
+                .IsOptional();
+
+            Property(n => n.FirstLocation)
+                .IsOptional();
+
+            Property(n => n.SecondLocation)
+                .IsOptional();
+
+            HasOptional<Edition>(n => n.Edition)
+                .WithMany(e => e.Notes)
+                .HasForeignKey(n => n.EditionId);
         }
     }
 }

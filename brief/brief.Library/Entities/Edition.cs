@@ -25,20 +25,17 @@
 
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
-
             var edition = obj as Edition;
             if (edition != null)
             {
-                return edition.PublisherId == PublisherId 
-                    && edition.Description == Description
-                    && edition.BookId == BookId
-                    && edition.EditionType == EditionType
-                    && edition.Language == Language
-                    && edition.Year.HasValue && Year.HasValue ? edition.Year.Value == Year.Value : true;
+                return edition.PublisherId != PublisherId ||
+                       edition.Description != Description ||
+                       edition.BookId != BookId ||
+                       edition.EditionType != EditionType ||
+                       edition.Language != Language ||
+                       !edition.Year.HasValue ||
+                       !Year.HasValue ||
+                       edition.Year.Value == Year.Value;
             }
 
             return false;
