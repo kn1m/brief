@@ -24,16 +24,16 @@ var recordTypesToSkip  = []string{"Highlight", "Bookmark"}
 
 type NoteRecord struct
 {
-	BookTile string
-	BookOriginalName string
-	BookAuthor []Author
-	FirstPage int
-	SecondPage int
-	FirstLocation int
-	SecondLocation int
-	CreatedOn string
-	NoteTitle string
-	NoteText string
+	BookTitle string        `json:"book_title"`
+	BookOriginalName string `json:"book_original_name"`
+	BookAuthor []Author     `json:"authors"`
+	FirstPage int 			`json:"first_page"`
+	SecondPage int          `json:"second_page"`
+	FirstLocation int       `json:"first_location"`
+	SecondLocation int      `json:"second_location"`
+	CreatedOn string        `json:"created_on"`
+	NoteTitle string        `json:"note_title"`
+	NoteText string         `json:"note_text"`
 }
 
 type Author struct {
@@ -47,7 +47,7 @@ type NoteData struct {
 	noteData map[string]string
 }
 
-func GetNotesFromFile(path string) ([]NoteRecord, error){
+func GetPaperwhiteNotesFromFile(path string) ([]NoteRecord, error){
 
 	b, err := ioutil.ReadFile(path)
 	common.Check(err)
@@ -104,7 +104,7 @@ func checkNoteFiled(data NoteData, fns ...func(data NoteData) (*NoteRecord, erro
 
 func (note *NoteRecord) checkTitle(data NoteData) (*NoteRecord, error) {
 	if baseNoteFieldCheck(data, titleGroupName, false) {
-		note.BookTile = data.titleNoteData[titleGroupName]
+		note.BookTitle = data.titleNoteData[titleGroupName]
 		return note, nil
 	}
 	return note, errors.New(titleGroupName + " could not be processed further!")
