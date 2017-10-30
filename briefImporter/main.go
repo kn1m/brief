@@ -7,8 +7,7 @@ import (
 	"runtime"
 	"log"
 	"flag"
-	"errors"
-    //"github.com/ahmetb/go-linq"
+	"os"
 )
 
 func main() {
@@ -18,9 +17,8 @@ func main() {
 	flag.Parse()
 
 	if path == "" {
-		//fmt.Fprintf(os.Stderr, "Usage: <textfilepath>\n")
-		//os.Exit(1)
-		panic(errors.New("File must be provided!"))
+		fmt.Fprintf(os.Stderr, "Usage: <textfilepath>\n")
+		os.Exit(1)
 	}
 
 	var mem runtime.MemStats
@@ -37,7 +35,7 @@ func main() {
 	common.Check(err)
 
 	for i := range notes {
-		fmt.Printf("\n%d: %s %s %+v p: %d-%d l:%d-%d :: %s :: %s %s", i, notes[i].BookTitle,
+		log.Printf("\n%d: %s %s %+v p: %d-%d l:%d-%d :: %s :: %s %s", i, notes[i].BookTitle,
 			notes[i].BookOriginalName, notes[i].BookAuthor, notes[i].FirstPage, notes[i].SecondPage,
 			notes[i].FirstLocation, notes[i].SecondLocation, notes[i].NoteTitle, notes[i].NoteText, notes[i].CreatedOn)
 	}
