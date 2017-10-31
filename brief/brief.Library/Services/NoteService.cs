@@ -5,9 +5,15 @@
     using Controllers.Models;
     using Controllers.Models.BaseEntities;
     using Controllers.Providers;
+    using Repositories;
 
-    class NoteService : INoteService
+    public class NoteService : INoteService
     {
+        public NoteService(INoteRepository noteRepository)
+        {
+            
+        }
+
         public Task<BaseResponseMessage> CreateNote(NoteModel note)
         {
             throw new NotImplementedException();

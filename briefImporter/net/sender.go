@@ -8,6 +8,14 @@ import (
 	"brief/briefImporter/common"
 )
 
+func compareFilesChecksums() bool {
+	return true
+}
+
+func compareDevicesSerialNumbers() bool {
+	return true
+}
+
 func SendNotesToServer(notes *[]byte) {
 	url := "http://localhost/notes"
 	fmt.Println("sending to: ", url)
