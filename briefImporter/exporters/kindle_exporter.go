@@ -4,9 +4,12 @@ import (
 	"errors"
 	"strings"
 	"regexp"
-	"io/ioutil"
 	"brief/briefImporter/common"
 	"strconv"
+	"os"
+	"log"
+	"io"
+	"crypto/md5"
 )
 
 const titleGroupName = "title"
@@ -49,10 +52,23 @@ type NoteData struct {
 
 func GetPaperwhiteNotesFromFile(path string) ([]NoteRecord, error){
 
-	b, err := ioutil.ReadFile(path)
+	file, err := os.Open(path)
 	common.Check(err)
+	defer file.Close()
 
-	str := string(b)
+	stat, _ := file.Stat()
+	file_data := make([]byte, stat.Size())
+
+	file.Read(file_data)
+
+	h := md5.New()
+	if _, err := io.Copy(h, file); err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("Current file hash: %x\n", h.Sum(nil))
+
+	str := string(file_data)
 
 	recordRegexp := regexp.MustCompile(`(g?)(i?)(?P<`+ titleGroupName +`>[\wА-Яа-яіїєґ'#\-*:*\s*\.*\,*]+)\s` +
 		`(?P<`+ alttitleGroupName +`>\({1}[\wА-Яа-яіїєґ\s*\.*\,*]+\){1})?\s?` +
