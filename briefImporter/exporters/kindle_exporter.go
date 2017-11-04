@@ -8,8 +8,6 @@ import (
 	"strconv"
 	"os"
 	"log"
-	"io"
-	"crypto/md5"
 )
 
 const titleGroupName = "title"
@@ -50,7 +48,9 @@ type NoteData struct {
 	noteData map[string]string
 }
 
-func GetPaperwhiteNotesFromFile(path string) ([]NoteRecord, error){
+func GetNotes(path string) ([]NoteRecord, error){
+
+	log.Printf("Processing file %s:\n", path)
 
 	file, err := os.Open(path)
 	common.Check(err)
@@ -61,12 +61,9 @@ func GetPaperwhiteNotesFromFile(path string) ([]NoteRecord, error){
 
 	file.Read(file_data)
 
-	h := md5.New()
-	if _, err := io.Copy(h, file); err != nil {
-		log.Fatal(err)
-	}
-
-	log.Printf("Current file hash: %x\n", h.Sum(nil))
+	go func() {
+		common.GetFileChecksum(file)
+	}()
 
 	str := string(file_data)
 

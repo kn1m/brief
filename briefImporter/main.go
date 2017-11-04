@@ -11,6 +11,8 @@ import (
 )
 
 func main() {
+	runtime.GOMAXPROCS(runtime.NumCPU())
+
 	var path string
 	flag.StringVar(&path, "filepath", "", "path to text file")
 	logFlag := flag.Bool("log", false, "true if provide logs in output")
@@ -31,7 +33,7 @@ func main() {
 		log.Println(mem.HeapSys)
 	}
 
-	notes, err := exporters.GetPaperwhiteNotesFromFile(path)
+	notes, err := exporters.GetNotes(path)
 	common.Check(err)
 
 	for i := range notes {
