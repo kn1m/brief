@@ -1,24 +1,47 @@
 package net
 
 import (
-	"fmt"
 	"net/http"
 	"bytes"
 	"io/ioutil"
 	"brief/briefImporter/common"
+	"time"
+	"log"
+	"encoding/json"
 )
 
-func compareFilesChecksums() bool {
-	return true
+type HistoryRecord struct {
+	SerialNumber string `json:"serial_number"`
+	Checksum []byte     `json:"checksum"`
+	CreatedOn time.Time `json:"created_on"`
 }
 
-func compareDevicesSerialNumbers() bool {
-	return true
+func GetPreviousHistoryRecord(deviceSerialNumber string) (HistoryRecord, error)  {
+	url := "http://localhost/notes"
+	log.Println("sending to: ", url)
+
+	req, err := http.NewRequest("GET", url, nil)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	common.Check(err)
+	defer resp.Body.Close()
+
+	var historyRecord HistoryRecord
+
+	log.Println("response status:", resp.Status)
+	log.Println("response headers:", resp.Header)
+	body, _ := ioutil.ReadAll(resp.Body)
+	log.Println("response body:", string(body))
+
+	err = json.Unmarshal(body, &historyRecord)
+
+	return historyRecord, err
 }
 
 func SendNotesToServer(notes *[]byte) {
 	url := "http://localhost/notes"
-	fmt.Println("sending to: ", url)
+	log.Println("sending to: ", url)
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(*notes))
 	req.Header.Set("Set-Type", "All")
@@ -29,8 +52,8 @@ func SendNotesToServer(notes *[]byte) {
 	common.Check(err)
 	defer resp.Body.Close()
 
-	fmt.Println("response status:", resp.Status)
-	fmt.Println("response headers:", resp.Header)
+	log.Println("response status:", resp.Status)
+	log.Println("response headers:", resp.Header)
 	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("response body:", string(body))
+	log.Println("response body:", string(body))
 }
