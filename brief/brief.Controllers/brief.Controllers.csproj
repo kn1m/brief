@@ -101,11 +101,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AuthorController.cs" />
-    <Compile Include="Controllers\BaseControllers\BaseDataFileUploadController.cs" />
+    <Compile Include="Controllers\BaseControllers\BaseFileUploadController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Constraints\LowercaseRouteConstraint.cs" />
     <Compile Include="Controllers\CoverController.cs" />
-    <Compile Include="Controllers\ExportController.cs" />
+    <Compile Include="Controllers\EditionFileController.cs" />
     <Compile Include="Extensions\BaseResponseExtensions.cs" />
     <Compile Include="Extensions\HttpContentExtensions.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />

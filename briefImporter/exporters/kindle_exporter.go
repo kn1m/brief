@@ -62,7 +62,7 @@ func GetNotes(path string) ([]NoteRecord, error){
 	file.Read(file_data)
 
 	go func() {
-		common.GetFileChecksum(file)
+		common.GetFileChecksum(file_data)
 	}()
 
 	str := string(file_data)

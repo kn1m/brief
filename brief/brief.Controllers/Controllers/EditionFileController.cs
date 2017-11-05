@@ -1,8 +1,8 @@
 ﻿namespace brief.Controllers.Controllers
 {
-    public class ExportController
+    public class EditionFileController
     {
-        public ExportController()
+        public EditionFileController()
         {
             
         }

@@ -13,18 +13,18 @@
     using Models.BaseEntities;
     using StreamProviders;
 
-    public abstract class BaseDataFileUploadController : ApiController
+    public abstract class BaseFileUploadController : ApiController
     {
         private readonly IFileSystem _fileSystem;
 
-        protected BaseDataFileUploadController() : this(new FileSystem()) {}
+        protected BaseFileUploadController() : this(new FileSystem()) {}
 
-        protected BaseDataFileUploadController(IFileSystem fileSystem)
+        protected BaseFileUploadController(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         }
 
-        protected virtual async Task<HttpResponseMessage> BaseImageUpload<TData>(Func<string, Task<TData>> strategy,
+        protected virtual async Task<HttpResponseMessage> BaseUpload<TData>(Func<string, Task<TData>> strategy,
             StorageSettings storageSettings)
             where TData : BaseResponseMessage
         {

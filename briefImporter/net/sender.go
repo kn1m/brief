@@ -12,7 +12,7 @@ import (
 
 type HistoryRecord struct {
 	SerialNumber string `json:"serial_number"`
-	Checksum []byte     `json:"checksum"`
+	Checksum [16]byte   `json:"checksum"`
 	CreatedOn time.Time `json:"created_on"`
 }
 

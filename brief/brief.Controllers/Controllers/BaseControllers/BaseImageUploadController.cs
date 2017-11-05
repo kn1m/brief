@@ -20,8 +20,6 @@
     {
         private readonly IFileSystem _fileSystem;
 
-        protected BaseImageUploadController() : this(new FileSystem()) {}
-
         protected BaseImageUploadController(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));

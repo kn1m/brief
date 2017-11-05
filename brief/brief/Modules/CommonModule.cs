@@ -1,8 +1,8 @@
 ﻿namespace brief.Modules
 {
+    using System.IO.Abstractions;
     using Autofac;
     using AutoMapper;
-    using log4net;
     using Library.Entities.Profiles;
 
     public class CommonModule : Module
@@ -15,6 +15,9 @@
             }));
 
             builder.Register(ctx => ctx.Resolve<MapperConfiguration>().CreateMapper()).As<IMapper>();
+
+            builder.RegisterType<FileSystem>()
+                .As<IFileSystem>();
         }
     }
 }

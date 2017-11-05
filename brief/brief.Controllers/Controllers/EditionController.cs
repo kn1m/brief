@@ -1,6 +1,7 @@
 ﻿namespace brief.Controllers.Controllers
 {
     using System;
+    using System.IO.Abstractions;
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
@@ -16,7 +17,7 @@
         private readonly IEditionService _editionService;
         private readonly IHeaderSettings _headerSettings;
 
-        public EditionController(IEditionService editionService, IHeaderSettings headerSettings)
+        public EditionController(IEditionService editionService, IFileSystem fileSystem, IHeaderSettings headerSettings) : base(fileSystem)
         {
             _editionService = editionService ?? throw new ArgumentNullException(nameof(editionService));
             _headerSettings = headerSettings ?? throw new ArgumentException(nameof(headerSettings));

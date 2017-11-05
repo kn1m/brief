@@ -1,6 +1,7 @@
 ﻿namespace brief.Controllers.Controllers
 {
     using System;
+    using System.IO.Abstractions;
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
@@ -15,7 +16,7 @@
         private readonly ICoverService _coverService;
         private readonly IHeaderSettings _headerSettings;
 
-        public CoverController(ICoverService coverService, IHeaderSettings headerSettings)
+        public CoverController(ICoverService coverService, IFileSystem fileSystem, IHeaderSettings headerSettings) : base(fileSystem)
         {
             _coverService = coverService ?? throw new ArgumentNullException(nameof(coverService));
             _headerSettings = headerSettings ?? throw new ArgumentException(nameof(headerSettings));
