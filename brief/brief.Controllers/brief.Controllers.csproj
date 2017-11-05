@@ -120,12 +120,14 @@
     <Compile Include="Helpers\StorageSettings.cs" />
     <Compile Include="Models\AuthorModel.cs" />
     <Compile Include="Models\BaseEntities\BaseResponseMessage.cs" />
+    <Compile Include="Models\BaseEntities\BaseUploadModel.cs" />
     <Compile Include="Models\BaseEntities\ResponseMessage.cs" />
     <Compile Include="Models\BookModel.cs" />
     <Compile Include="Models\CoverModel.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\EditionModel.cs" />
     <Compile Include="Models\EditionTypeModel.cs" />
+    <Compile Include="Models\FileUploadModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\BaseEntities\IRecognizable.cs" />
     <Compile Include="Models\LanguageModel.cs" />
