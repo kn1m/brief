@@ -6,7 +6,6 @@
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using System.Web;
     using System.Web.Http;
     using Extensions;
     using Helpers;
@@ -16,8 +15,6 @@
     public abstract class BaseFileUploadController : ApiController
     {
         private readonly IFileSystem _fileSystem;
-
-        protected BaseFileUploadController() : this(new FileSystem()) {}
 
         protected BaseFileUploadController(IFileSystem fileSystem)
         {
@@ -32,14 +29,7 @@
             {
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
-
-            var filesCount = HttpContext.Current.Request.Files.Count;
-
-            if (filesCount != 1)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, $"Single-file upload is only allowed. But {filesCount} files detected.");
-            }
-
+            
             FileMultipartFormDataStreamProvider provider = new FileMultipartFormDataStreamProvider(storageSettings.StoragePath);
 
             try
