@@ -29,10 +29,8 @@ func GetPreviousHistoryRecord(deviceSerialNumber string) (HistoryRecord, error) 
 
 	var historyRecord HistoryRecord
 
-	log.Println("response status:", resp.Status)
-	log.Println("response headers:", resp.Header)
 	body, _ := ioutil.ReadAll(resp.Body)
-	log.Println("response body:", string(body))
+	printResponse(resp, body)
 
 	err = json.Unmarshal(body, &historyRecord)
 
@@ -52,8 +50,14 @@ func SendNotesToServer(notes *[]byte) {
 	common.Check(err)
 	defer resp.Body.Close()
 
-	log.Println("response status:", resp.Status)
-	log.Println("response headers:", resp.Header)
 	body, _ := ioutil.ReadAll(resp.Body)
+
+	printResponse(resp, body)
+}
+
+func printResponse(response *http.Response, body []byte) {
+	log.Println("response status:", response.Status)
+	log.Println("response headers:", response.Header)
 	log.Println("response body:", string(body))
 }
+
