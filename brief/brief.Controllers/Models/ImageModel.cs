@@ -1,11 +1,9 @@
 ﻿namespace brief.Controllers.Models
 {
-    using System;
+    using BaseEntities;
 
-    public class ImageModel
+    public class ImageModel : BaseUploadModel
     {
-        public Guid? TargetId { get; set; }
-        public string Path { get; set; }
         public string TargetLanguage { get; set; }
     }
 }

@@ -1,13 +1,13 @@
 ﻿namespace brief.Controllers.Controllers.BaseControllers
 {
     using System;
+    using System.Collections.Generic;
     using System.IO.Abstractions;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using Extensions;
     using Helpers;
     using Models.BaseEntities;
     using StreamProviders;
@@ -21,7 +21,7 @@
             _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         }
 
-        protected virtual async Task<HttpResponseMessage> BaseUpload<TData>(Func<string, Task<TData>> strategy,
+        protected virtual async Task<HttpResponseMessage> BaseUpload<TData>(Func<BaseUploadModel, Task<TData>> strategy,
             StorageSettings storageSettings)
             where TData : BaseResponseMessage
         {
@@ -29,21 +29,40 @@
             {
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
-            
-            FileMultipartFormDataStreamProvider provider = new FileMultipartFormDataStreamProvider(storageSettings.StoragePath);
+
+            var clientFolderId = Guid.NewGuid();
+            string currentProviderPath = _fileSystem.Path.Combine(storageSettings.StoragePath, clientFolderId.ToString());
+
+            _fileSystem.Directory.CreateDirectory(currentProviderPath);
+
+            FileMultipartFormDataStreamProvider provider = new FileMultipartFormDataStreamProvider(currentProviderPath);
 
             try
             {
                 await Request.Content.ReadAsMultipartAsync(provider);
 
-                var newFilename = Guid.NewGuid() + "_" + _fileSystem.Path.GetFileName(provider.FileData.First().LocalFileName);
-                string newAbsolutePath = _fileSystem.Path.Combine(storageSettings.StoragePath, newFilename);
+                List<string> files = new List<string>();
+                var dataTasks = new List<Task<TData>>();
 
-                _fileSystem.File.Move(provider.FileData.First().LocalFileName, newAbsolutePath);
+                foreach (MultipartFileData file in provider.FileData)
+                {
+                    files.Add(_fileSystem.Path.GetFileName(file.LocalFileName));
 
-                var result = await strategy.Invoke(newAbsolutePath);
+                    var fileeToSave = new BaseUploadModel
+                    {
+                        Path = _fileSystem.Path.Combine(currentProviderPath, file.LocalFileName),
+                    };
 
-                return result.CreateRespose(Request, HttpStatusCode.Created, HttpStatusCode.BadRequest);
+                    dataTasks.Add(strategy.Invoke(fileeToSave));
+                }
+
+                var results = await Task.WhenAll(dataTasks);
+
+                _fileSystem.Directory.Delete(currentProviderPath);
+
+                var resultingDict = Enumerable.Range(0, results.Length).ToDictionary(i => files[i], i => results[i].RawData);
+
+                return Request.CreateResponse(HttpStatusCode.OK, resultingDict);
             }
             catch (Exception e)
             {
