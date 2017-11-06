@@ -4,7 +4,6 @@
     using Autofac;
     using Autofac.Core;
     using Autofac.Integration.WebApi;
-    using Controllers;
     using Controllers.Controllers;
     using Controllers.Helpers;
     using Controllers.Helpers.Base;

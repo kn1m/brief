@@ -27,20 +27,22 @@
                     new NamedParameter("mode", myParamsCollection["EngineMode"].ConvertToEnum<EngineMode>())
                 });
 
+            var briefConnectionString = ConfigurationManager.ConnectionStrings["briefContext"].ConnectionString;
+
             builder.RegisterType<ApplicationDbContext>()
                 .As<IApplicationDbContext>()
-                .WithParameter(new NamedParameter("connectionString", ConfigurationManager.ConnectionStrings["briefContext"].ConnectionString))
+                .WithParameter(new NamedParameter("connectionString", briefConnectionString))
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<CoverRepository>()
                 .As<ICoverRepository>()
-                .WithParameter(new TypedParameter(typeof(string), ConfigurationManager.ConnectionStrings["briefContext"].ConnectionString));
+                .WithParameter(new TypedParameter(typeof(string), briefConnectionString));
             builder.RegisterType<SeriesRepository>()
                 .As<ISeriesRepository>()
-                .WithParameter(new TypedParameter(typeof(string), ConfigurationManager.ConnectionStrings["briefContext"].ConnectionString));
+                .WithParameter(new TypedParameter(typeof(string), briefConnectionString));
             builder.RegisterType<AuthorRepository>()
                 .As<IAuthorRepository>()
-                .WithParameter(new TypedParameter(typeof(string), ConfigurationManager.ConnectionStrings["briefContext"].ConnectionString));
+                .WithParameter(new TypedParameter(typeof(string), briefConnectionString));
 
             builder.RegisterType<FilterRepository>()
                 .As<IFilterRepository>();

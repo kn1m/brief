@@ -8,6 +8,7 @@ import (
 	"time"
 	"log"
 	"encoding/json"
+	"io"
 )
 
 type HistoryRecord struct {
@@ -17,20 +18,12 @@ type HistoryRecord struct {
 }
 
 func GetPreviousHistoryRecord(deviceSerialNumber string) (HistoryRecord, error)  {
-	url := "http://localhost/notes"
-	log.Println("sending to: ", url)
-
-	req, err := http.NewRequest("GET", url, nil)
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	common.Check(err)
-	defer resp.Body.Close()
+	resp, err := executeRequest("http://localhost/notes", "GET", nil, nil)
 
 	var historyRecord HistoryRecord
 
 	body, _ := ioutil.ReadAll(resp.Body)
-	printResponse(resp, body)
+	logResponse(resp, body)
 
 	err = json.Unmarshal(body, &historyRecord)
 
@@ -38,26 +31,38 @@ func GetPreviousHistoryRecord(deviceSerialNumber string) (HistoryRecord, error) 
 }
 
 func SendNotesToServer(notes *[]byte) {
-	url := "http://localhost/notes"
+	headers := make(map[string]string)
+	headers["Set-Type"] = "All"
+	headers["Content-Type"] = "application/json"
+
+	resp, err := executeRequest("http://localhost/notes", "POST", bytes.NewBuffer(*notes), headers)
+	common.Check(err)
+
+	body, _ := ioutil.ReadAll(resp.Body)
+
+	logResponse(resp, body)
+}
+
+func logResponse(response *http.Response, body []byte) {
+	log.Println("response status:", response.Status)
+	log.Println("response headers:", response.Header)
+	log.Println("response body:", string(body))
+}
+
+func executeRequest(url string, method string, bodyReader io.Reader, headers map[string]string) (*http.Response, error) {
 	log.Println("sending to: ", url)
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(*notes))
-	req.Header.Set("Set-Type", "All")
-	req.Header.Set("Content-Type", "application/json")
+	req, err := http.NewRequest(method, url, bodyReader)
+	common.Check(err)
+	for k, v := range headers {
+		req.Header.Set(k, v)
+	}
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	common.Check(err)
 	defer resp.Body.Close()
 
-	body, _ := ioutil.ReadAll(resp.Body)
-
-	printResponse(resp, body)
-}
-
-func printResponse(response *http.Response, body []byte) {
-	log.Println("response status:", response.Status)
-	log.Println("response headers:", response.Header)
-	log.Println("response body:", string(body))
+	return resp, err
 }
 

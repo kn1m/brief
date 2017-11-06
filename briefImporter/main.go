@@ -42,11 +42,6 @@ func main() {
 			notes[i].FirstLocation, notes[i].SecondLocation, notes[i].NoteTitle, notes[i].NoteText, notes[i].CreatedOn)
 	}
 
-	//json_notes, err := json.Marshal(notes)
-	//common.Check(err)
-
-	//net.SendNotesToServer(&json_notes)
-
 	if *logFlag {
 		runtime.ReadMemStats(&mem)
 		log.Println(mem.Alloc)
