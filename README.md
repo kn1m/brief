@@ -5,7 +5,7 @@ brief is personal library.
 Original purpose was to catolgize >1500 of books by simply scaning edition marks or ISBNs
 using Tesseract Engine.
 
-Features in development:
+### Features in development:
     - storing edition files;
     - adding flexibility to Tesseract settings;
     - storing notes with easily ability to perform flexible search;
