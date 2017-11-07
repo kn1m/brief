@@ -48,12 +48,12 @@
                 {
                     files.Add(_fileSystem.Path.GetFileName(file.LocalFileName));
 
-                    var fileeToSave = new BaseUploadModel
+                    var fileToSave = new BaseUploadModel
                     {
                         Path = _fileSystem.Path.Combine(currentProviderPath, file.LocalFileName),
                     };
 
-                    dataTasks.Add(strategy.Invoke(fileeToSave));
+                    dataTasks.Add(strategy.Invoke(fileToSave));
                 }
 
                 var results = await Task.WhenAll(dataTasks);

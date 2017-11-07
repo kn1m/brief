@@ -8,7 +8,7 @@ using Tesseract Engine.
 ### Features in development
     - storing edition files;
     - adding flexibility to Tesseract settings;
-    - storing notes with easily ability to perform flexible search;
+    - storing notes with easy ability to perform flexible search;
     - notes import tool with flexible configuration, which is going to be Linux/Windows service.
 
 ### Todos
