@@ -10,16 +10,16 @@ import (
 	"log"
 )
 
-const titleGroupName = "title"
-const alttitleGroupName = "alttitle"
-const authorGroupName = "author"
-const pageGroupName = "page"
-const firstLocationGroupName = "location"
+const titleGroupName          = "title"
+const alttitleGroupName       = "alttitle"
+const authorGroupName         = "author"
+const pageGroupName           = "page"
+const firstLocationGroupName  = "location"
 const secondLocationGroupName = "slocation"
-const createdOnDateGroupName = "createdondate"
-const createdOnTimeGroupName = "createdontime"
-const noteDataGroupName = "notedata"
-const recordTypeGroupName  = "recordtype"
+const createdOnDateGroupName  = "createdondate"
+const createdOnTimeGroupName  = "createdontime"
+const noteDataGroupName       = "notedata"
+const recordTypeGroupName     = "recordtype"
 
 var recordTypesToSkip  = []string{"Highlight", "Bookmark"}
 
