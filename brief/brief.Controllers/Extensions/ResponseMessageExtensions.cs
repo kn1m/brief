@@ -8,13 +8,6 @@
     {
         public static HttpResponseMessage CreateRespose<T>(this ResponseMessage<T> result, HttpRequestMessage request, HttpStatusCode success,
             HttpStatusCode failure)
-        {
-            if (result.RawData != null)
-            {
-                return request.CreateResponse(failure, result.RawData);
-            }
-
-            return request.CreateResponse(success, result.Payload);
-        }
+            => result.RawData == null ? request.CreateResponse(success, result.Payload) : request.CreateResponse(failure, result.RawData);
     }
 }
