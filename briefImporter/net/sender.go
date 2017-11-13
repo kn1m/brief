@@ -17,10 +17,10 @@ type HistoryRecord struct {
 	CreatedOn time.Time `json:"created_on"`
 }
 
-func GetPreviousHistoryRecord(deviceSerialNumber string) (HistoryRecord, error)  {
-	resp, err := executeRequest("http://localhost/notes", "GET", nil, nil)
+func GetPreviousHistoryRecord(serial string, config *common.Config) (*HistoryRecord, error)  {
+	resp, err := executeRequest(config.HostAddress + config.RetrieveUrl, "GET", nil, nil)
 
-	var historyRecord HistoryRecord
+	var historyRecord *HistoryRecord
 
 	body, _ := ioutil.ReadAll(resp.Body)
 	logResponse(resp, body)
@@ -30,12 +30,12 @@ func GetPreviousHistoryRecord(deviceSerialNumber string) (HistoryRecord, error) 
 	return historyRecord, err
 }
 
-func SendNotesToServer(notes *[]byte) {
+func SendNotesToServer(notes *[]byte, config *common.Config) {
 	headers := make(map[string]string)
 	headers["Set-Type"] = "All"
 	headers["Content-Type"] = "application/json"
 
-	resp, err := executeRequest("http://localhost/notes", "POST", bytes.NewBuffer(*notes), headers)
+	resp, err := executeRequest(config.HostAddress + config.SendUrl, "POST", bytes.NewBuffer(*notes), headers)
 	common.Check(err)
 
 	body, _ := ioutil.ReadAll(resp.Body)
@@ -65,4 +65,3 @@ func executeRequest(url string, method string, bodyReader io.Reader, headers map
 
 	return resp, err
 }
-

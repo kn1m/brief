@@ -1,0 +1,5 @@
+{
+  "host_address" : "http://localhost",
+  "retrieve_url" : "/notes",
+  "send_url" : "/notes"
+}
