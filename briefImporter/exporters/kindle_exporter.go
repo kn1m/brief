@@ -6,7 +6,6 @@ import (
 	"regexp"
 	"brief/briefImporter/common"
 	"strconv"
-	"os"
 	"log"
 )
 
@@ -52,14 +51,17 @@ func GetNotes(path string) ([]NoteRecord, error){
 
 	log.Printf("Processing file %s:\n", path)
 
-	file, err := os.Open(path)
+	/*file, err := os.Open(path)
 	common.Check(err)
 	defer file.Close()
 
 	stat, _ := file.Stat()
 	file_data := make([]byte, stat.Size())
 
-	file.Read(file_data)
+	file.Read(file_data)*/
+
+	file_data, err := common.GetFileData(path)
+	common.Check(err)
 
 	go func() {
 		common.GetFileChecksum(file_data)

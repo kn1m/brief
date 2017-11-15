@@ -24,6 +24,10 @@ func GetConfig(path string) (*Config, error) {
 	return config, err
 }
 
+func GetFileData(path string) ([]byte, error){
+	return ioutil.ReadFile(path)
+}
+
 func Check(err error) {
 	if err != nil {
 		log.Fatalln(err)
