@@ -16,5 +16,7 @@
         public NoteType NoteType { get; set; }
         public Guid? EditionId { get; set; }
         public virtual Edition Edition { get; set; }
+        public bool Reviewed { get; set; }
+        public string Comment { get; set; }
     }
 }
