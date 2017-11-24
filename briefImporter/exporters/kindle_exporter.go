@@ -24,16 +24,12 @@ const (
 
 type (
 	NoteRecord struct {
-		BookTitle        string   `json:"book_title"`
-		BookOriginalName string   `json:"book_original_name"`
+		BaseNote
 		BookAuthor       []Author `json:"authors"`
 		FirstPage        int      `json:"first_page"`
 		SecondPage       int      `json:"second_page"`
 		FirstLocation    int      `json:"first_location"`
 		SecondLocation   int      `json:"second_location"`
-		CreatedOn        string   `json:"created_on"`
-		NoteTitle        string   `json:"note_title"`
-		NoteText         string   `json:"note_text"`
 	}
 
 	Author struct {
@@ -53,15 +49,6 @@ var recordTypesToSkip = []string{"Highlight", "Bookmark"}
 func GetNotes(path string) ([]NoteRecord, error) {
 
 	log.Printf("Processing file %s:\n", path)
-
-	/*file, err := os.Open(path)
-	common.Check(err)
-	defer file.Close()
-
-	stat, _ := file.Stat()
-	fileData := make([]byte, stat.Size())
-
-	file.Read(fileData)*/
 
 	fileData, err := common.GetFileData(path)
 	common.Check(err)
@@ -141,7 +128,7 @@ func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 		authors := strings.Split(data.titleNoteData[authorGroup], ";")
 		if len(authors) > 1 {
 			for i := range authors {
-				parsedAuthor := regexp.MustCompile(",{1}\\s*").Split(authors[i], -1)
+				parsedAuthor := regexp.MustCompile(",\\\\s*").Split(authors[i], -1)
 				if len(parsedAuthor) > 1 {
 					common.Reverse(parsedAuthor)
 
@@ -162,7 +149,7 @@ func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 				}
 			}
 		} else {
-			parsedAuthor := regexp.MustCompile(",{1}\\s*").Split(data.titleNoteData[authorGroup], -1)
+			parsedAuthor := regexp.MustCompile(",\\\\s*").Split(data.titleNoteData[authorGroup], -1)
 			if len(parsedAuthor) > 1 {
 				common.Reverse(parsedAuthor)
 
