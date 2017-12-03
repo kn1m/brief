@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	runtime.GOMAXPROCS(runtime.NumCPU())
+	runtime.GOMAXPROCS(2)
 
 	var dataPath string
 	flag.StringVar(&dataPath, "data_path", "", "path to data file")

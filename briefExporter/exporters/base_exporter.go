@@ -8,6 +8,6 @@ type BaseNote struct {
 	NoteText         string `json:"note_text"`
 }
 
-type Importer interface {
+type Exporter interface {
 	GetNotes(path string) ([]NoteRecord, error)
 }
