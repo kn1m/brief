@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-type Config struct{
+type Config struct {
 	HostAddress string  `json:"host_address"`
 	RetrieveUrl string  `json:"retrieve_url"`
 	SendUrl string      `json:"send_url"`

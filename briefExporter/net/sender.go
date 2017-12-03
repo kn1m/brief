@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"bytes"
 	"io/ioutil"
-	"brief/briefImporter/common"
+	"brief/briefExporter/common"
 	"time"
 	"log"
 	"encoding/json"

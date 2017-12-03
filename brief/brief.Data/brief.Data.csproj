@@ -67,7 +67,6 @@
     <Compile Include="Maps\BookMap.cs" />
     <Compile Include="Maps\CoverMap.cs" />
     <Compile Include="Maps\EditionMap.cs" />
-    <Compile Include="Maps\NoteMap.cs" />
     <Compile Include="Maps\PublisherMap.cs" />
     <Compile Include="Maps\SeriesMap.cs" />
     <Compile Include="Repositories\EditionRepository.cs" />

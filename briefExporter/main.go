@@ -1,8 +1,8 @@
 package main
 
 import (
-	"brief/briefImporter/exporters"
-	"brief/briefImporter/common"
+	"brief/briefExporter/exporters"
+	"brief/briefExporter/common"
 	"runtime"
 	"log"
 	"flag"
@@ -40,7 +40,9 @@ func main() {
 	common.Check(err)
 	log.Println(config)
 
-	notes, err := exporters.GetNotes(dataPath)
+	var matcher exporters.KindleExporter
+
+	notes, err := matcher.GetNotes(dataPath)
 	common.Check(err)
 
 	for i := range notes {

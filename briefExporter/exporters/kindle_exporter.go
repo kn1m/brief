@@ -1,7 +1,7 @@
 package exporters
 
 import (
-	"brief/briefImporter/common"
+	"brief/briefExporter/common"
 	"errors"
 	"log"
 	"regexp"
@@ -42,11 +42,13 @@ type (
 		titleNoteData map[string]string
 		noteData      map[string]string
 	}
+
+	KindleExporter struct {}
 )
 
 var recordTypesToSkip = []string{"Highlight", "Bookmark"}
 
-func GetNotes(path string) ([]NoteRecord, error) {
+func (m KindleExporter) GetNotes(path string) ([]NoteRecord, error) {
 
 	log.Printf("Processing file %s:\n", path)
 
