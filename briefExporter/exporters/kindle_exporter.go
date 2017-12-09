@@ -38,17 +38,17 @@ type (
 		Surname       string
 	}
 
-	NoteData struct {
+	KindleExporter struct {}
+
+	noteData struct {
 		titleNoteData map[string]string
 		noteData      map[string]string
 	}
-
-	KindleExporter struct {}
 )
 
 var recordTypesToSkip = []string{"Highlight", "Bookmark"}
 
-func (m KindleExporter) GetNotes(path string) ([]NoteRecord, error) {
+func (m *KindleExporter) GetNotes(path string) ([]*NoteRecord, error) {
 
 	log.Printf("Processing file %s:\n", path)
 
@@ -74,11 +74,11 @@ func (m KindleExporter) GetNotes(path string) ([]NoteRecord, error) {
 
 	split := regexp.MustCompile("={10}[\r\n]*").Split(str, -1)
 
-	var notes []NoteRecord
+	var notes []*NoteRecord
 
 	i := 0
 	for i < len(split)-1 {
-		var noteData NoteData
+		var noteData noteData
 		titleGroup := common.GetGroupsData(recordRegexp, split[i])
 
 		//handling of Highlights and Bookmarks
@@ -93,14 +93,14 @@ func (m KindleExporter) GetNotes(path string) ([]NoteRecord, error) {
 
 		checkNoteFiled(noteData, note.checkTitle, note.checkAltTitle,
 			note.checkAuthor, note.checkPage, note.checkLocations, note.checkDateAndTime, note.checkNoteTitleAndText)
-		notes = append(notes, *note)
+		notes = append(notes, note)
 
 		i += 2
 	}
 	return notes, nil
 }
 
-func checkNoteFiled(data NoteData, fns ...func(data NoteData) (*NoteRecord, error)) (err error) {
+func checkNoteFiled(data noteData, fns ...func(data noteData) (*NoteRecord, error)) (err error) {
 	for _, fn := range fns {
 		if _, err = fn(data); err != nil {
 			break
@@ -109,7 +109,7 @@ func checkNoteFiled(data NoteData, fns ...func(data NoteData) (*NoteRecord, erro
 	return
 }
 
-func (note *NoteRecord) checkTitle(data NoteData) (*NoteRecord, error) {
+func (note *NoteRecord) checkTitle(data noteData) (*NoteRecord, error) {
 	if baseNoteFieldCheck(data, titleGroup, false) {
 		note.BookTitle = data.titleNoteData[titleGroup]
 		return note, nil
@@ -117,7 +117,7 @@ func (note *NoteRecord) checkTitle(data NoteData) (*NoteRecord, error) {
 	return note, errors.New(titleGroup + " could not be processed further")
 }
 
-func (note *NoteRecord) checkAltTitle(data NoteData) (*NoteRecord, error) {
+func (note *NoteRecord) checkAltTitle(data noteData) (*NoteRecord, error) {
 	if baseNoteFieldCheck(data, originalTitleGroup, true) {
 		note.BookOriginalName = data.titleNoteData[originalTitleGroup]
 		return note, nil
@@ -125,7 +125,7 @@ func (note *NoteRecord) checkAltTitle(data NoteData) (*NoteRecord, error) {
 	return note, errors.New(originalTitleGroup + " could not be processed further")
 }
 
-func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
+func (note *NoteRecord) checkAuthor(data noteData) (*NoteRecord, error) {
 	if baseNoteFieldCheck(data, authorGroup, false) {
 		authors := strings.Split(data.titleNoteData[authorGroup], ";")
 		if len(authors) > 1 {
@@ -176,7 +176,7 @@ func (note *NoteRecord) checkAuthor(data NoteData) (*NoteRecord, error) {
 	return note, errors.New(authorGroup + " could not be processed further")
 }
 
-func (note *NoteRecord) checkPage(data NoteData) (*NoteRecord, error) {
+func (note *NoteRecord) checkPage(data noteData) (*NoteRecord, error) {
 	var err error
 	if data.noteData[pageGroup] != "" || data.titleNoteData[pageGroup] != "" {
 		if data.titleNoteData[pageGroup] != "" {
@@ -190,7 +190,7 @@ func (note *NoteRecord) checkPage(data NoteData) (*NoteRecord, error) {
 	return note, nil
 }
 
-func (note *NoteRecord) checkLocations(data NoteData) (*NoteRecord, error) {
+func (note *NoteRecord) checkLocations(data noteData) (*NoteRecord, error) {
 	var err error
 	if data.noteData[firstLocationGroup] != "" || data.titleNoteData[firstLocationGroup] != "" {
 		if data.titleNoteData[firstLocationGroup] != "" {
@@ -204,7 +204,7 @@ func (note *NoteRecord) checkLocations(data NoteData) (*NoteRecord, error) {
 	return note, errors.New(firstLocationGroup + " could not be processed further")
 }
 
-func (note *NoteRecord) checkNoteTitleAndText(data NoteData) (*NoteRecord, error) {
+func (note *NoteRecord) checkNoteTitleAndText(data noteData) (*NoteRecord, error) {
 	if data.noteData[noteDataGroup] != "" {
 		note.NoteTitle = data.titleNoteData[noteDataGroup]
 		note.NoteText = data.noteData[noteDataGroup]
@@ -213,7 +213,7 @@ func (note *NoteRecord) checkNoteTitleAndText(data NoteData) (*NoteRecord, error
 	return note, errors.New(noteDataGroup + " could not be processed further")
 }
 
-func (note *NoteRecord) checkDateAndTime(data NoteData) (*NoteRecord, error) {
+func (note *NoteRecord) checkDateAndTime(data noteData) (*NoteRecord, error) {
 	if baseNoteFieldCheck(data, createdOnDateGroup, false) || baseNoteFieldCheck(data, createdOnTimeGroup, false) {
 		note.CreatedOn = data.noteData[createdOnDateGroup] + " " + data.noteData[createdOnTimeGroup]
 		return note, nil
@@ -221,7 +221,7 @@ func (note *NoteRecord) checkDateAndTime(data NoteData) (*NoteRecord, error) {
 	return note, errors.New(noteDataGroup + " could not be processed further")
 }
 
-func baseNoteFieldCheck(data NoteData, groupName string, isOptional bool) bool {
+func baseNoteFieldCheck(data noteData, groupName string, isOptional bool) bool {
 	if !isOptional {
 		if data.titleNoteData[groupName] != "" && data.titleNoteData[groupName] == data.noteData[groupName] {
 			return true

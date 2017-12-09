@@ -9,5 +9,5 @@ type BaseNote struct {
 }
 
 type Exporter interface {
-	GetNotes(path string) ([]NoteRecord, error)
+	GetNotes(path string) ([]*NoteRecord, error)
 }
