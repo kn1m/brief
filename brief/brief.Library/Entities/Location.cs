@@ -1,6 +1,6 @@
 ﻿namespace brief.Library.Entities
 {
-    class Location
+    public class Location
     {
     }
 }

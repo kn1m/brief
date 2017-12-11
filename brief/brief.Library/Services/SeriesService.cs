@@ -1,7 +1,6 @@
 ﻿namespace brief.Library.Services
 {
     using System;
-    using System.Collections.Specialized;
     using System.IO.Abstractions;
     using System.Threading.Tasks;
     using AutoMapper;
