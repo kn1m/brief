@@ -11,6 +11,7 @@ type Config struct {
 	HostAddress string  `json:"host_address"`
 	RetrieveUrl string  `json:"retrieve_url"`
 	SendUrl string      `json:"send_url"`
+	ScanFolder string 	`json:"scan_folder"`
 }
 
 func GetConfig(path string) (*Config, error) {
