@@ -12,7 +12,7 @@
 
         protected BaseRepository(IApplicationDbContext appContext)
         {
-            Guard.AssertNotNull(appContext);
+            Guard.AssertNotNull(appContext, nameof(appContext));
 
             Context = appContext;
         }

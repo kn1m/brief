@@ -12,7 +12,7 @@
 
         protected BaseTransformService(BaseTransformerSettings settings, IFileSystem fileSystem) : base(fileSystem)
         {
-            Guard.AssertNotNull(settings);
+            Guard.AssertNotNull(settings, nameof(settings));
 
             _mainTransformerFormat = settings.MainTransformerFormat;
         }

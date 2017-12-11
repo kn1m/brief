@@ -17,8 +17,8 @@
 
         public FilterService(IFilterRepository filterRepository, IMapper mapper)
         {
-            Guard.AssertNotNull(filterRepository);
-            Guard.AssertNotNull(mapper);
+            Guard.AssertNotNull(filterRepository, nameof(filterRepository));
+            Guard.AssertNotNull(mapper, nameof(mapper));
 
             _filterRepository = filterRepository;
             _mapper = mapper;

@@ -1,6 +1,7 @@
 ﻿namespace brief.Library.Services
 {
     using System;
+    using System.Collections.Specialized;
     using System.IO.Abstractions;
     using System.Threading.Tasks;
     using AutoMapper;
@@ -25,10 +26,10 @@
                                 IFileSystem fileSystem,
                                 IMapper mapper) : base(fileSystem)
         {
-            Guard.AssertNotNull(publisherRepository);
-            Guard.AssertNotNull(editionRepository);
-            Guard.AssertNotNull(coverRepository);
-            Guard.AssertNotNull(mapper);
+            Guard.AssertNotNull(publisherRepository, nameof(publisherRepository));
+            Guard.AssertNotNull(editionRepository, nameof(editionRepository));
+            Guard.AssertNotNull(coverRepository, nameof(coverRepository));
+            Guard.AssertNotNull(mapper, nameof(mapper));
 
             _coverRepository = coverRepository;
             _editionRepository = editionRepository;

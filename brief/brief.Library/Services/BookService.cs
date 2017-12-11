@@ -27,11 +27,11 @@
                            IFileSystem fileSystem,
                            IMapper mapper) : base(fileSystem)
         {
-            Guard.AssertNotNull(bookRepository);
-            Guard.AssertNotNull(mapper);
-            Guard.AssertNotNull(editionRepository);
-            Guard.AssertNotNull(authorRepository);
-            Guard.AssertNotNull(coverRepository);
+            Guard.AssertNotNull(bookRepository, nameof(bookRepository));
+            Guard.AssertNotNull(mapper, nameof(mapper));
+            Guard.AssertNotNull(editionRepository, nameof(editionRepository));
+            Guard.AssertNotNull(authorRepository, nameof(authorRepository));
+            Guard.AssertNotNull(coverRepository, nameof(coverRepository));
 
             _authorRepository = authorRepository;
             _coverRepository = coverRepository;

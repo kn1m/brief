@@ -13,7 +13,7 @@
 
         public BaseDapperRepository(string connectionString)
         {
-            Guard.AssertNotNull(connectionString);
+            Guard.AssertNotNull(connectionString, nameof(connectionString));
 
             ConnectionString = connectionString;
         }

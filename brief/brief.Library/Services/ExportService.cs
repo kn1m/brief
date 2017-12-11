@@ -16,7 +16,7 @@
 
         public ExportService(IFileSystem fileSystem, INoteRepository noteRepository) : base(fileSystem)
         {
-            Guard.AssertNotNull(noteRepository);
+            Guard.AssertNotNull(noteRepository, nameof(noteRepository));
 
             _noteRepository = noteRepository;
         }

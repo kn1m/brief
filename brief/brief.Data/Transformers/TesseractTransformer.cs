@@ -15,7 +15,7 @@
 
         public TesseractTransformer(string dataPath, EngineMode mode)
         {
-            Guard.AssertNotNull(dataPath);
+            Guard.AssertNotNull(dataPath, nameof(dataPath));
 
             _dataPath = dataPath;
             _mode = mode;

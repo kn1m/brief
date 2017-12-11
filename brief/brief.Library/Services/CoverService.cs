@@ -31,11 +31,11 @@
                             BaseTransformerSettings settings,
                             StorageSettings storageSettings) : base(settings, fileSystem)
         {
-            Guard.AssertNotNull(coverRepository);
-            Guard.AssertNotNull(editionRepository);
-            Guard.AssertNotNull(transformer);
-            Guard.AssertNotNull(mapper);
-            Guard.AssertNotNull(storageSettings);
+            Guard.AssertNotNull(coverRepository, nameof(coverRepository));
+            Guard.AssertNotNull(editionRepository, nameof(editionRepository));
+            Guard.AssertNotNull(transformer, nameof(transformer));
+            Guard.AssertNotNull(mapper, nameof(mapper));
+            Guard.AssertNotNull(storageSettings, nameof(storageSettings));
 
             StorageSettings = storageSettings;
 

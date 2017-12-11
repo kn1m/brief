@@ -25,10 +25,10 @@
                              IFileSystem fileSystem,
                              IMapper mapper) : base(fileSystem)
         {
-            Guard.AssertNotNull(authorRepository);
-            Guard.AssertNotNull(mapper);
-            Guard.AssertNotNull(editionRepository);
-            Guard.AssertNotNull(coverRepository);
+            Guard.AssertNotNull(authorRepository, nameof(authorRepository));
+            Guard.AssertNotNull(mapper, nameof(mapper));
+            Guard.AssertNotNull(editionRepository, nameof(editionRepository));
+            Guard.AssertNotNull(coverRepository, nameof(coverRepository));
 
             _coverRepository = coverRepository;
             _editionRepository = editionRepository;
