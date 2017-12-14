@@ -7,6 +7,8 @@ import (
 	"log"
 	"flag"
 	"os"
+	//"brief/briefExporter/libsync"
+	"brief/briefExporter/libsync"
 )
 
 func main() {
@@ -58,5 +60,9 @@ func main() {
 		log.Println(mem.HeapAlloc)
 		log.Println(mem.HeapSys)
 	}
+
+	//libDir := &libsync.Directory{Path:config.ScanFolder}
+	//libsync.CheckPath(libDir)
+	//libDir.PrintStructure(nil)
 }
 
