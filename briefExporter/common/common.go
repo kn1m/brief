@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"runtime"
 )
 
 type Config struct {
@@ -33,5 +34,16 @@ func Check(err error) {
 	if err != nil {
 		log.Fatalln(err)
 		os.Exit(1)
+	}
+}
+
+func GetSystemPathDelimiter() string {
+	switch os := runtime.GOOS; os {
+	case "darwin":
+		return "/"
+	case "linux":
+		return "/"
+	default:
+		return "\\"
 	}
 }

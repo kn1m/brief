@@ -22,7 +22,7 @@ func CheckPath(currentDir *Directory) {
 		case false:
 			currentDir.Files = append(currentDir.Files, file)
 		case true:
-			subDir := &Directory{Path: currentDir.Path + "\\" + file.Name()}
+			subDir := &Directory{Path: currentDir.Path + common.GetSystemPathDelimiter() + file.Name()}
 			currentDir.SubDirectories = append(currentDir.SubDirectories, subDir)
 			CheckPath(subDir)
 		}

@@ -1,14 +1,12 @@
 package main
 
 import (
-	"brief/briefExporter/exporters"
-	"brief/briefExporter/common"
 	"runtime"
 	"log"
 	"flag"
 	"os"
-	//"brief/briefExporter/libsync"
-	"brief/briefExporter/libsync"
+	"brief/briefExporter/exporters"
+	"brief/briefExporter/common"
 )
 
 func main() {
@@ -61,8 +59,8 @@ func main() {
 		log.Println(mem.HeapSys)
 	}
 
-	//libDir := &libsync.Directory{Path:config.ScanFolder}
-	//libsync.CheckPath(libDir)
-	//libDir.PrintStructure(nil)
+	/*libDir := &libsync.Directory{Path:config.ScanFolder}
+	libsync.CheckPath(libDir)
+	libDir.PrintStructure(nil)*/
 }
 
