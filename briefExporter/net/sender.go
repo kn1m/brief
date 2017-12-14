@@ -18,7 +18,7 @@ type HistoryRecord struct {
 }
 
 func GetPreviousHistoryRecord(serial string, config *common.Config) (*HistoryRecord, error)  {
-	resp, err := executeRequest(config.HostAddress + config.RetrieveUrl, "GET", nil, nil)
+	resp, err := executeRequest(config.NotesRetrieveUrl, "GET", nil, nil)
 
 	var historyRecord *HistoryRecord
 
@@ -35,7 +35,7 @@ func SendNotesToServer(notes *[]byte, config *common.Config) {
 	headers["Set-Type"] = "All"
 	headers["Content-Type"] = "application/json"
 
-	resp, err := executeRequest(config.HostAddress + config.SendUrl, "POST", bytes.NewBuffer(*notes), headers)
+	resp, err := executeRequest(config.NotesSendUrl, "POST", bytes.NewBuffer(*notes), headers)
 	common.Check(err)
 
 	body, _ := ioutil.ReadAll(resp.Body)

@@ -9,10 +9,11 @@ import (
 )
 
 type Config struct {
-	HostAddress string  `json:"host_address"`
-	RetrieveUrl string  `json:"retrieve_url"`
-	SendUrl string      `json:"send_url"`
-	ScanFolder string 	`json:"scan_folder"`
+	NotesRetrieveUrl     string `json:"retrieve_url"`
+	NotesSendUrl         string `json:"send_url"`
+	LibraryCheckUrl      string `json:"library_check_url"`
+	LibrarySyncUrl       string `json:"library_sync_url"`
+	ScanFolder           string `json:"scan_folder"`
 }
 
 func GetConfig(path string) (*Config, error) {

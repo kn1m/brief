@@ -1,6 +1,7 @@
 {
-  "host_address" : "http://localhost",
-  "retrieve_url" : "/notes",
-  "send_url" : "/notes",
+  "notes_retrieve_url" : "http://localhost/notes",
+  "notes_send_url" : "http://localhost/notes",
+  "library_check_url" : "http://localhost/lib",
+  "library_sync_url": "http://localhost/libsync",
   "scan_folder": "D:\\brief"
 }

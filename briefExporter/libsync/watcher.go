@@ -2,9 +2,9 @@ package libsync
 
 import (
 	"os"
+	"log"
 	"io/ioutil"
 	"brief/briefExporter/common"
-	"log"
 )
 
 type Directory struct {
