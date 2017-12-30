@@ -1,12 +1,12 @@
 package exporters
 
 import (
-	"brief/briefExporter/common"
 	"errors"
 	"log"
 	"regexp"
 	"strconv"
 	"strings"
+	"brief/briefExporter/common"
 )
 
 const (
@@ -23,21 +23,6 @@ const (
 )
 
 type (
-	NoteRecord struct {
-		BaseNote
-		BookAuthor       []Author `json:"authors"`
-		FirstPage        int      `json:"first_page"`
-		SecondPage       int      `json:"second_page"`
-		FirstLocation    int      `json:"first_location"`
-		SecondLocation   int      `json:"second_location"`
-	}
-
-	Author struct {
-		FirstName     string
-		SecondaryName string
-		Surname       string
-	}
-
 	KindleExporter struct {}
 
 	noteData struct {

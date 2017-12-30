@@ -29,7 +29,7 @@ func CheckPath(currentDir *Directory) {
 	}
 }
 
-func (dir *Directory) PrintStructure(initialWhitespace *string)  {
+func (dir *Directory) PrintStructure(initialWhitespace *string) {
 	if initialWhitespace == nil {
 		initialWhitespace = new(string)
 		*initialWhitespace = ""
