@@ -1,5 +1,11 @@
 package connectivity
 
-func ConnectToDevice(deviceType string){
-	
+type KindleUsbConnector struct {}
+
+func (c *KindleUsbConnector) ConnectToDevice() {
+
+}
+
+func getNotesDataFromDevice(deviceType string) ([]byte, error) {
+	return nil, nil
 }
