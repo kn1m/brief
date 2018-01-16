@@ -55,11 +55,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="Contexts\ApplicationDbContext.cs" />
     <Compile Include="Maps\EditionFileMap.cs" />
+    <Compile Include="Maps\LocationMap.cs" />
     <Compile Include="Repositories\AuthorRepository.cs" />
-    <Compile Include="BaseDapperRepository.cs" />
-    <Compile Include="BaseRepository.cs" />
+    <Compile Include="Repositories\BaseRepositories\BaseDapperRepository.cs" />
+    <Compile Include="Repositories\BaseRepositories\BaseRepository.cs" />
     <Compile Include="Repositories\EditionFileRepository.cs" />
     <Compile Include="Repositories\FilterRepository.cs" />
     <Compile Include="Maps\AuthorMap.cs" />
@@ -73,7 +74,7 @@
     <Compile Include="Repositories\NoteRepository.cs" />
     <Compile Include="Repositories\PublisherRepostitory.cs" />
     <Compile Include="Repositories\SeriesRepository.cs" />
-    <Compile Include="IApplicationDbContext.cs" />
+    <Compile Include="Contexts\Interfaces\IApplicationDbContext.cs" />
     <Compile Include="Repositories\BookRepository.cs" />
     <Compile Include="Repositories\CoverRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,6 +106,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

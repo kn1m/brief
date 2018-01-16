@@ -1,8 +1,9 @@
-﻿namespace brief.Data
+﻿namespace brief.Data.Contexts
 {
     using System.Data.Entity;
     using System.Reflection;
     using System.Threading.Tasks;
+    using Interfaces;
 
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {

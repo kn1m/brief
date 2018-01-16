@@ -66,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BaseImageUploadControllerTests.cs" />
+    <Compile Include="Library\Services\BookServiceTests.cs" />
+    <Compile Include="Library\Services\EditionServiceTests.cs" />
     <Compile Include="Library\Services\ExportServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

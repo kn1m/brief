@@ -131,6 +131,7 @@
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\BaseEntities\IRecognizable.cs" />
     <Compile Include="Models\LanguageModel.cs" />
+    <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Models\NoteModel.cs" />
     <Compile Include="Models\NoteTypeModel.cs" />
     <Compile Include="Models\PublisherModel.cs" />

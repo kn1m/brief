@@ -1,4 +1,4 @@
-﻿namespace brief.Data
+﻿namespace brief.Data.Contexts.Interfaces
 {
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;

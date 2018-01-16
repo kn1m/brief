@@ -5,6 +5,8 @@
     using Autofac;
     using Autofac.Core;
     using Data;
+    using Data.Contexts;
+    using Data.Contexts.Interfaces;
     using Data.Repositories;
     using Data.Transformers;
     using Library.Helpers;

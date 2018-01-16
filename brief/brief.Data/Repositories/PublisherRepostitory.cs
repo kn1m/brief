@@ -3,6 +3,8 @@
     using System;
     using System.Data.Entity;
     using System.Threading.Tasks;
+    using BaseRepositories;
+    using Contexts.Interfaces;
     using Library.Entities;
     using Library.Repositories;
 
