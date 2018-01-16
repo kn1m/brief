@@ -17,6 +17,7 @@
         public virtual IList<Cover> Covers { get; set; }
         public virtual IList<Note> Notes { get; set; }
         public virtual IList<EditionFile> Files { get; set; }
+        public virtual IList<Location> Locations { get; set; }
         public EditionType EditionType { get; set; }
         public Language Language { get; set; }
         public Currency? Currency { get; set; }
