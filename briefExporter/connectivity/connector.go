@@ -1,5 +1,5 @@
 package connectivity
 
 type Connector interface {
-	ConnectToDevice()
+	GetNotes() string
 }
