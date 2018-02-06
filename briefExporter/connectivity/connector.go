@@ -1,5 +1,5 @@
 package connectivity
 
 type Connector interface {
-	GetNotes() string
+	GetNotesFromDevice(serialNumber string) string
 }

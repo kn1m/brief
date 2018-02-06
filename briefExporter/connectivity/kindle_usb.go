@@ -3,6 +3,7 @@ package connectivity
 import (
 	"github.com/gotmc/libusb"
 	"log"
+	"os/exec"
 )
 
 const (
@@ -12,12 +13,21 @@ const (
 
 type KindleUsbConnector struct {}
 
-func (c *KindleUsbConnector) GetNotes() string {
+func (c *KindleUsbConnector) GetNotesFromDevice(serialNumber string) string {
+	deviceVerified := verifyDevice(serialNumber)
+	if deviceVerified {
+		mountPath, err := getDeviceMountPath(serialNumber)
+		if err == nil {
+			return mountPath
+		}
+	}
+
 	return ""
 }
 
-func getNotesDataFromDevice(deviceType string) ([]byte, error) {
-	return nil, nil
+func getDeviceMountPath(serialNumber string) (string, error) {
+	mountPath, err := exec.Command("sh", "briefExporter/scripts/devices.sh").Output()
+	return string(mountPath), err
 }
 
 func verifyDevice(serialNumberToCheck string) bool {

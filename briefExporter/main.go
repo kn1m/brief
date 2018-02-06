@@ -7,6 +7,7 @@ import (
 	"os"
 	"brief/briefExporter/exporters"
 	"brief/briefExporter/common"
+	"brief/briefExporter/connectivity"
 )
 
 func main() {
@@ -58,6 +59,9 @@ func main() {
 		log.Println(mem.HeapAlloc)
 		log.Println(mem.HeapSys)
 	}
+
+	kindleUsb := &connectivity.KindleUsbConnector{}
+	log.Println(kindleUsb.GetNotesFromDevice("G090G10560350NP9"))
 
 	/*libDir := &libsync.Directory{Path:config.ScanFolder}
 	libsync.CheckPath(libDir)
