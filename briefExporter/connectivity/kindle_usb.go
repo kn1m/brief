@@ -21,7 +21,6 @@ func getNotesDataFromDevice(deviceType string) ([]byte, error) {
 }
 
 func verifyDevice(serialNumberToCheck string) bool {
-
 	manufacturerConfirmed := false
 	productConfirmed := false
 
@@ -62,6 +61,5 @@ func verifyDevice(serialNumberToCheck string) bool {
 			return true
 		}
 	}
-
 	return false
 }

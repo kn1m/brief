@@ -3,5 +3,5 @@
   "notes_send_url" : "http://localhost/notes",
   "library_check_url" : "http://localhost/lib",
   "library_sync_url": "http://localhost/libsync",
-  "scan_folder": "D:\\brief"
+  "scan_folder": "/home/pk/brief"
 }
