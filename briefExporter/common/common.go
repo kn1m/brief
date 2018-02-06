@@ -14,6 +14,7 @@ type Config struct {
 	LibraryCheckUrl      string `json:"library_check_url"`
 	LibrarySyncUrl       string `json:"library_sync_url"`
 	ScanFolder           string `json:"scan_folder"`
+	ScanMountPathScript  string `json:"scan_mount_path_script"`
 }
 
 func GetConfig(path string) (*Config, error) {

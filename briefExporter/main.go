@@ -61,7 +61,7 @@ func main() {
 	}
 
 	kindleUsb := &connectivity.KindleUsbConnector{}
-	log.Println(kindleUsb.GetNotesFromDevice("G090G10560350NP9"))
+	kindleUsb.GetNotesFromDevice("G090G10560350NP9")
 
 	/*libDir := &libsync.Directory{Path:config.ScanFolder}
 	libsync.CheckPath(libDir)

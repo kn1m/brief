@@ -18,7 +18,8 @@ func (c *KindleUsbConnector) GetNotesFromDevice(serialNumber string) string {
 	if deviceVerified {
 		mountPath, err := getDeviceMountPath(serialNumber)
 		if err == nil {
-			return mountPath
+			log.Printf("Mount path of device %s with serial number %s : %s", productName, serialNumber, mountPath)
+			return ""
 		}
 	}
 
