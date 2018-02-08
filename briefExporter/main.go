@@ -8,10 +8,13 @@ import (
 	"brief/briefExporter/exporters"
 	"brief/briefExporter/common"
 	"brief/briefExporter/connectivity"
+	"brief/briefExporter/libsync"
 )
 
 func main() {
 	runtime.GOMAXPROCS(2)
+
+	log.Println(common.GetUserCredentials())
 
 	var dataPath string
 	flag.StringVar(&dataPath, "data_path", "", "path to data file")
@@ -61,10 +64,10 @@ func main() {
 	}
 
 	kindleUsb := &connectivity.KindleUsbConnector{}
-	kindleUsb.GetNotesFromDevice("G090G10560350NP9")
+	mountPath, err := kindleUsb.GetNotesFromDevice("G090G10560350NP9", config)
 
-	/*libDir := &libsync.Directory{Path:config.ScanFolder}
+	libDir := &libsync.Directory{Path:mountPath}
 	libsync.CheckPath(libDir)
-	libDir.PrintStructure(nil)*/
+	libDir.PrintStructure(nil)
 }
 
