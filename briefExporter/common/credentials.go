@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func GetUserCredentials() (string, string) {
+func GetUserCredentials() (*bufio.Reader, string, string){
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Print("Enter Username: ")
@@ -23,5 +23,5 @@ func GetUserCredentials() (string, string) {
 	}
 	password := string(bytePassword)
 
-	return strings.TrimSpace(username), strings.TrimSpace(password)
+	return reader, strings.TrimSpace(username), strings.TrimSpace(password)
 }

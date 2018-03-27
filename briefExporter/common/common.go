@@ -1,20 +1,21 @@
 package common
 
 import (
-	"io/ioutil"
 	"encoding/json"
+	"io/ioutil"
 	"log"
 	"os"
 	"runtime"
 )
 
 type Config struct {
-	NotesRetrieveUrl     string `json:"retrieve_url"`
-	NotesSendUrl         string `json:"send_url"`
-	LibraryCheckUrl      string `json:"library_check_url"`
-	LibrarySyncUrl       string `json:"library_sync_url"`
-	ScanFolder           string `json:"scan_folder"`
-	ScanMountPathScript  string `json:"scan_mount_path_script"`
+	NotesRetrieveUrl           string `json:"retrieve_url"`
+	NotesSendUrl               string `json:"send_url"`
+	LibraryCheckUrl            string `json:"library_check_url"`
+	LibrarySyncUrl             string `json:"library_sync_url"`
+	ScanFolder                 string `json:"scan_folder"`
+	ScanMountPathScript        string `json:"scan_mount_path_script"`
+	DefaultKindleNotesLocation string `json:"default_kindle_notes_location"`
 }
 
 func GetConfig(path string) (*Config, error) {
@@ -28,7 +29,7 @@ func GetConfig(path string) (*Config, error) {
 	return config, err
 }
 
-func GetFileData(path string) ([]byte, error){
+func GetFileData(path string) ([]byte, error) {
 	return ioutil.ReadFile(path)
 }
 

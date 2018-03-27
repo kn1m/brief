@@ -9,12 +9,14 @@ import (
 	"brief/briefExporter/common"
 	"brief/briefExporter/connectivity"
 	"brief/briefExporter/libsync"
+	"fmt"
+	"strings"
 )
 
 func main() {
 	runtime.GOMAXPROCS(2)
 
-	log.Println(common.GetUserCredentials())
+	reader, _, _ := common.GetUserCredentials()
 
 	var dataPath string
 	flag.StringVar(&dataPath, "data_path", "", "path to data file")
@@ -44,9 +46,21 @@ func main() {
 	common.Check(err)
 	log.Println(config)
 
+	kindleUsb := &connectivity.KindleUsbConnector{}
+
+	devices, err := connectivity.GetAllCompatibleDevicesSerials("Amazon", "Amazon Kindle")
+	for i := range devices {
+		log.Printf("Found compatible device with serial: %s\n", *devices[i])
+	}
+
+	fmt.Println("Enter desired serial:")
+	desiredSerial, _ := reader.ReadString('\n')
+
+	mountPath, err := kindleUsb.GetNotesFromDevice(strings.TrimRight(desiredSerial, "\n"), config)
+
 	var matcher exporters.KindleExporter
 
-	notes, err := matcher.GetNotes(dataPath)
+	notes, err := matcher.GetNotes(mountPath + config.DefaultKindleNotesLocation)
 	common.Check(err)
 
 	for i := range notes {
@@ -55,6 +69,10 @@ func main() {
 			notes[i].FirstLocation, notes[i].SecondLocation, notes[i].NoteTitle, notes[i].NoteText, notes[i].CreatedOn)
 	}
 
+	libDir := &libsync.Directory{ Path:mountPath }
+	libsync.CheckPath(libDir)
+	libDir.PrintStructure(nil)
+
 	if *logFlag {
 		runtime.ReadMemStats(&mem)
 		log.Println(mem.Alloc)
@@ -62,12 +80,5 @@ func main() {
 		log.Println(mem.HeapAlloc)
 		log.Println(mem.HeapSys)
 	}
-
-	kindleUsb := &connectivity.KindleUsbConnector{}
-	mountPath, err := kindleUsb.GetNotesFromDevice("G090G10560350NP9", config)
-
-	libDir := &libsync.Directory{Path:mountPath}
-	libsync.CheckPath(libDir)
-	libDir.PrintStructure(nil)
 }
 
