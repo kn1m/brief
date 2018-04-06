@@ -60,7 +60,7 @@ func main() {
 
 	var matcher exporters.KindleExporter
 
-	notes, err := matcher.GetNotes(mountPath + config.DefaultKindleNotesLocation)
+	notes, err := matcher.GetNotes(mountPath + connectivity.DefaultKindleNotesFilePath)
 	common.Check(err)
 
 	for i := range notes {

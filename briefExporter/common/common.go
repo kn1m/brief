@@ -15,7 +15,6 @@ type Config struct {
 	LibrarySyncUrl             string `json:"library_sync_url"`
 	ScanFolder                 string `json:"scan_folder"`
 	ScanMountPathScript        string `json:"scan_mount_path_script"`
-	DefaultKindleNotesLocation string `json:"default_kindle_notes_location"`
 }
 
 func GetConfig(path string) (*Config, error) {

@@ -6,6 +6,8 @@ import (
 )
 
 const (
+	DefaultKindleNotesFilePath = "/documents/My Clippings.txt"
+
 	manufacturerName = "Amazon"
 	productName = "Amazon Kindle"
 )
