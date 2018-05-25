@@ -9,6 +9,7 @@ import (
 	"log"
 	"encoding/json"
 	"io"
+	"brief/briefExporter/ui"
 )
 
 type HistoryRecord struct {
@@ -41,6 +42,22 @@ func SendNotesToServer(notes *[]byte, config *common.Config) {
 	body, _ := ioutil.ReadAll(resp.Body)
 
 	logResponse(resp, body)
+}
+
+func CheckDeviceAvailability(device *ui.Device, config *common.Config) bool {
+	headers := make(map[string]string)
+	headers["Content-Type"] = "application/json"
+
+	deviceJson, _ := json.Marshal(*device)
+
+	resp, err := executeRequest(config.DeviceAvailabilityUrl, "GET", bytes.NewBuffer(deviceJson), headers)
+	common.Check(err)
+
+	if resp.StatusCode == 200 {
+		return true
+	}
+
+	return false
 }
 
 func logResponse(response *http.Response, body []byte) {

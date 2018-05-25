@@ -1,6 +1,6 @@
 //+build !debug
 
-package common
+package ui
 
 import (
 	"bufio"

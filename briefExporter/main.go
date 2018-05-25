@@ -11,12 +11,14 @@ import (
 	"brief/briefExporter/libsync"
 	"fmt"
 	"strings"
+	"brief/briefExporter/ui"
+	"brief/briefExporter/net"
 )
 
 func main() {
 	runtime.GOMAXPROCS(2)
 
-	reader, _, _ := common.GetUserCredentials()
+	reader, _, _ := ui.GetUserCredentials()
 
 	var dataPath string
 	flag.StringVar(&dataPath, "data_path", "", "path to data file")
@@ -45,6 +47,13 @@ func main() {
 	config, err := common.GetConfig(configPath)
 	common.Check(err)
 	log.Println(config)
+
+	device := ui.GetDeviceToConnect(config, reader)
+
+	if net.CheckDeviceAvailability(device, config) {
+		log.Fatalln("configPath and dataPath should been provided!")
+		os.Exit(1)
+	}
 
 	kindleUsb := &connectivity.KindleUsbConnector{}
 
